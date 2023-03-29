@@ -1,0 +1,7 @@
+.submit-photo-control {
+  min-height: 300px;
+  text-align: center;
+  vertical-align: middle;
+  border: 1px dashed blue;
+  margin: 5px;
+}

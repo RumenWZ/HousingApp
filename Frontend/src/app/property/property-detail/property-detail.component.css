@@ -1,0 +1,20 @@
+.card {
+  min-height: 600px;
+
+}
+
+.card img {
+  padding: 10px;
+  min-height: 250px;
+  max-height: 400px;
+}
+
+.card-img-wrapper {
+
+}
+
+
+.ngx-gallery {
+  display: inline-block;
+  margin-bottom: 20px;
+}
