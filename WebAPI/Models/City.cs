@@ -8,7 +8,7 @@ namespace WebAPI.Models
         [Required]
         public string Name { get; set; } = string.Empty;
         [Required]
-        public string Country { get; set; }
+        public string Country { get; set; } = string.Empty;
         public DateTime LastUpdatedOn { get; set; }
 
         public int LastUpdatedBy { get; set; }

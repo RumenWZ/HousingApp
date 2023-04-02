@@ -15,6 +15,8 @@ namespace WebAPI.Data
 
         public DataContext Dc { get; }
 
+        public IUserRepository UserRepository => new UserRepository(dc);
+
         public async Task<bool> SaveAsync()
         {
             return await dc.SaveChangesAsync() > 0;
