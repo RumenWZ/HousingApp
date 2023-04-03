@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "0XDYd5aGR25+OeX/1/XC27NV5LargzxeRnNdJX71Q52B6gJahrfJ0M5rQkxjaPc8iVr3LXtv9fnDnR4xY9abmw==",
+  "dgSpecHash": "Xz2RyyA6Ka0k2oiD7zZrvbFaWIMsyCo4+CJFuRqEeBu/PIY9PCz3fu/wRHg9VtBrycEVb19m11CuiNBiSWY7wQ==",
   "success": true,
   "projectFilePath": "D:\\CSharp\\repos\\HSPA\\WebAPI\\WebAPI.csproj",
   "expectedPackageFiles": [
@@ -9,6 +9,7 @@
     "C:\\Users\\ipwnd.DESKTOP-P8D3QE5\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\ipwnd.DESKTOP-P8D3QE5\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",
     "C:\\Users\\ipwnd.DESKTOP-P8D3QE5\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
+    "C:\\Users\\ipwnd.DESKTOP-P8D3QE5\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\7.0.4\\microsoft.aspnetcore.authentication.jwtbearer.7.0.4.nupkg.sha512",
     "C:\\Users\\ipwnd.DESKTOP-P8D3QE5\\.nuget\\packages\\microsoft.aspnetcore.jsonpatch\\7.0.4\\microsoft.aspnetcore.jsonpatch.7.0.4.nupkg.sha512",
     "C:\\Users\\ipwnd.DESKTOP-P8D3QE5\\.nuget\\packages\\microsoft.aspnetcore.mvc.newtonsoftjson\\7.0.4\\microsoft.aspnetcore.mvc.newtonsoftjson.7.0.4.nupkg.sha512",
     "C:\\Users\\ipwnd.DESKTOP-P8D3QE5\\.nuget\\packages\\microsoft.aspnetcore.openapi\\7.0.3\\microsoft.aspnetcore.openapi.7.0.3.nupkg.sha512",

@@ -80,3 +80,4 @@ D:\CSharp\repos\HSPA\WebAPI\bin\Debug\net7.0\Microsoft.AspNetCore.JsonPatch.dll
 D:\CSharp\repos\HSPA\WebAPI\bin\Debug\net7.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 D:\CSharp\repos\HSPA\WebAPI\bin\Debug\net7.0\Newtonsoft.Json.dll
 D:\CSharp\repos\HSPA\WebAPI\bin\Debug\net7.0\Newtonsoft.Json.Bson.dll
+D:\CSharp\repos\HSPA\WebAPI\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
