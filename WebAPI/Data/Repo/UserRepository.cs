@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography;
+using System.Text;
 using WebAPI.Interfaces;
 using WebAPI.Models;
 
@@ -11,9 +13,60 @@ namespace WebAPI.Data.Repo
         {
             this.dc = dc;
         }
-        public async Task<User> Authenticate(string username, string password)
+        public async Task<User> Authenticate(string username, string passwordText)
         {
-            return await dc.Users.FirstOrDefaultAsync(x => x.Username == username && x.Password == password);
+            var user = await dc.Users.FirstOrDefaultAsync(x => x.Username == username);
+
+            if (user == null) return null;
+
+            if (!MatchPasswordHash(passwordText, user.Password, user.PasswordKey))
+            {
+                return null;
+            }
+
+            return user;
+        }
+
+        public void Register(string username, string password)
+        {
+            byte[] passwordHash, passwordKey;
+
+            using (var hmac = new HMACSHA512())
+            {
+                passwordKey = hmac.Key;
+                passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+            }
+
+            User user = new User();
+            user.Username = username;
+            user.Password = passwordHash;
+            user.PasswordKey = passwordKey;
+
+            dc.Users.Add(user);
+        }
+
+        private bool MatchPasswordHash(string passwordText, byte[] password, byte[] passwordKey)
+        {
+
+            using (var hmac = new HMACSHA512(passwordKey))
+            {
+                var passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(passwordText));
+
+                for (int i = 0; i < passwordHash.Length; i++)
+                {
+                    if (passwordHash[i] != password[i])
+                        return false;
+                }
+                return true;
+            }
+
+        }
+
+        public async Task<bool> UserAlreadyExists(string username)
+        {
+            return await dc.Users.AnyAsync(x => x.Username == username);
         }
     }
+
+    
 }
