@@ -17,7 +17,8 @@ namespace WebAPI.Data.Repo
         {
             var user = await dc.Users.FirstOrDefaultAsync(x => x.Username == username);
 
-            if (user == null) return null;
+            if (user == null || user.PasswordKey == null) 
+                return null;
 
             if (!MatchPasswordHash(passwordText, user.Password, user.PasswordKey))
             {
@@ -34,7 +35,7 @@ namespace WebAPI.Data.Repo
             using (var hmac = new HMACSHA512())
             {
                 passwordKey = hmac.Key;
-                passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+                passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
             }
 
             User user = new User();
@@ -50,7 +51,7 @@ namespace WebAPI.Data.Repo
 
             using (var hmac = new HMACSHA512(passwordKey))
             {
-                var passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(passwordText));
+                var passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(passwordText));
 
                 for (int i = 0; i < passwordHash.Length; i++)
                 {

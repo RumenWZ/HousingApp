@@ -16,7 +16,7 @@ export class NavBarComponent {
   }
 
   loggedIn() {
-    this.loggedinUser = localStorage.getItem('token');
+    this.loggedinUser = localStorage.getItem('userName');
     return this.loggedinUser;
   }
 
