@@ -32,7 +32,7 @@ namespace WebAPI.Controllers
 
             if (user == null)
             {
-                return Unauthorized();
+                return Unauthorized("Invalid Username or Password");
             }
 
             var loginResponse = new LoginResponseDTO();
@@ -43,13 +43,16 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register(LoginRequestDTO loginRequest)
+        public async Task<IActionResult> Register(RegisterRequestDTO registerRequest)
         {
-            if (await uow.UserRepository.UserAlreadyExists(loginRequest.UserName))
+            Console.WriteLine("start");
+            Console.WriteLine(registerRequest.UserName);
+            Console.WriteLine("start");
+            if (await uow.UserRepository.UserAlreadyExists(registerRequest.UserName))
             {
                 return BadRequest("User already exists, try a different username");
             }
-            uow.UserRepository.Register(loginRequest.UserName, loginRequest.Password);
+            uow.UserRepository.Register(registerRequest.UserName, registerRequest.Password, registerRequest.Mobile, registerRequest.Email);
             await uow.SaveAsync();
             return StatusCode(201);
         }

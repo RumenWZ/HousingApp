@@ -3,20 +3,25 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors,
 import { User } from 'src/app/model/user';
 import { UserService } from 'src/app/services/user.service';
 import { AlertifyService } from 'src/app/services/alertify.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-user-register',
   templateUrl: './user-register.component.html',
   styleUrls: ['./user-register.component.css']
 })
+
 export class UserRegisterComponent {
   registerForm!: FormGroup;
   user: User;
   userSubmitted :boolean;
+
+
   constructor(
     private fb: FormBuilder,
     private userService: UserService,
-    private alertify: AlertifyService) { }
+    private alertify: AlertifyService,
+    ) { }
 
   ngOnInit() {
     this.registerForm = new FormGroup({
@@ -45,16 +50,24 @@ export class UserRegisterComponent {
   };
 
   onSubmit(){
-    console.log(this.registerForm);
     this.userSubmitted = true;
+    var test = {
+      UserName: "borpax",
+      Email: "borpacorp@gmail.com",
+      Mobile: "999999999",
+      Password: "aaaaaa"
+    }
     if (this.registerForm.valid) {
-      // this.user = Object.assign(this.user, this.registerForm.value);
-      this.userService.addUser(this.userData());
-      this.registerForm.reset();
-      this.userSubmitted = false;
-      this.alertify.success('Successful registration!')
-    } else {
-      this.alertify.error('Please enter valid credentials.')
+
+      this.userService.addUser(this.userData()).subscribe(() => {
+        this.registerForm.reset();
+        this.userSubmitted = false;
+
+        this.alertify.success('Successful registration!');
+      }, error => {
+        console.log(error);
+        this.alertify.error(error.error);
+      });
     }
   }
 

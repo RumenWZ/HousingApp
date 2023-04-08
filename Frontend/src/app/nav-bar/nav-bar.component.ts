@@ -22,6 +22,7 @@ export class NavBarComponent {
 
   onLogout() {
     localStorage.removeItem('token');
+    localStorage.removeItem('userName');
     this.alertify.success("You have logged out.");
   }
 }
