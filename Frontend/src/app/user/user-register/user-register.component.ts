@@ -64,9 +64,6 @@ export class UserRegisterComponent {
         this.userSubmitted = false;
 
         this.alertify.success('Successful registration!');
-      }, error => {
-        console.log(error);
-        this.alertify.error(error.error);
       });
     }
   }

@@ -27,18 +27,8 @@ export class UserLoginComponent {
         localStorage.setItem('userName', user.userName);
         this.router.navigate(['/']);
         this.alertify.success("Login Successful");
-      }, error => {
-        console.log(error.error);
-        this.alertify.error(error.error);
+
       }
     );
-
-    // if (token) {
-    //   localStorage.setItem('token', token.userName);
-    //   this.router.navigate(['/']);
-    //   this.alertify.success("Login Successful");
-    // } else {
-    //   this.alertify.error("Invalid Credentials");
-    // }
   }
 }
