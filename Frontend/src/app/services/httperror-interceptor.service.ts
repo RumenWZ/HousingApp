@@ -32,6 +32,7 @@ export class HttpErrorInterceptorService implements HttpInterceptor {
             switch(checkErr.status) {
               case ErrorCode.serverDown: return of(checkErr);
               case ErrorCode.unauthorized: return of(checkErr);
+              
             }
           }
           return throwError(checkErr);

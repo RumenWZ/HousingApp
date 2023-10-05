@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "Xz2RyyA6Ka0k2oiD7zZrvbFaWIMsyCo4+CJFuRqEeBu/PIY9PCz3fu/wRHg9VtBrycEVb19m11CuiNBiSWY7wQ==",
+  "dgSpecHash": "dwY7ZdivvtNoRGGGWGkHELpB04VF17O7b7uTNdihA7rN6wfmLPQXib4mHtZYbVzFc6qPSecZd6cr3R7Ri3BBLA==",
   "success": true,
   "projectFilePath": "D:\\CSharp\\repos\\HSPA\\WebAPI\\WebAPI.csproj",
   "expectedPackageFiles": [
@@ -8,6 +8,7 @@
     "C:\\Users\\ipwnd.DESKTOP-P8D3QE5\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.0\\automapper.extensions.microsoft.dependencyinjection.12.0.0.nupkg.sha512",
     "C:\\Users\\ipwnd.DESKTOP-P8D3QE5\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\ipwnd.DESKTOP-P8D3QE5\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",
+    "C:\\Users\\ipwnd.DESKTOP-P8D3QE5\\.nuget\\packages\\dotenv.net\\3.1.2\\dotenv.net.3.1.2.nupkg.sha512",
     "C:\\Users\\ipwnd.DESKTOP-P8D3QE5\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\ipwnd.DESKTOP-P8D3QE5\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\7.0.4\\microsoft.aspnetcore.authentication.jwtbearer.7.0.4.nupkg.sha512",
     "C:\\Users\\ipwnd.DESKTOP-P8D3QE5\\.nuget\\packages\\microsoft.aspnetcore.jsonpatch\\7.0.4\\microsoft.aspnetcore.jsonpatch.7.0.4.nupkg.sha512",

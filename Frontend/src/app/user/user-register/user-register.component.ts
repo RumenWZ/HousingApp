@@ -51,12 +51,7 @@ export class UserRegisterComponent {
 
   onSubmit(){
     this.userSubmitted = true;
-    var test = {
-      UserName: "borpax",
-      Email: "borpacorp@gmail.com",
-      Mobile: "999999999",
-      Password: "aaaaaa"
-    }
+
     if (this.registerForm.valid) {
 
       this.userService.addUser(this.userData()).subscribe(() => {
