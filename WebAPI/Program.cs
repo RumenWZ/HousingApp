@@ -7,6 +7,7 @@ using WebAPI.Data;
 using WebAPI.Helpers;
 using WebAPI.Interfaces;
 using WebAPI.Middlewares;
+using WebAPI.Services;
 
 DotEnv.Load();
 
@@ -21,10 +22,15 @@ builder.Services.AddDbContext<DataContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
 });
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
+
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork> ();
+builder.Services.AddScoped<IPhotoService, PhotoService>();
 
 var secretKey = Environment.GetEnvironmentVariable("JWT_SECRET_KEY");
 var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
+var cloudinaryConfig = builder.Configuration.GetSection("CloudinarySettings");
+
+builder.Services.Configure<CloudinarySettings>(cloudinaryConfig);
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(op =>
 {
@@ -41,7 +47,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
