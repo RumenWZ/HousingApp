@@ -11,17 +11,6 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
   addUser(user: User) {
-    console.log(user);
-    
     return this.http.post(this.baseUrl + '/account/register', user);
-
-    // let users = [];
-    // if (localStorage.getItem('Users')) {
-    //   users = JSON.parse(localStorage.getItem('Users'));
-    //   users = [user, ...users];
-    // } else {
-    //   users = [user];
-    // }
-    // localStorage.setItem('Users', JSON.stringify(users));
   }
 }

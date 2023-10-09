@@ -27,6 +27,7 @@ import { NgxGalleryModule } from '@kolkov/ngx-gallery';
 import { FilterPipe,  } from './Pipes/filter.pipe';
 import { SortPipe } from './Pipes/sort.pipe';
 import { HttpErrorInterceptorService } from './services/httperror-interceptor.service';
+import { TokenInterceptorService } from './services/token-interceptor.service';
 
 
 const appRoutes: Routes = [
@@ -71,6 +72,11 @@ const appRoutes: Routes = [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpErrorInterceptorService,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptorService,
       multi: true
     },
     HousingService,

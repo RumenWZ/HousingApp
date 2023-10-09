@@ -6,8 +6,8 @@ namespace WebAPI.DTOs
     {
         public int Id { get; set; }
         [Required]
-        [StringLength(50, MinimumLength = 4)]
-        [RegularExpression(".*[a-zA-Z]+.*", ErrorMessage = "Only numerics are not allowed")]
+        [StringLength(30, MinimumLength = 4)]
+        [RegularExpression("^[a-zA-Z]+$", ErrorMessage = "Only letters are allowed")]
         public string Name { get; set; } = string.Empty;
         [Required]
         public string Country { get; set; }

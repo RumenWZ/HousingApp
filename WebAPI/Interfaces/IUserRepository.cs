@@ -9,5 +9,7 @@ namespace WebAPI.Interfaces
         void Register(string username, string password, string mobile, string email);
 
         Task<bool> UserAlreadyExists(string username);
+
+        Task<User> GetUserByTokenAsync(string token);
     }
 }

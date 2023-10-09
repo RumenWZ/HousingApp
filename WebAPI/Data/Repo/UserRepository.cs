@@ -1,4 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using WebAPI.Interfaces;
@@ -61,6 +64,44 @@ namespace WebAPI.Data.Repo
                         return false;
                 }
                 return true;
+            }
+
+        }
+
+        public async Task<User> GetUserByTokenAsync(string token)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var secretKey = Environment.GetEnvironmentVariable("JWT_SECRET_KEY");
+            var validationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey)),
+                ValidateIssuer = false,
+                ValidateAudience = false
+            };
+
+            try
+            {
+                SecurityToken validatedToken;
+                var principal = tokenHandler.ValidateToken(token, validationParameters, out validatedToken);
+
+                var userIdString = principal.FindFirstValue(ClaimTypes.NameIdentifier);
+
+                if (int.TryParse(userIdString, out int userId))
+                {
+                    var user = await dc.Users.FindAsync(userId);
+
+                    return user;
+                }
+                else
+                {
+
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                return null;
             }
 
         }

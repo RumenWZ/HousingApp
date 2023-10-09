@@ -59,7 +59,7 @@
               <label>City*</label>
               <select class="form-control" [(ngModel)]="propertyView.City" formControlName="City">
                 <option value="">--Select City--</option>
-                <option *ngFor="let city of cityList" value="{{city.id}}">{{city.name}}</option>
+                <option *ngFor="let city of cityList" value="{{city.name}}">{{city.name}}</option>
               </select>
               <div class="error-block" *ngIf="City.invalid && (City.touched || clickedNext)">
                 Field required

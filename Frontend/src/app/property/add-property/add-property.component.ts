@@ -89,8 +89,6 @@ export class AddPropertyComponent {
     });
   }
 
-  //#region Getter Methods
-  //#region FormGroups
 
   get BasicInfo() {
     return this.addPropertyForm.controls.BasicInfo as FormGroup;

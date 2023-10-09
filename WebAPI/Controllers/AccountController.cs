@@ -74,7 +74,7 @@ namespace WebAPI.Controllers
 
         private string CreateJWT(User user)
         {
-            var secretKey = config.GetSection("AppSettings:Key").Value;
+            var secretKey = Environment.GetEnvironmentVariable("JWT_SECRET_KEY");
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
 
             var claims = new Claim[]
