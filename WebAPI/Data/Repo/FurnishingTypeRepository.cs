@@ -1,4 +1,5 @@
-﻿using WebAPI.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using WebAPI.Interfaces;
 using WebAPI.Models;
 
 namespace WebAPI.Data.Repo
@@ -22,6 +23,22 @@ namespace WebAPI.Data.Repo
             };
 
             dc.FurnishingTypes.Add(newFurnishingType);
+        }
+
+        public async Task DeleteAsync(int id)
+        {
+            var furnishingType = dc.FurnishingTypes.FirstOrDefault(ft => ft.Id == id);
+            if (furnishingType != null)
+            {
+                dc.FurnishingTypes.Remove(furnishingType);
+                await dc.SaveChangesAsync();
+            }
+        }
+
+        public async Task<FurnishingType> GetByIdAsync(int id)
+        {                                                
+            var furnishingType = await dc.FurnishingTypes.FirstOrDefaultAsync(p => p.Id == id);
+            return furnishingType;
         }
     }
 }
