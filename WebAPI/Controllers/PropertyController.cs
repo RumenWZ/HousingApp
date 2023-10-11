@@ -25,14 +25,19 @@ namespace WebAPI.Controllers
             this.mapper = mapper;
         }
 
-        //[HttpGet]
-        //public Task<IActionResult> GetProperties()
-        //{
-        //    var properties = uow.PropertyRepository.GetAllProperties();
-        //    return Ok(properties);
-        //}
+        [HttpGet]
+        public async Task<IActionResult> GetProperties()
+        {
+            var properties = await uow.PropertyRepository.GetAllPropertiesAsync();
+            var propertyDTOs = new List<PropertyResponseDTO>();
+            foreach ( var property in properties) { 
+                var propertyDTO = mapper.Map<PropertyResponseDTO>(property);
+                propertyDTOs.Add(propertyDTO);
+            }
+            return Ok(propertyDTOs);
+        }
         [HttpPost("add/property")]
-        public async Task<IActionResult> AddPropertyDetails([FromBody] PropertyDTO propertyDTO)
+        public async Task<IActionResult> AddPropertyDetails([FromBody] PropertyAddDTO propertyDTO)
         {
             string token = HttpContext.GetAuthToken();
             var user = await uow.UserRepository.GetUserByTokenAsync(token);
@@ -41,7 +46,6 @@ namespace WebAPI.Controllers
                 return Unauthorized("Invalid token");
             }
 
-            //var newProperty = await uow.PropertyRepository.AddProperty(property, user);
             var newProperty = mapper.Map<Property>(propertyDTO);
             newProperty.PostedBy = user.Id;
             uow.PropertyRepository.AddProperty(newProperty);

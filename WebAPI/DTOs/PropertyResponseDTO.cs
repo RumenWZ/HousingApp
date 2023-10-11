@@ -4,8 +4,9 @@ using WebAPI.Models;
 
 namespace WebAPI.DTOs
 {
-    public class PropertyDTO
+    public class PropertyResponseDTO
     {
+        public int Id { get; set; }
         [Required]
         public int SellOrRent { get; set; }
         [Required]
@@ -36,11 +37,13 @@ namespace WebAPI.DTOs
         public int Security { get; set; }
         public bool Gated { get; set; }
         public int Maintenance { get; set; }
-        //make required later
         public DateTime EstPosessionOn { get; set; }
         public int Age { get; set; }
         public string Description { get; set; }
         public DateTime PostedOn { get; set; } = DateTime.Now;
+        public int PostedBy { get; set; }
+        public DateTime LastUpdatedOn { get; set; } 
+        public int LastUpdatedBy { get; set; }
 
     }
 }

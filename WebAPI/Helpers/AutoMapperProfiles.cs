@@ -10,7 +10,8 @@ namespace WebAPI.Helpers
         {
             CreateMap<City, CityDTO>().ReverseMap();
             CreateMap<City, CityUpdateDTO>().ReverseMap();
-            CreateMap<Property, PropertyDTO>().ReverseMap();
+            CreateMap<Property, PropertyAddDTO>().ReverseMap();
+            CreateMap<Property, PropertyResponseDTO>().ReverseMap();
 
         }
     }

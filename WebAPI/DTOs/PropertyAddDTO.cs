@@ -4,7 +4,7 @@ using WebAPI.Models;
 
 namespace WebAPI.DTOs
 {
-    public class PropertyDTO
+    public class PropertyAddDTO
     {
         [Required]
         public int SellOrRent { get; set; }

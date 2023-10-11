@@ -21,9 +21,9 @@ namespace WebAPI.Data.Repo
             await dc.Properties.AddAsync(property);
         }
 
-        public Task<IEnumerable<PropertyDTO>> GetAllPropertiesAsync()
+        public async Task<IEnumerable<Property>> GetAllPropertiesAsync()
         {
-            throw new NotImplementedException();
+            return await dc.Properties.ToListAsync();
         }
 
         public async Task<Property> GetPropertyByIdAsync(int id)

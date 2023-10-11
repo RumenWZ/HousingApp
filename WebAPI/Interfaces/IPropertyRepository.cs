@@ -5,7 +5,7 @@ namespace WebAPI.Interfaces
 {
     public interface IPropertyRepository
     {
-        Task<IEnumerable<PropertyDTO>> GetAllPropertiesAsync();
+        Task<IEnumerable<Property>> GetAllPropertiesAsync();
         void AddProperty(Property property);
         Task<Property> GetPropertyByIdAsync(int id);
     }
