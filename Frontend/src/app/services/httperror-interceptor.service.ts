@@ -12,7 +12,6 @@ export class HttpErrorInterceptorService implements HttpInterceptor {
   constructor(private alertify: AlertifyService) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    console.log('HTTP request started');
     return next.handle(req).pipe(
       retryWhen(error => this.retryRequest(error, 10)),
       catchError((error: HttpErrorResponse) => {

@@ -8,7 +8,7 @@
         <tabset class="member-tabset" #formTabs>
           <tab heading="Basic information" formGroupName="BasicInfo">
             <div class="form-group col-12">
-              <p>I want to</p>
+              <label>I want to*</label><br/>
               <div class="btn-group" btnRadioGroup formControlName="SellOrRent">
                 <label class="btn btn-outline-primary" btnRadio="1" tabindex="0" role="button" name="SellOrRent">Sell</label>
                 <label class="btn btn-outline-primary" btnRadio="2" tabindex="0" role="button" name="SellOrRent">Rent</label>
@@ -17,7 +17,7 @@
 
 
             <div class="form-group col-12">
-              <p>BHK (Bedroom, Hall, Kitchen)*</p>
+              <label>BHK (Bedroom, Hall, Kitchen)*</label><br/>
               <div class="btn-group" btnRadioGroup [(ngModel)]="propertyView.bhk" formControlName="BHK">
                 <label *ngFor="let x of [1,2,3,4]" class="btn btn-outline-primary" [btnRadio]="x" role="button">{{x}}</label>
               </div>
@@ -27,7 +27,7 @@
             </div>
 
             <div class="form-group col-12">
-              <p>Type of Property*</p>
+              <label>Type of Property*</label><br/>
               <div class="btn-group" btnRadioGroup formControlName="propType" formControlName="PType">
                 <label *ngFor="let ptype of propertyTypes" (click)="propertyView.propertyType=ptype.name" class="btn btn-outline-primary" [btnRadio]="ptype.id" role="button" name="PropType">{{ptype.name}}</label>
               </div>
@@ -37,7 +37,7 @@
             </div>
 
             <div class="form-group col-12">
-              <p>Furnishing Type*</p>
+              <label>Furnishing Type*</label><br/>
               <div class="btn-group" btnRadioGroup formControlName="FType">
                 <label *ngFor="let ftype of furnishingTypes" (click)="propertyView.furnishingType=ftype.name" class="btn btn-outline-primary" [btnRadio]="ftype.id" role="button" name="SellRent">{{ftype.name}}</label>
               </div>
@@ -173,8 +173,18 @@
             </div>
 
             <div class="form-group col-12">
-              <label>Gated Community</label>
-              <input type="text" class="form-control" formControlName="Gated">
+              <label>Gated</label><br/>
+              <div class="btn-group" btnRadioGroup
+                  formControlName="Gated">
+                    <label class="btn btn-outline-primary mr-2 mt-1"
+                      btnRadio=true tabindex="0" role="button"
+                      name="gated">Yes
+                    </label>
+                    <label class="btn btn-outline-primary mt-1"
+                      btnRadio=false  tabindex="0" role="button"
+                      name="Gated">No
+                    </label>
+                  </div>
             </div>
 
             <div class="form-group col-12">
@@ -194,8 +204,17 @@
           <tab heading="Photos">
             <div class="form-group col-12">
               <div class="submit-photo-control">
-                  <button class="mt-5" type="button">Upload</button> <br>
-                  To do
+                <div class="photo-upload-button">
+                  <label for="fileUpload" class="upload-button">Upload</label>
+                  <input type="file" id="fileUpload" (change)="onFileSelected($event)" accept="image/*" style="display: none;">
+                </div>
+
+                <div class="photo-belt">
+                  <div *ngFor="let photo of photosSelected; let i = index" class="photo-belt-item">
+                    <img [src]="photo.url" alt="Preview image">
+                    <i class='bx bx-x remove-button' (click)="removeSelectedPhoto(i)"></i>
+                  </div>
+                </div>
               </div>
             </div>
             <div class="form-group col-12 mt-3">

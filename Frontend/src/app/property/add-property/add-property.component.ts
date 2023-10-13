@@ -23,6 +23,8 @@ export class AddPropertyComponent {
   propertyTypes: Array<BasicPropertyOption>;
   furnishingTypes: Array<BasicPropertyOption>;
 
+  photosSelected: any[] = [];
+
   propertyView: IPropertyBase = {
     id: null,
     name: null,
@@ -55,13 +57,58 @@ export class AddPropertyComponent {
     });
   }
 
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    const allowedFormats = ['image/jpeg', 'image/png'];
+    const maxSize = 2 * 1024 * 1024;
+
+    if(this.photosSelected.length >= 6) {
+      this.alertify.warning('You can upload a maximum of 6 photos per property')
+      return;
+    }
+
+    if (!allowedFormats.includes(file.type)) {
+      this.alertify.error('Invalid file format. Only JPEG and PNG files are allowed');
+      return;
+    }
+
+    if (file.size > maxSize) {
+      this.alertify.error('File size exceeds the limit of 2 MB');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const imageUrl = e.target.result;
+      this.photosSelected.push({ url: imageUrl });
+    };
+    reader.readAsDataURL(file);
+  }
+
+  removeSelectedPhoto(index: number) {
+    this.photosSelected.splice(index, 1);
+  }
+
+  getPhotoURL(file: File){
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const photoURL = reader.result as string;
+        resolve(photoURL);
+      };
+      reader.onerror = (error) => {
+        reject(error);
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
   ngOnInit() {
     this.GetPropertyTypeOptions();
     this.CreateAddPropertyForm();
     this.GetFurnishingTypeOptions();
     this.housingService.getAllCities().subscribe(data => {
       this.cityList = data;
-      console.log(data);
     })
   }
 
@@ -175,7 +222,6 @@ export class AddPropertyComponent {
 
   selectTab(id: number, currentTabValid?: boolean) {
     this.clickedNext = true;
-    console.log(this.Address);
     if (currentTabValid) {
       this.formTabs.tabs[id].active = true;
       this.clickedNext = false;
@@ -196,8 +242,7 @@ export class AddPropertyComponent {
   get OtherInfo() {
     return this.addPropertyForm.controls.OtherInfo as FormGroup;
   }
-  //#endregion
-  //#region FormControl
+
   get SellOrRent() {
     return this.BasicInfo.controls.SellOrRent as FormControl;
   }
