@@ -29,14 +29,12 @@ namespace WebAPI.Controllers
         public async Task<IActionResult> GetProperties()
         {
             var properties = await uow.PropertyRepository.GetAllPropertiesAsync();
-            var propertyDTOs = new List<PropertyResponseDTO>();
-            foreach ( var property in properties) { 
-                var propertyDTO = mapper.Map<PropertyResponseDTO>(property);
-                propertyDTOs.Add(propertyDTO);
-            }
-            return Ok(propertyDTOs);
+            var propertiesDTO = mapper.Map<IEnumerable<PropertyResponseDTO>>(properties);
+            return Ok(propertiesDTO);
         }
-        [HttpPost("add/property")]
+
+
+        [HttpPost("add-property")]
         public async Task<IActionResult> AddPropertyDetails([FromBody] PropertyAddDTO propertyDTO)
         {
             string token = HttpContext.GetAuthToken();
@@ -55,7 +53,7 @@ namespace WebAPI.Controllers
             
         }
 
-        [HttpPost("add/photos")]
+        [HttpPost("add-photos")]
         public async Task<IActionResult> UploadPropertyPhotos(int propertyId, [FromForm] List<IFormFile> photos)
         {
 

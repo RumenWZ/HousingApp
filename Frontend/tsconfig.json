@@ -3,7 +3,7 @@
   "compileOnSave": false,
   "compilerOptions": {
     "noPropertyAccessFromIndexSignature": false,
-    "suppressImplicitAnyIndexErrors": true,
+    //"suppressImplicitAnyIndexErrors": true,
     "strictPropertyInitialization": false,
     "strictNullChecks": false,
 

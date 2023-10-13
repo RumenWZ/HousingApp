@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WebAPI.DTOs;
 using WebAPI.Extensions;
 using WebAPI.Interfaces;
 
@@ -10,10 +12,22 @@ namespace WebAPI.Controllers
     public class PropertyTypeController : ControllerBase
     {
         private readonly IUnitOfWork uow;
+        private readonly IMapper mapper;
 
-        public PropertyTypeController(IUnitOfWork uow)
+        public PropertyTypeController(
+            IUnitOfWork uow,
+            IMapper mapper)
         {
             this.uow = uow;
+            this.mapper = mapper;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var propertyTypes = await uow.PropertyTypeRepository.GetAllAsync();
+            var propertyTypesDTO = mapper.Map<IEnumerable<KeyValuePairDTO>>(propertyTypes);
+            return Ok(propertyTypesDTO);
         }
 
         [HttpPost("add/{propertyType}")]

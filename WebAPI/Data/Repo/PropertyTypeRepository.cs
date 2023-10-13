@@ -35,9 +35,20 @@ namespace WebAPI.Data.Repo
             }
         }
 
+        public async Task<IEnumerable<PropertyType>> GetAllAsync()
+        {
+            return await dc.PropertyTypes.ToListAsync();
+        }
+
         public async Task<PropertyType> GetByIdAsync(int id)
         {
             var propertyType = await dc.PropertyTypes.FirstOrDefaultAsync(p => p.Id == id);
+            return propertyType;
+        }
+
+        public async Task<PropertyType> GetByNameAsync(string name)
+        {
+            var propertyType = await dc.PropertyTypes.FirstOrDefaultAsync(pt => pt.Name == name);
             return propertyType;
         }
     }

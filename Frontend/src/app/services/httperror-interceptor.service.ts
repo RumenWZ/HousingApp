@@ -32,7 +32,7 @@ export class HttpErrorInterceptorService implements HttpInterceptor {
             switch(checkErr.status) {
               case ErrorCode.serverDown: return of(checkErr);
               case ErrorCode.unauthorized: return of(checkErr);
-              
+
             }
           }
           return throwError(checkErr);
@@ -43,14 +43,11 @@ export class HttpErrorInterceptorService implements HttpInterceptor {
   setError(error: HttpErrorResponse): string {
     let errorMessage = 'Unknown error occured';
     if (error.error instanceof ErrorEvent) {
-      // client side error
       errorMessage = error.error.message;
     } else {
-      // server side error
       if (error.status !== 0) {
-        errorMessage = error.error.errorMessage;
+        errorMessage = error.error;
       }
-
     }
     return errorMessage;
   }

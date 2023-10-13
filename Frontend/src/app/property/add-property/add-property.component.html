@@ -18,7 +18,7 @@
 
             <div class="form-group col-12">
               <p>BHK (Bedroom, Hall, Kitchen)*</p>
-              <div class="btn-group" btnRadioGroup [(ngModel)]="propertyView.BHK" formControlName="BHK">
+              <div class="btn-group" btnRadioGroup [(ngModel)]="propertyView.bhk" formControlName="BHK">
                 <label *ngFor="let x of [1,2,3,4]" class="btn btn-outline-primary" [btnRadio]="x" role="button">{{x}}</label>
               </div>
               <div class="error-block" *ngIf="BHK.invalid && (BHK.touched || clickedNext)">
@@ -28,8 +28,8 @@
 
             <div class="form-group col-12">
               <p>Type of Property*</p>
-              <div class="btn-group" btnRadioGroup formControlName="propType" [(ngModel)]="propertyView.PType" formControlName="PType">
-                <label *ngFor="let propType of propertyTypes" class="btn btn-outline-primary" [btnRadio]="propType" role="button" name="PropType">{{propType}}</label>
+              <div class="btn-group" btnRadioGroup formControlName="propType" formControlName="PType">
+                <label *ngFor="let ptype of propertyTypes" (click)="propertyView.propertyType=ptype.name" class="btn btn-outline-primary" [btnRadio]="ptype.id" role="button" name="PropType">{{ptype.name}}</label>
               </div>
               <div class="error-block" *ngIf="PType.invalid && (PType.touched || clickedNext)">
                 Select the property type
@@ -38,8 +38,8 @@
 
             <div class="form-group col-12">
               <p>Furnishing Type*</p>
-              <div class="btn-group" btnRadioGroup [(ngModel)]="propertyView.FType" formControlName="FType">
-                <label *ngFor="let ftype of furnishingTypes" class="btn btn-outline-primary" [btnRadio]="ftype" role="button" name="SellRent">{{ftype}}</label>
+              <div class="btn-group" btnRadioGroup formControlName="FType">
+                <label *ngFor="let ftype of furnishingTypes" (click)="propertyView.furnishingType=ftype.name" class="btn btn-outline-primary" [btnRadio]="ftype.id" role="button" name="SellRent">{{ftype.name}}</label>
               </div>
               <div class="error-block" *ngIf="FType.invalid && (FType.touched || clickedNext)">
                 Select type of furnishing
@@ -48,7 +48,7 @@
 
             <div class="col-12 form-group">
               <label>in Building/Project*</label>
-              <input [(ngModel)]="propertyView.Name" type="text" class="form-control" ngModel formControlName="Name" required minlength="5">
+              <input [(ngModel)]="propertyView.name" type="text" class="form-control" ngModel formControlName="Name" required minlength="5">
               <span *ngIf="!Name.valid && (Name.touched || clickedNext)" class="error-block">
                 <span *ngIf="Name.errors.required">Field required</span>
                 <span *ngIf="Name.errors.minlength">The name must be at least 5 characters long</span>
@@ -57,9 +57,9 @@
 
             <div class="form-group col-12">
               <label>City*</label>
-              <select class="form-control" [(ngModel)]="propertyView.City" formControlName="City">
+              <select class="form-control" formControlName="City" [(ngModel)]="propertyView.city">
                 <option value="">--Select City--</option>
-                <option *ngFor="let city of cityList" value="{{city.name}}">{{city.name}}</option>
+                <option *ngFor="let city of cityList" value="{{city.id}}">{{city.name}}</option>
               </select>
               <div class="error-block" *ngIf="City.invalid && (City.touched || clickedNext)">
                 Field required
@@ -74,7 +74,7 @@
           <tab heading="Pricing and Area" formGroupName="PriceInfo">
             <div class="form-group col-12" >
               <label><span *ngIf="SellOrRent.value==1">Price</span><span *ngIf="SellOrRent.value==2">Rent</span> (in EUR)*</label>
-              <input type="text" class="form-control" formControlName="Price" [(ngModel)]="propertyView.Price">
+              <input type="text" class="form-control" formControlName="Price" [(ngModel)]="propertyView.price">
               <span class="error-block" *ngIf="Price.invalid && (Price.touched || clickedNext)">
                 Field required
               </span>
@@ -92,7 +92,7 @@
 
             <div class="form-group col-12">
               <label>Built Area (in Sqr Feet)*</label>
-              <input type="text" class="form-control" [(ngModel)]="propertyView.BuiltArea" formControlName="BuiltArea">
+              <input type="text" class="form-control" [(ngModel)]="propertyView.builtArea" formControlName="BuiltArea">
               <span class="error-block" *ngIf="BuiltArea.invalid && (BuiltArea.touched || clickedNext)">
                 Field required
               </span>
@@ -144,13 +144,13 @@
                   formControlName="RTM">
                     <label class="btn btn-outline-primary mr-2 mt-1"
                       btnRadio=true tabindex="0" role="button"
-                      (click)="propertyView.RTM=true"
+                      (click)="propertyView.rtm=true"
                       name="RTM">Yes
                     </label>
 
                     <label class="btn btn-outline-primary mt-1"
                       btnRadio=false  tabindex="0" role="button"
-                      (click)="propertyView.RTM=false"
+                      (click)="propertyView.rtm=false"
                       name="RTM">No
                     </label>
                   </div>

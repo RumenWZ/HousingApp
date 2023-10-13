@@ -1,29 +1,35 @@
 import { IPropertyBase } from "./ipropertybase";
 
 export class Property implements IPropertyBase{
-  Id: number;
-  SellOrRent: number;
-  Name: string;
-  PType: string;
-  BHK: number;
-  FType: string;
-  Price: number;
-  BuiltArea: number;
-  CarpetArea?: number;
-  Address: string;
-  Address2?: string;
-  City: string;
-  FloorNo?: string;
-  TotalFloors?: string;
-  RTM: boolean;
-  AOP?: string;
-  MainEntrance?: string;
-  Security?: number;
-  Gated?: number;
-  Maintenance?: number;
-  PossessionOn?: string;
-  Image?: string;
-  Description?: string;
-  PostedOn: string;
-  PostedBy: number;
+  id: number;
+  sellOrRent: number;
+  name: string;
+  propertyTypeId: number;
+  propertyType: string;
+  bhk: number;
+  furnishingType: string;
+  furnishingTypeId: string;
+  price: number;
+  builtArea: number;
+  carpetArea?: number;
+  address: string;
+  address2?: string;
+  city: string;
+  cityId: number;
+  floorNo?: string;
+  totalFloors?: string;
+  rtm: boolean;
+  aop?: string;
+  mainEntrance?: string;
+  security?: number;
+  gated?: boolean;
+  maintenance?: number;
+  possessionOn?: string;
+  image?: string;
+  description?: string;
+}
+
+export class BasicPropertyOption {
+  id: number;
+  name: string;
 }

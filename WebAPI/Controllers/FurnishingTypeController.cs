@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WebAPI.DTOs;
 using WebAPI.Extensions;
 using WebAPI.Interfaces;
 
@@ -11,11 +13,24 @@ namespace WebAPI.Controllers
     public class FurnishingTypeController : ControllerBase
     {
         private readonly IUnitOfWork uow;
+        private readonly IMapper mapper;
 
-        public FurnishingTypeController(IUnitOfWork uow)
+        public FurnishingTypeController(
+            IUnitOfWork uow,
+            IMapper mapper)
         {
             this.uow = uow;
+            this.mapper = mapper;
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var furnishingTypes = await uow.FurnishingTypeRepository.GetAllAsync();
+            var furnishingTypesDTO = mapper.Map<IEnumerable<KeyValuePairDTO>>(furnishingTypes);
+            return Ok(furnishingTypesDTO);
+        }
+
 
         [HttpPost("add/{furnishingType}")]
         public async Task<IActionResult> Add(string furnishingType)

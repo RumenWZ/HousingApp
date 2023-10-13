@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { TabsetComponent } from 'ngx-bootstrap/tabs';
 import { IPropertyBase } from 'src/app/model/ipropertybase';
-import { Property } from 'src/app/model/property';
+import { BasicPropertyOption, Property } from 'src/app/model/property';
 import { HousingService } from 'src/app/services/housing.service';
 import { AlertifyService } from 'src/app/services/alertify.service';
 
@@ -20,20 +20,20 @@ export class AddPropertyComponent {
   property = new Property();
   cityList: any[];
 
-  propertyTypes: Array<string> = ['House', 'Apartment'];
-  furnishingTypes: Array<string> = ['Fully', 'Partially', 'Unfurnished'];
+  propertyTypes: Array<BasicPropertyOption>;
+  furnishingTypes: Array<BasicPropertyOption>;
 
   propertyView: IPropertyBase = {
-    Id: null,
-    Name: null,
-    Price: null,
-    SellOrRent: null,
-    PType: null,
-    FType: null,
-    RTM: null,
-    BHK: null,
-    BuiltArea: null,
-    City: ''
+    id: null,
+    name: null,
+    price: null,
+    sellOrRent: null,
+    propertyType: null,
+    furnishingType: null,
+    rtm: null,
+    bhk: null,
+    builtArea: null,
+    city: ''
   };
 
   constructor(
@@ -43,8 +43,22 @@ export class AddPropertyComponent {
     private alertify: AlertifyService
     ) {}
 
+  GetPropertyTypeOptions() {
+    this.housingService.getPropertyTypes().subscribe((response: BasicPropertyOption[]) => {
+      this.propertyTypes = response;
+    });
+  }
+
+  GetFurnishingTypeOptions() {
+    this.housingService.getFurnishingTypes().subscribe((response: BasicPropertyOption[]) => {
+      this.furnishingTypes = response;
+    });
+  }
+
   ngOnInit() {
+    this.GetPropertyTypeOptions();
     this.CreateAddPropertyForm();
+    this.GetFurnishingTypeOptions();
     this.housingService.getAllCities().subscribe(data => {
       this.cityList = data;
       console.log(data);
@@ -89,7 +103,84 @@ export class AddPropertyComponent {
     });
   }
 
+  onBack() {
+    this.router.navigate(['/']);
+  }
 
+  onSubmit(){
+    if (this.TabValidityChecker()) {
+      this.mapProperty();
+      console.log(this.property);
+      this.housingService.addProperty(this.property).subscribe((response: any) => {
+        console.log(response);
+      });
+
+      // if (this.SellOrRent.value === '2') {
+      //   this.router.navigate(['/rent-property']);
+      // }else {
+      //   this.router.navigate(['/']);
+      // }
+    } else {
+      this.alertify.error('Form is invalid, please review your entries');
+    }
+
+  }
+
+  mapProperty(): void {
+    this.property.sellOrRent = +this.SellOrRent.value;
+    this.property.name = this.Name.value;
+    this.property.propertyTypeId = this.PType.value;
+    this.property.bhk = this.BHK.value;
+    this.property.furnishingTypeId = this.FType.value;
+    this.property.price = this.Price.value;
+    this.property.builtArea = this.BuiltArea.value;
+    this.property.carpetArea = this.CarpetArea.value;
+    this.property.address = this.Address.value;
+    this.property.address2 = this.LandMark.value;
+    this.property.cityId = this.City.value;
+    this.property.floorNo = this.FloorNo.value;
+    this.property.totalFloors = this.TotalFloors.value;
+    this.property.rtm = this.RTM.value;
+    this.property.aop = this.AOP.value;
+    this.property.mainEntrance = this.MainEntrance.value;
+    this.property.security = this.Security.value;
+    this.property.gated = this.Gated.value;
+    this.property.maintenance = this.Maintenance.value;
+    this.property.possessionOn = this.PossessionOn.value;
+    this.property.description = this.Description.value;
+  }
+
+  TabValidityChecker(): boolean {
+    if (this.BasicInfo.invalid) {
+      this.formTabs.tabs[0].active = true;
+      return false;
+    }
+
+    if (this.PriceInfo.invalid) {
+      this.formTabs.tabs[1].active = true;
+      return false;
+    }
+
+    if (this.AddressInfo.invalid) {
+      this.formTabs.tabs[2].active = true;
+      return false;
+    }
+
+    if (this.OtherInfo.invalid) {
+      this.formTabs.tabs[3].active = true;
+      return false;
+    }
+    return true;
+  }
+
+  selectTab(id: number, currentTabValid?: boolean) {
+    this.clickedNext = true;
+    console.log(this.Address);
+    if (currentTabValid) {
+      this.formTabs.tabs[id].active = true;
+      this.clickedNext = false;
+    }
+  }
   get BasicInfo() {
     return this.addPropertyForm.controls.BasicInfo as FormGroup;
   }
@@ -190,87 +281,6 @@ export class AddPropertyComponent {
   get Description() {
     return this.OtherInfo.controls.Description as FormControl;
   }
-
-
-
-  //#endregion
-  onBack() {
-    this.router.navigate(['/']);
-  }
-
-  onSubmit(){
-    console.log(this.Description);
-    if (this.TabValidityChecker()) {
-      this.mapProperty();
-      this.housingService.addProperty(this.property);
-      this.alertify.success('Property successfully listed on our website');
-
-      if (this.SellOrRent.value === '2') {
-        this.router.navigate(['/rent-property']);
-      }else {
-        this.router.navigate(['/']);
-      }
-    } else {
-      this.alertify.error('Form is invalid, please review your entries');
-    }
-
-  }
-
-  mapProperty(): void {
-  this.property.Id = this.housingService.newPropID();
-  this.property.SellOrRent = +this.SellOrRent.value;
-  this.property.Name = this.Name.value;
-  this.property.PType = this.PType.value;
-  this.property.BHK = this.BHK.value;
-  this.property.FType = this.FType.value;
-  this.property.Price = this.Price.value;
-  this.property.BuiltArea = this.BuiltArea.value;
-  this.property.CarpetArea = this.CarpetArea.value;
-  this.property.Address = this.Address.value;
-  this.property.Address2 = this.LandMark.value;
-  this.property.City = this.City.value;
-  this.property.FloorNo = this.FloorNo.value;
-  this.property.TotalFloors = this.TotalFloors.value;
-  this.property.RTM = this.RTM.value;
-  this.property.AOP = this.AOP.value;
-  this.property.MainEntrance = this.MainEntrance.value;
-  this.property.Security = this.Security.value;
-  this.property.Gated = this.Gated.value;
-  this.property.Maintenance = this.Maintenance.value;
-  this.property.PossessionOn = this.PossessionOn.value;
-  this.property.Description = this.Description.value;
-  this.property.PostedOn = new Date().toString();
-  }
-
-  TabValidityChecker(): boolean {
-    if (this.BasicInfo.invalid) {
-      this.formTabs.tabs[0].active = true;
-      return false;
-    }
-
-    if (this.PriceInfo.invalid) {
-      this.formTabs.tabs[1].active = true;
-      return false;
-    }
-
-    if (this.AddressInfo.invalid) {
-      this.formTabs.tabs[2].active = true;
-      return false;
-    }
-
-    if (this.OtherInfo.invalid) {
-      this.formTabs.tabs[3].active = true;
-      return false;
-    }
-    return true;
-  }
-
-  selectTab(id: number, currentTabValid?: boolean) {
-    this.clickedNext = true;
-    console.log(this.Address);
-    if (currentTabValid) {
-      this.formTabs.tabs[id].active = true;
-      this.clickedNext = false;
-    }
-  }
 }
+
+
