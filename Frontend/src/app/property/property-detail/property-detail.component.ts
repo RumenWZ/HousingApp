@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxGalleryAnimation, NgxGalleryImage, NgxGalleryOptions } from '@kolkov/ngx-gallery';
 import { Property } from 'src/app/model/property';
+import { DateService } from 'src/app/services/date.service';
 import { HousingService } from 'src/app/services/housing.service';
 
 @Component({
@@ -15,18 +16,24 @@ export class PropertyDetailComponent {
   galleryOptions: NgxGalleryOptions[];
   galleryImages: NgxGalleryImage[];
 
+  postedSince: string;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private housingService: HousingService) { }
+    private housingService: HousingService,
+    private dateService: DateService) { }
 
   ngOnInit() {
     this.propertyId = Number(this.route.snapshot.params['id']);
-    this.route.data.subscribe(
-      (data: any) => {
-        this.property = data['prp'];
-      }
-    )
+    this.housingService.getProperty(this.propertyId).subscribe((response: any) => {
+      this.property = response;
+      var postedDate = new Date(this.property.postedOn);
+      console.log(this.property);
+      this.postedSince = this.dateService.formatDateDifference(postedDate);
+
+    });
+
 
     // this.route.params.subscribe(
     //   (params) => {

@@ -22,7 +22,6 @@ import { UserRegisterComponent } from './user/user-register/user-register.compon
 import { UserService } from './services/user.service';
 import { AlertifyService } from './services/alertify.service';
 import { AuthService } from './services/auth.service';
-import { PropertyDetailResolverService } from './property/property-detail/property-detail-resolver.service';
 import { NgxGalleryModule } from '@kolkov/ngx-gallery';
 import { FilterPipe,  } from './Pipes/filter.pipe';
 import { SortPipe } from './Pipes/sort.pipe';
@@ -34,7 +33,7 @@ const appRoutes: Routes = [
   {path: 'add-property', component: AddPropertyComponent},
   {path: '', component: PropertyListComponent},
   {path: 'rent-property', component: PropertyListComponent},
-  {path: 'property-detail/:id', component: PropertyDetailComponent, resolve: {prp: PropertyDetailResolverService}},
+  {path: 'property-detail/:id', component: PropertyDetailComponent},
   {path: 'user/login', component: UserLoginComponent},
   {path: 'user/register', component: UserRegisterComponent},
   {path: '**', component: PropertyListComponent}
@@ -83,7 +82,6 @@ const appRoutes: Routes = [
     UserService,
     AlertifyService,
     AuthService,
-    PropertyDetailResolverService
   ],
   bootstrap: [AppComponent]
 })

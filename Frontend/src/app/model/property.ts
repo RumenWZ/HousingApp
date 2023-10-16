@@ -27,6 +27,7 @@ export class Property implements IPropertyBase{
   possessionOn?: string;
   image?: string;
   description?: string;
+  postedOn: Date
 }
 
 export class BasicPropertyOption {

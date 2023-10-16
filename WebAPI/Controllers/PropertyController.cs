@@ -33,6 +33,17 @@ namespace WebAPI.Controllers
             return Ok(propertiesDTO);
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetProperty(int id)
+        {
+            var property = await uow.PropertyRepository.GetPropertyByIdAsync(id);
+            if (property == null)
+            {
+                return BadRequest("Property not found");
+            }
+            var propertyDTO = mapper.Map<PropertyResponseDTO>(property);
+            return Ok(propertyDTO);
+        }
 
         [HttpPost("add-property")]
         public async Task<IActionResult> AddPropertyDetails([FromBody] PropertyAddDTO propertyDTO)
