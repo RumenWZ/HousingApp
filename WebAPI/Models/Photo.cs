@@ -8,8 +8,10 @@ namespace WebAPI.Models
     {
         [Required]
         public string PhotoUrl { get; set; }
-        public bool IsPrimary { get; set; }
+        [Required]
+        public string PublicId { get; set; }
+        public bool IsPrimary { get; set; } = false;
+        [ForeignKey("Property")]
         public int PropertyId { get; set; }
-        public Property Property { get; set; }
     }
 }

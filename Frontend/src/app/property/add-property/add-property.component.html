@@ -210,7 +210,7 @@
                 </div>
 
                 <div class="photo-belt">
-                  <div *ngFor="let photo of photosSelected; let i = index" class="photo-belt-item">
+                  <div *ngFor="let photo of photosSelectedPreview; let i = index" class="photo-belt-item">
                     <img [src]="photo.url" alt="Preview image">
                     <i class='bx bx-x remove-button' (click)="removeSelectedPhoto(i)"></i>
                   </div>

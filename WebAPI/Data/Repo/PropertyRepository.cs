@@ -31,5 +31,6 @@ namespace WebAPI.Data.Repo
             var property = await dc.Properties.FirstOrDefaultAsync(property => property.Id == id);
             return property;
         }
+
     }
 }

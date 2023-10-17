@@ -1,5 +1,4 @@
-﻿using WebAPI.DTOs;
-using WebAPI.Models;
+﻿using WebAPI.Models;
 
 namespace WebAPI.Interfaces
 {

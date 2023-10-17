@@ -23,6 +23,7 @@ export class AddPropertyComponent {
   propertyTypes: Array<BasicPropertyOption>;
   furnishingTypes: Array<BasicPropertyOption>;
 
+  photosSelectedPreview: any[] = [];
   photosSelected: any[] = [];
 
   propertyView: IPropertyBase = {
@@ -58,35 +59,44 @@ export class AddPropertyComponent {
   }
 
   onFileSelected(event: any) {
+    const fileInput = event.target;
     const file = event.target.files[0];
     const allowedFormats = ['image/jpeg', 'image/png'];
     const maxSize = 2 * 1024 * 1024;
 
     if(this.photosSelected.length >= 6) {
-      this.alertify.warning('You can upload a maximum of 6 photos per property')
-      return;
+      fileInput.value = '';
+      return this.alertify.warning('You can upload a maximum of 6 photos per property');
+    }
+
+    if (this.photosSelected.some(selectedFile => selectedFile.name === file.name)) {
+      fileInput.value = '';
+      return this.alertify.warning(`An image with that file name is already selected`);
     }
 
     if (!allowedFormats.includes(file.type)) {
-      this.alertify.error('Invalid file format. Only JPEG and PNG files are allowed');
-      return;
+      fileInput.value = '';
+      return this.alertify.error('Invalid file format. Only JPEG and PNG files are allowed');
     }
 
     if (file.size > maxSize) {
-      this.alertify.error('File size exceeds the limit of 2 MB');
-      return;
+      fileInput.value = '';
+      return this.alertify.error('File size exceeds the limit of 2 MB');
     }
 
+    this.photosSelected.push(file);
     const reader = new FileReader();
     reader.onload = (e) => {
       const imageUrl = e.target.result;
-      this.photosSelected.push({ url: imageUrl });
+      this.photosSelectedPreview.push({ url: imageUrl });
     };
     reader.readAsDataURL(file);
+    fileInput.value = '';
   }
 
   removeSelectedPhoto(index: number) {
     this.photosSelected.splice(index, 1);
+    this.photosSelectedPreview.splice(index, 1);
   }
 
   getPhotoURL(file: File){
