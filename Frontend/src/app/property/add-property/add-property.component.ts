@@ -6,6 +6,7 @@ import { IPropertyBase } from 'src/app/model/ipropertybase';
 import { BasicPropertyOption, Property } from 'src/app/model/property';
 import { HousingService } from 'src/app/services/housing.service';
 import { AlertifyService } from 'src/app/services/alertify.service';
+import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-add-property',
@@ -14,7 +15,6 @@ import { AlertifyService } from 'src/app/services/alertify.service';
 })
 export class AddPropertyComponent {
   @ViewChild('formTabs') formTabs: TabsetComponent;
-
   addPropertyForm!: FormGroup;
   clickedNext: boolean;
   property = new Property();
@@ -24,7 +24,10 @@ export class AddPropertyComponent {
   furnishingTypes: Array<BasicPropertyOption>;
 
   photosSelectedPreview: any[] = [];
-  photosSelected: any[] = [];
+  photosSelected: File[] = [];
+  newPropertyId: number;
+
+  isProcessing: boolean = false;
 
   propertyView: IPropertyBase = {
     id: null,
@@ -167,20 +170,32 @@ export class AddPropertyComponent {
   onSubmit(){
     if (this.TabValidityChecker()) {
       this.mapProperty();
-      console.log(this.property);
-      this.housingService.addProperty(this.property).subscribe((response: any) => {
-        console.log(response);
+      const formData = new FormData();
+
+      for (const file of this.photosSelected) {
+        formData.append('photos', file);
+      }
+
+      this.housingService.addProperty(this.property).pipe(switchMap((response: any) => {
+        this.newPropertyId = response;
+
+        return this.housingService.uploadPropertyPhotos(this.newPropertyId, formData);
+      })
+      ).subscribe((response: any) => {
+        if (response == 201) {
+          this.alertify.success('Property uploaded successfully');
+
+          if (this.SellOrRent.value === '2') {
+            this.router.navigate(['/rent-property']);
+          }else {
+            this.router.navigate(['/']);
+          }
+        }
       });
 
-      // if (this.SellOrRent.value === '2') {
-      //   this.router.navigate(['/rent-property']);
-      // }else {
-      //   this.router.navigate(['/']);
-      // }
     } else {
       this.alertify.error('Form is invalid, please review your entries');
     }
-
   }
 
   mapProperty(): void {

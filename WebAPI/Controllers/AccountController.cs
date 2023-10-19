@@ -35,10 +35,7 @@ namespace WebAPI.Controllers
 
             if (user == null)
             {
-                apiError.ErrorCode = Unauthorized().StatusCode;
-                apiError.ErrorMessage = "Invalid username or password";
-                apiError.ErrorDetails = "This error appears when provided userID or password does not exist";
-                return Unauthorized(apiError);
+                return Unauthorized("Invalid username or password");
             }
 
             var loginResponse = new LoginResponseDTO();
@@ -51,21 +48,16 @@ namespace WebAPI.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterRequestDTO registerRequest)
         {
-            ApiError apiError = new ApiError();
 
             if (String.IsNullOrEmpty(registerRequest.UserName.Trim()) || 
                 String.IsNullOrEmpty(registerRequest.Password.Trim())) {
-                apiError.ErrorCode = BadRequest().StatusCode;
-                apiError.ErrorMessage = "Username or Password can not be blank";
-                return BadRequest(apiError);
+                return BadRequest("Username or Password can not be blank");
             }
 
             
             if (await uow.UserRepository.UserAlreadyExists(registerRequest.UserName))
             {
-                apiError.ErrorCode = BadRequest().StatusCode;
-                apiError.ErrorMessage = "User already exists, try a different username";
-                return BadRequest(apiError);
+                return BadRequest("User already exists, try a different username");
             }
             uow.UserRepository.Register(registerRequest.UserName, registerRequest.Password, registerRequest.Mobile, registerRequest.Email);
             await uow.SaveAsync();
@@ -80,8 +72,7 @@ namespace WebAPI.Controllers
             var claims = new Claim[]
             {
                 new Claim(ClaimTypes.Name, user.Username),
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
             };
 
             var signInCredentials = new SigningCredentials(

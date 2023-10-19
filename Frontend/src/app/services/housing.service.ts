@@ -32,6 +32,10 @@ export class HousingService {
   //   )
   // }
 
+  uploadPropertyPhotos(propertyId: number, photos: FormData) {
+    return this.http.post(`${this.baseUrl}/property/add-photos/${propertyId}`, photos);
+  }
+
   getProperty(id: number) {
     return this.http.get(`${this.baseUrl}/property/${id}`);
   }
