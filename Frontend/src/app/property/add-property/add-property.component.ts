@@ -39,7 +39,8 @@ export class AddPropertyComponent {
     rtm: null,
     bhk: null,
     builtArea: null,
-    city: ''
+    city: '',
+    image: null
   };
 
   constructor(
@@ -92,14 +93,37 @@ export class AddPropertyComponent {
     reader.onload = (e) => {
       const imageUrl = e.target.result;
       this.photosSelectedPreview.push({ url: imageUrl });
+      this.updatePreviewPhoto();
     };
     reader.readAsDataURL(file);
     fileInput.value = '';
+
+  }
+
+  setPrimaryPhoto(index: number) {
+    if (index == 0) {
+      return;
+    }
+    var photoPreview = this.photosSelectedPreview.splice(index, 1)[0];
+    var photoFile = this.photosSelected.splice(index, 1)[0];
+
+    this.photosSelectedPreview.unshift(photoPreview);
+    this.photosSelected.unshift(photoFile);
+    this.updatePreviewPhoto();
+  }
+
+  updatePreviewPhoto() {
+    if (this.photosSelectedPreview.length > 0) {
+      this.propertyView.image = this.photosSelectedPreview[0].url;
+    } else {
+      this.propertyView.image = null;
+    }
   }
 
   removeSelectedPhoto(index: number) {
     this.photosSelected.splice(index, 1);
     this.photosSelectedPreview.splice(index, 1);
+    this.updatePreviewPhoto();
   }
 
   getPhotoURL(file: File){

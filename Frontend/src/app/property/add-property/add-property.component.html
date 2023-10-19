@@ -211,11 +211,12 @@
 
                 <div class="photo-belt">
                   <div *ngFor="let photo of photosSelectedPreview; let i = index" class="photo-belt-item">
-                    <img [src]="photo.url" alt="Preview image">
+                    <img (click)="setPrimaryPhoto(i)" [src]="photo.url" alt="Preview image">
                     <i class='bx bx-x remove-button' (click)="removeSelectedPhoto(i)"></i>
                   </div>
                 </div>
               </div>
+              <span style="font-family: italics; ">Note: The first photo on the left-hand side will be the primary photo. Click any photo to set it as the primary.</span>
             </div>
             <div class="form-group col-12 mt-3">
               <button (click)="selectTab(3)" type="button" class="btn btn-primary mt-1" style="width: 100%;"><- Back</button>

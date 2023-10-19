@@ -1,6 +1,6 @@
 <div class="card shadow-lg ">
       <div class="card-img-wrapper">
-        <img *ngIf="property.image" class="card-img-top" src="/assets/images/{{property.image}}.png">
+        <img *ngIf="property.image" class="card-img-top" [src]="property.image">
         <img *ngIf="!property.image" class="card-img-top" src="/assets/images/houseClipart.png">
         <ul *ngIf="!hideIcons" class="list-inline text-center member-icons animate">
           <li class="list-inline-item">
