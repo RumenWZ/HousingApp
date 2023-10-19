@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Reflection.Metadata.Ecma335;
@@ -29,10 +30,11 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetProperties()
         {
             var properties = await uow.PropertyRepository.GetAllPropertiesAsync();
-            var propertiesDTO = mapper.Map<IEnumerable<PropertyResponseDTO>>(properties);
+            var propertiesDTO = mapper.Map<IEnumerable<PropertyDTO>>(properties);
             return Ok(propertiesDTO);
         }
 
@@ -44,7 +46,7 @@ namespace WebAPI.Controllers
             {
                 return BadRequest("Property not found");
             }
-            var propertyDTO = mapper.Map<PropertyResponseDTO>(property);
+            var propertyDTO = mapper.Map<PropertyDTO>(property);
             return Ok(propertyDTO);
         }
 

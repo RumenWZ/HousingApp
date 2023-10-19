@@ -3,21 +3,31 @@ import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest
 import { Observable, catchError, concatMap, of, retryWhen, throwError } from "rxjs";
 import { AlertifyService } from "./alertify.service";
 import { ErrorCode } from '../enums/enums';
+import { Router } from '@angular/router';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class HttpErrorInterceptorService implements HttpInterceptor {
-  constructor(private alertify: AlertifyService) { }
+  constructor(
+    private alertify: AlertifyService,
+    private router: Router,
+    private userService: UserService
+    ) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(req).pipe(
       retryWhen(error => this.retryRequest(error, 10)),
       catchError((error: HttpErrorResponse) => {
         const errorMessage = this.setError(error);
-        console.log(error);
-        this.alertify.error(errorMessage);
+
+        if (error.status === ErrorCode.unauthorized) {
+          this.userService.logout();
+          this.router.navigate(['/user/login']);
+          this.alertify.error('Login session expired');
+        }
         return throwError(errorMessage);
       })
     );

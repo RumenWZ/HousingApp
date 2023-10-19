@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.DTOs;
@@ -23,22 +24,20 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAll()
         {
             var propertyTypes = await uow.PropertyTypeRepository.GetAllAsync();
             var propertyTypesDTO = mapper.Map<IEnumerable<KeyValuePairDTO>>(propertyTypes);
             return Ok(propertyTypesDTO);
         }
-
+        
         [HttpPost("add/{propertyType}")]
+        [Authorize]
         public async Task<IActionResult> Add(string propertyType)
         {
             string token = HttpContext.GetAuthToken();
             var user = await uow.UserRepository.GetUserByTokenAsync(token);
-            if (user == null)
-            {
-                return BadRequest("Invalid token");
-            }
             if (user.IsAdmin == false)
             {
                 return Unauthorized("You do not have permission to perform this action");
@@ -49,13 +48,10 @@ namespace WebAPI.Controllers
         }
 
         [HttpDelete("delete/{id}")]
+        [Authorize]
         public async Task<IActionResult> Delete(int id)
         {
             var user = await uow.UserRepository.GetUserByTokenAsync(HttpContext.GetAuthToken());
-            if (user == null)
-            {
-                return BadRequest("Invalid token");
-            }
             if (user.IsAdmin == false)
             {
                 return Unauthorized("You do not have permission to perform this action");

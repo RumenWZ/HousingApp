@@ -13,4 +13,9 @@ export class UserService {
   addUser(user: User) {
     return this.http.post(this.baseUrl + '/account/register', user);
   }
+
+  logout() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('userName');
+  }
 }
