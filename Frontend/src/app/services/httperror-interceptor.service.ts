@@ -28,6 +28,7 @@ export class HttpErrorInterceptorService implements HttpInterceptor {
           this.router.navigate(['/user/login']);
           this.alertify.error('Login session expired');
         }
+        this.alertify.error(errorMessage);
         return throwError(errorMessage);
       })
     );
@@ -53,7 +54,8 @@ export class HttpErrorInterceptorService implements HttpInterceptor {
     let errorMessage = 'Unknown error occured';
     if (error.error instanceof ErrorEvent) {
       errorMessage = error.error.message;
-    } else {
+    }
+    else {
       if (error.status !== 0) {
         errorMessage = error.error;
       }

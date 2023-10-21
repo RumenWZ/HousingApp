@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.DTOs;
@@ -24,6 +25,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAll()
         {
             var furnishingTypes = await uow.FurnishingTypeRepository.GetAllAsync();
@@ -33,31 +35,25 @@ namespace WebAPI.Controllers
 
 
         [HttpPost("add/{furnishingType}")]
+        [Authorize]
         public async Task<IActionResult> Add(string furnishingType)
         {
             string token = HttpContext.GetAuthToken();
             var user = await uow.UserRepository.GetUserByTokenAsync(token);
-            if (user == null)
-            {
-                return BadRequest("Invalid token");
-            }
             if (user.IsAdmin == false)
             {
                 return Unauthorized("You do not have permission to perform this action");
             }
             uow.FurnishingTypeRepository.Add(furnishingType, user.Id);
             await uow.SaveAsync();
-            return Ok(201);
+            return StatusCode(201);
         }
 
         [HttpDelete("delete/{id}")]
+        [Authorize]
         public async Task<IActionResult> Delete(int id)
         {
             var user = await uow.UserRepository.GetUserByTokenAsync(HttpContext.GetAuthToken());
-            if (user == null)
-            {
-                return BadRequest("Invalid token");
-            }
             if (user.IsAdmin == false)
             {
                 return Unauthorized("You do not have permission to perform this action");
@@ -70,7 +66,7 @@ namespace WebAPI.Controllers
             }
             await uow.FurnishingTypeRepository.DeleteAsync(id);
             
-            return Ok(201);
+            return StatusCode(201);
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace WebAPI.DTOs
+﻿using WebAPI.Models;
+
+namespace WebAPI.DTOs
 {
     public class PropertyDetailDTO : PropertyListDTO
     {

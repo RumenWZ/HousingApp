@@ -29,16 +29,17 @@ namespace WebAPI.Controllers
             this.photoService = photoService;
         }
 
-        [HttpGet]
-        [Authorize]
-        public async Task<IActionResult> GetProperties()
+        [HttpGet("list/{sellRent}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetPropertyList(int sellRent)
         {
-            var properties = await uow.PropertyRepository.GetAllPropertiesAsync();
-            var propertiesDTO = mapper.Map<IEnumerable<PropertyDTO>>(properties);
-            return Ok(propertiesDTO);
+            var properties = await uow.PropertyRepository.GetPropertiesAsync(sellRent);
+            var propertyListDTO = mapper.Map<IEnumerable<PropertyListDTO>>(properties);
+            return Ok(propertyListDTO);
         }
 
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetProperty(int id)
         {
             var property = await uow.PropertyRepository.GetPropertyByIdAsync(id);
@@ -51,14 +52,11 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("add-property")]
+        [Authorize]
         public async Task<IActionResult> AddPropertyDetails([FromBody] PropertyAddDTO propertyDTO)
         {
             string token = HttpContext.GetAuthToken();
             var user = await uow.UserRepository.GetUserByTokenAsync(token);
-            if (user == null)
-            {
-                return Unauthorized("Invalid token");
-            }
 
             var newProperty = mapper.Map<Property>(propertyDTO);
             newProperty.PostedBy = user.Id;
@@ -70,13 +68,11 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("add-photos/{propertyId}")]
+        [Authorize]
         public async Task<IActionResult> UploadPropertyPhotos(int propertyId, [FromForm] List<IFormFile> photos)
         {
             var user = await uow.UserRepository.GetUserByTokenAsync(HttpContext.GetAuthToken());
-            if (user == null)
-            {
-                return Unauthorized("Invalid token");
-            }
+
             var property = await uow.PropertyRepository.GetPropertyByIdAsync(propertyId);
             if (property == null)
             {
@@ -121,7 +117,7 @@ namespace WebAPI.Controllers
                 await uow.SaveAsync();
             }
             
-            return Ok(201);
+            return StatusCode(201);
         }
     }
 }
