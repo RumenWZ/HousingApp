@@ -38,16 +38,16 @@ namespace WebAPI.Controllers
             return Ok(propertyListDTO);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("details/{id}")]
         [AllowAnonymous]
-        public async Task<IActionResult> GetProperty(int id)
+        public async Task<IActionResult> GetPropertyDetails(int id)
         {
-            var property = await uow.PropertyRepository.GetPropertyByIdAsync(id);
+            var property = await uow.PropertyRepository.GetPropertyDetailsAsync(id);
             if (property == null)
             {
                 return BadRequest("Property not found");
             }
-            var propertyDTO = mapper.Map<PropertyDTO>(property);
+            var propertyDTO = mapper.Map<PropertyDetailDTO>(property);
             return Ok(propertyDTO);
         }
 
@@ -117,7 +117,7 @@ namespace WebAPI.Controllers
                 await uow.SaveAsync();
             }
             
-            return StatusCode(201);
+            return Ok(201);
         }
     }
 }

@@ -27,7 +27,7 @@ export class AddPropertyComponent {
   photosSelected: File[] = [];
   newPropertyId: number;
 
-  isProcessing: boolean = false;
+  isUploading: boolean = false;
 
   propertyView: IPropertyBase = {
     id: null,
@@ -60,6 +60,12 @@ export class AddPropertyComponent {
     this.housingService.getFurnishingTypes().subscribe((response: BasicPropertyOption[]) => {
       this.furnishingTypes = response;
     });
+  }
+
+  cityChanged(){
+    var cityId = this.City.value;
+    var city = this.cityList.find(c => c.id == cityId);
+    this.propertyView.city = city.name;
   }
 
   onFileSelected(event: any) {
@@ -157,7 +163,7 @@ export class AddPropertyComponent {
       FType: [null, Validators.required],
       PType: [null, Validators.required],
       Name: [null, Validators.required],
-      City: [null, Validators.required],
+      City: ['', Validators.required],
       }),
 
       PriceInfo: this.fb.group({
@@ -199,7 +205,8 @@ export class AddPropertyComponent {
       for (const file of this.photosSelected) {
         formData.append('photos', file);
       }
-
+      console.log(this.property);
+      this.isUploading = true;
       this.housingService.addProperty(this.property).pipe(switchMap((response: any) => {
         this.newPropertyId = response;
 
@@ -207,6 +214,7 @@ export class AddPropertyComponent {
       })
       ).subscribe((response: any) => {
         if (response == 201) {
+          this.isUploading = false;
           this.alertify.success('Property uploaded successfully');
 
           if (this.SellOrRent.value === '2') {

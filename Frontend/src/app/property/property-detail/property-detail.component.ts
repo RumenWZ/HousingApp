@@ -15,6 +15,7 @@ export class PropertyDetailComponent {
   property = new Property();
   galleryOptions: NgxGalleryOptions[];
   galleryImages: NgxGalleryImage[];
+  primaryPhotoUrl: string;
 
   postedSince: string;
 
@@ -26,12 +27,12 @@ export class PropertyDetailComponent {
 
   ngOnInit() {
     this.propertyId = Number(this.route.snapshot.params['id']);
-    this.housingService.getProperty(this.propertyId).subscribe((response: any) => {
+    this.housingService.getPropertyDetails(this.propertyId).subscribe((response: any) => {
       this.property = response;
       var postedDate = new Date(this.property.postedOn);
-      console.log(this.property);
       this.postedSince = this.dateService.formatDateDifference(postedDate);
 
+      this.primaryPhotoUrl = this.property.photos.find(p => p.isPrimary).photoUrl;
     });
 
 

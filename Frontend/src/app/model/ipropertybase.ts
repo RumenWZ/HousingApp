@@ -10,4 +10,5 @@ export interface IPropertyBase {
   city: string;
   rtm: boolean;
   image?: string;
+  photo? :string;
 }

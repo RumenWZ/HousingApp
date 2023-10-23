@@ -36,12 +36,12 @@ export class HousingService {
     return this.http.post(`${this.baseUrl}/property/add-photos/${propertyId}`, photos);
   }
 
-  getProperty(id: number) {
-    return this.http.get(`${this.baseUrl}/property/${id}`);
+  getPropertyDetails(id: number) {
+    return this.http.get(`${this.baseUrl}/property/details/${id}`);
   }
 
-  getAllProperties(SellOrRent?: number): Observable<Property[]> {
-    return this.http.get<Property[]>(`${this.baseUrl}/property`);
+  getAllProperties(sellRent?: number) {
+    return this.http.get(`${this.baseUrl}/property/list/${sellRent}`);
   }
 
   addProperty(property: Property) {

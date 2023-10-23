@@ -11,7 +11,7 @@ import { HousingService } from 'src/app/services/housing.service';
 })
 export class PropertyListComponent implements OnInit{
   SellRent = 1;
-  properties: Array<IPropertyBase>;
+  properties: any;
   city: '';
   searchCityFilter: '';
   sortByParam = 'City';

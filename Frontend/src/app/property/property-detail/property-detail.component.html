@@ -1,12 +1,13 @@
 <div class="posted-on">
-  <span>Posted {{postedSince}} ago</span>
+  <span *ngIf="postedSince">Posted {{postedSince}} ago</span>
 </div>
 <div class="row shadow">
   <div class="col-sm-4 p-0">
     <div class="card">
       <div class="card-img-wrapper">
         <img *ngIf="property.image" class="card-img-top" src="assets/images/{{property.image}}.png">
-        <img *ngIf="!property.image" class="card-img-top" src="assets/images/houseClipart.png">
+        <img *ngIf="!property.image && !primaryPhotoUrl" class="card-img-top" src="assets/images/houseClipart.png">
+        <img *ngIf="!property.image && primaryPhotoUrl" class="card-img-top" [src]="primaryPhotoUrl">
       </div>
       <div class="card-body">
         <h1 class="card-title">{{property.name}}</h1>
@@ -20,7 +21,7 @@
           <strong>Build Area: </strong>
           {{property.builtArea}} Sqft
         </div>
-        <div>
+        <div *ngIf="property.carpetArea">
           <strong>Carpet Area: </strong>
           {{property.carpetArea}} Sqft
         </div>
@@ -75,7 +76,7 @@
                       <p>{{property.gated}}</p>
                   </div>
 
-                  <div class="heading">
+                  <div *ngIf="property.security" class="heading">
                       <strong>Security Deposit</strong>
                       <p>{{property.security}}</p>
                   </div>

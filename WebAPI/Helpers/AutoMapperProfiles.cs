@@ -11,7 +11,9 @@ namespace WebAPI.Helpers
             CreateMap<City, CityDTO>().ReverseMap();
             CreateMap<City, CityUpdateDTO>().ReverseMap();
             CreateMap<Property, PropertyAddDTO>().ReverseMap();
+            CreateMap<PropertyAddDTO, Property>().ReverseMap();
             CreateMap<Property, PropertyDTO>().ReverseMap();
+            CreateMap<Photo, PhotoDTO>();
 
             CreateMap<Property, PropertyListDTO>()
                 .ForMember(d => d.FurnishingType, op => op.MapFrom(src => src.FurnishingType.Name))
