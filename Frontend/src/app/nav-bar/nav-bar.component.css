@@ -1,3 +1,7 @@
 .active {
   color: #747ff7 !important;
 }
+
+.pointer {
+  cursor: pointer;
+}

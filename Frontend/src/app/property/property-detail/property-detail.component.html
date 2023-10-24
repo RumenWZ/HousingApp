@@ -41,7 +41,7 @@
   <div class="col-sm-8">
     <tabset class="member-tabset">
       <tab heading="Overview">
-        <h1>Overview</h1>
+        <h1 class="card-title">Overview</h1>
           <div class="row">
               <div class="col-sm-6">
                   <div class="heading">
@@ -95,7 +95,7 @@
       </tab>
       <tab heading="Address">
         <div class="col-sm-12">
-          <h1>Address</h1>
+          <h1 class="card-title">Address</h1>
           <div class="heading">
               <strong>{{property.address}}</strong><br/>
               <strong>{{property.address2}}</strong><br/>
@@ -103,11 +103,11 @@
           </div>
       </div>
       </tab>
-      <!-- <tab heading="Photos">
+      <tab heading="Photos">
         <ngx-gallery [options]="galleryOptions" [images]="galleryImages" class="ngx-gallery"></ngx-gallery>
-      </tab> -->
+      </tab>
       <tab heading="Contact">
-        <h1>Address</h1>
+        <h1 class="card-title">Contact</h1>
         i should restrict this only for logged in users later
       </tab>
     </tabset>

@@ -1,0 +1,34 @@
+.filter-sort-container {
+  display: flex;
+  height: 5rem;
+}
+
+.filter-container, .sort-container {
+  width: 50%;
+  border: 1px solid #282826;
+  padding-left: 1rem;
+  padding-top: 2rem;
+  position: relative;
+}
+
+.filter-container {
+  border-right: none;
+}
+
+.overlapping-label {
+  position: absolute;
+  top: -0.91rem;
+  left: 1rem;
+  background-color: white;
+  padding: 0.2rem 0.4rem;
+}
+
+.white-button {
+  background: white;
+  border: 1px solid #282826;
+  transition: 0.3s ease;
+}
+
+.white-button:hover {
+  background-color: #f9f9f7;
+}

@@ -1,19 +1,30 @@
-<label>Filter City: &nbsp;</label>
+<div class="filter-sort-container">
 
-<input [(ngModel)]='city'>
-<button (click)="onSearchClick()" type="button">Search</button>
-<button (click)="onClearClick()" type="button">Clear</button> &nbsp;
+  <div class="filter-container">
+    <div class="overlapping-label">Filtering</div>
+    <label>City: &nbsp;</label>
 
-<label>Sort by &nbsp;</label>
-<select [(ngModel)]="sortByParam">
-  <option value="City">City</option>
-  <option value="Price">Price</option>
-</select>
+    <input [(ngModel)]='city'>
+    <button (click)="onSearchClick()" type="button" class="white-button">Search</button>
+    <button (click)="onClearClick()" type="button" class="white-button">Clear</button> &nbsp;
+  </div>
 
-<button type="button" (click)="toggleSortDirection()">
-  <i *ngIf="sortDirection==='asc'" class="fas fa-sort-alpha-down"></i>
-  <i *ngIf="sortDirection==='desc'" class="fas fa-sort-alpha-up"></i>
-</button>
+  <div class="sort-container">
+    <div class="overlapping-label">Sorting</div>
+    <label>Sort by &nbsp;</label>
+    <select [(ngModel)]="sortByParam">
+      <option value="City">City</option>
+      <option value="Price">Price</option>
+    </select>
+
+    <button type="button" class="white-button" (click)="toggleSortDirection()">
+      <i *ngIf="sortDirection==='asc'" class="fas fa-sort-alpha-down"></i>
+      <i *ngIf="sortDirection==='desc'" class="fas fa-sort-alpha-up"></i>
+    </button>
+  </div>
+
+</div>
+<button (click)="test()">test</button>
 
 <div class="row">
   <div *ngFor="let property of properties|filter:searchCityFilter:'City'|sort: [sortByParam, sortDirection]" class="col-sm-4 p-3">

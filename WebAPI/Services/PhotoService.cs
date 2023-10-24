@@ -26,8 +26,7 @@ namespace WebAPI.Services
                 using var stream = photo.OpenReadStream();
                 var uploadParams = new ImageUploadParams
                 {
-                    File = new FileDescription(photo.FileName, stream),
-                    Transformation = new Transformation().Height(500).Width(500)
+                    File = new FileDescription(photo.FileName, stream)
                 };
                 uploadResult = await cloudinary.UploadAsync(uploadParams);
             }

@@ -31,23 +31,17 @@ export class PropertyDetailComponent {
       this.property = response;
       var postedDate = new Date(this.property.postedOn);
       this.postedSince = this.dateService.formatDateDifference(postedDate);
-
+      console.log(this.property);
       this.primaryPhotoUrl = this.property.photos.find(p => p.isPrimary).photoUrl;
+
+      this.galleryImages = this.property.photos.map(photo => {
+        return {
+          small: photo.photoUrl,
+          medium: photo.photoUrl,
+          big: photo.photoUrl
+        };
+      });
     });
-
-
-    // this.route.params.subscribe(
-    //   (params) => {
-    //     this.propertyId = +params['id'];
-    //     this.housingService.getProperty(this.propertyId).subscribe(
-    //       (data: any) => {
-    //         this.property = data;
-    //       }, error => {
-    //         this.router.navigate(['/'])
-    //       }
-    //     );
-    //   }
-    // );
 
     this.galleryOptions = [
       {
@@ -55,34 +49,6 @@ export class PropertyDetailComponent {
         height: '550px',
         thumbnailsColumns: 4,
         imageAnimation: NgxGalleryAnimation.Slide
-      },
-    ];
-
-    this.galleryImages = [
-      {
-        small: 'assets/images/interior-1.png',
-        medium: 'assets/images/interior-1.png',
-        big: 'assets/images/interior-1.png',
-      },
-      {
-        small: 'assets/images/interior-2.png',
-        medium: 'assets/images/interior-2.png',
-        big: 'assets/images/interior-2.png',
-      },
-      {
-        small: 'assets/images/interior-3.png',
-        medium: 'assets/images/interior-3.png',
-        big: 'assets/images/interior-3.png',
-      },
-      {
-        small: 'assets/images/interior-4.png',
-        medium: 'assets/images/interior-4.png',
-        big: 'assets/images/interior-4.png',
-      },
-      {
-        small: 'assets/images/interior-5.png',
-        medium: 'assets/images/interior-5.png',
-        big: 'assets/images/interior-5.png',
       },
     ];
   }

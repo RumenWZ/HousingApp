@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { IPropertyBase } from 'src/app/model/ipropertybase';
+import { Property } from 'src/app/model/property';
 import { HousingService } from 'src/app/services/housing.service';
 
 
@@ -11,7 +11,7 @@ import { HousingService } from 'src/app/services/housing.service';
 })
 export class PropertyListComponent implements OnInit{
   SellRent = 1;
-  properties: any;
+  properties: Property[];
   city: '';
   searchCityFilter: '';
   sortByParam = 'City';
@@ -37,17 +37,21 @@ export class PropertyListComponent implements OnInit{
     }
   }
 
+  test() {
+    console.log(this.city);
+    console.log(this.sortByParam);
+  }
+
   ngOnInit(): void {
     this.searchCityFilter = '';
     if (this.route.snapshot.url.toString()) {
       this.SellRent = 2;
     }
     this.housingService.getAllProperties(this.SellRent).subscribe(
-      data=>{
-        this.properties=data;
+      (response: any)=>{
+        this.properties=response;
 
-
-        console.log(data);
+        console.log(response);
       }, error => {
         console.log(error);
       }

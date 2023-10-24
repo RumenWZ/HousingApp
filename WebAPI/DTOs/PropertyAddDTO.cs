@@ -10,7 +10,7 @@ namespace WebAPI.DTOs
         public int SellOrRent { get; set; }
         [Required]
         [StringLength(50, MinimumLength = 4)]
-        [RegularExpression("^[a-zA-Z]+$", ErrorMessage = "Only letters are allowed")]
+        [RegularExpression("^[a-zA-Z ]+$", ErrorMessage = "Only letters are allowed")]
         public string Name { get; set; }
         [Required]
         public int PropertyTypeId { get; set; }
