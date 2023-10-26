@@ -1,1 +1,38 @@
-<p>my-profile works!</p>
+<div class="profile-wrapper shadow-lg">
+
+  <div class="profile">
+    <div class="avatar-container">
+      <img src="/assets/images/avatar-default.png" class="profile-picture">
+    </div>
+    <span class="username">{{user.username}}</span>
+    <div class="user-details">
+      <form [formGroup]="profileForm">
+        <div class="user-details-wrapper">
+          <strong>Email</strong>
+          <div class="details-wrapper">
+            <input class="input-field" formControlName="email" [readOnly]="!canEditEmail" #emailInput (blur)="onEmailInputBlur()">
+            <i class="fa-regular fa-pen-to-square edit-icon" (click)="toggleEditEmail()"></i>
+          </div>
+          <span *ngIf="Email.hasError('email')" class="error-block error-msg">
+            Invalid email address.
+          </span>
+        </div>
+        <div class="user-details-wrapper">
+          <strong>Mobile number</strong>
+          <div class="details-wrapper">
+            <input class="input-field" formControlName="mobile" [readOnly]="!canEditMobile" #mobileInput (blur)="onMobileInputBlur()">
+            <i class="fa-regular fa-pen-to-square edit-icon" (click)="toggleEditMobile()"></i>
+          </div>
+          <span *ngIf="Mobile.hasError('invalidMobile')" class="error-block error-msg">
+            Please enter a valid 10-digit mobile number.
+          </span>
+        </div>
+    </form>
+    </div>
+  </div>
+
+  <div class="properties">
+
+  </div>
+
+</div>

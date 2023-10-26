@@ -65,7 +65,7 @@ export class UserRegisterComponent {
 
   userData(): User {
     return this.user = {
-      userName: this.userName.value,
+      username: this.userName.value,
       email: this.email.value,
       password: this.password.value,
       mobile: this.mobile.value

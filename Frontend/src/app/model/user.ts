@@ -1,12 +1,12 @@
 export interface User {
-  userName: string;
+  username: string;
   email: string;
   password: string;
   mobile: string;
 }
 
 export interface UserForLogin {
-  userName: string;
+  username: string;
   password: string;
   token: string;
 }

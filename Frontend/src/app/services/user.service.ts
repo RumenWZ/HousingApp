@@ -18,7 +18,7 @@ export class UserService {
   }
 
   getLoggedInUserDetails() {
-    
+    return this.http.get(`${this.baseUrl}/account/profile-details`);
   }
 
   logout() {

@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { User } from 'src/app/model/user';
 import { UserService } from 'src/app/services/user.service';
 
@@ -9,12 +10,70 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class MyProfileComponent {
   user: User;
+  canEditEmail: boolean = false;
+  canEditMobile: boolean = false;
+  mobileControl: FormControl;
+  profileForm: FormGroup;
+
+  @ViewChild('emailInput') emailInput: ElementRef;
+  @ViewChild('mobileInput') mobileInput: ElementRef;
 
   constructor(
-    private userService: UserService
-  ) {}
+    private userService: UserService,
+    private fb: FormBuilder
+  ) {
+    this.profileForm = this.fb.group({
+      mobile: ['', [Validators.required, this.mobileValidator()]],
+      email: ['', [Validators.required, Validators.email]]
+    });
+  }
+
+  toggleEditEmail() {
+    this.canEditEmail = true;
+    this.emailInput.nativeElement.focus();
+  }
+
+  onEmailInputBlur() {
+    this.canEditEmail = false;
+    this.profileForm.controls.email.setValue(this.user.email);
+  }
+
+  toggleEditMobile() {
+    this.canEditMobile = true;
+    this.mobileInput.nativeElement.focus();
+  }
+
+  onMobileInputBlur() {
+    this.canEditMobile = false;
+    this.profileForm.controls.mobile.setValue(this.user.mobile);
+  }
 
   ngOnInit() {
-    this.userService
+    this.userService.getLoggedInUserDetails().subscribe((response: any) => {
+      this.user = response;
+      console.log(this.user);
+      this.profileForm.controls.mobile.setValue(this.user.mobile);
+      this.profileForm.controls.email.setValue(this.user.email);
+    })
+  }
+
+  mobileValidator() {
+    return (control: any) => {
+      const mobileNumber = control.value;
+
+      if (!mobileNumber) {
+        return null;
+      }
+      const valid = /^\d{10}$/.test(mobileNumber);
+
+      return valid ? null : { invalidMobile: true };
+    };
+  }
+
+  get Email() {
+    return this.profileForm.controls.email as FormControl;
+  }
+  get Mobile() {
+    return this.profileForm.controls.mobile as FormControl;
   }
 }
