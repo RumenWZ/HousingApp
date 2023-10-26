@@ -17,6 +17,10 @@ export class UserService {
     return this.http.post(this.baseUrl + '/account/register', user);
   }
 
+  getLoggedInUserDetails() {
+    
+  }
+
   logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('userName');

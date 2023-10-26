@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -6,6 +8,7 @@ using System.Text;
 using System.Text.Unicode;
 using WebAPI.DTOs;
 using WebAPI.Errors;
+using WebAPI.Extensions;
 using WebAPI.Interfaces;
 using WebAPI.Models;
 
@@ -17,16 +20,21 @@ namespace WebAPI.Controllers
     {
         private readonly IUnitOfWork uow;
         private readonly IConfiguration config;
+        private readonly IMapper mapper;
+
         public AccountController(
             IUnitOfWork uow,
-            IConfiguration config)
+            IConfiguration config,
+            IMapper mapper)
 
         {
             this.uow = uow;
             this.config = config;
+            this.mapper = mapper;
         }
 
         [HttpPost("login")]
+        [AllowAnonymous]
         public async Task<IActionResult> Login(LoginRequestDTO loginRequest)
         {
             var user = await uow.UserRepository.Authenticate(loginRequest.UserName, loginRequest.Password);
@@ -46,6 +54,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("register")]
+        [AllowAnonymous]
         public async Task<IActionResult> Register(RegisterRequestDTO registerRequest)
         {
 
@@ -62,6 +71,21 @@ namespace WebAPI.Controllers
             uow.UserRepository.Register(registerRequest.UserName, registerRequest.Password, registerRequest.Mobile, registerRequest.Email);
             await uow.SaveAsync();
             return StatusCode(201);
+        }
+
+        [HttpGet("profile-details")]
+        [Authorize]
+        public async Task<IActionResult> GetUserProfileDetails()
+        {
+            var user = await uow.UserRepository.GetUserByTokenAsync(HttpContext.GetAuthToken());
+            var userDTO = mapper.Map<UserDetailsDTO>(user);
+
+            var userProperties = await uow.PropertyRepository.GetPropertieOfUserAsync(user.Id);
+            var userPropertiesDTO = mapper.Map<IEnumerable<PropertyListDTO>>(userProperties);
+
+            userDTO.Properties = userPropertiesDTO.ToList();
+
+            return Ok(userDTO);
         }
 
         private string CreateJWT(User user)

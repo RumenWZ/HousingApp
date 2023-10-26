@@ -14,7 +14,6 @@ export class SortPipe implements PipeTransform {
       sortAscOrDescMultiplier = -1;
     }
 
-    console.log(value);
     if (value != null) {
     value.sort((a: any, b: any) => {
       if (a[sortField] < b[sortField]) {

@@ -27,6 +27,7 @@ import { FilterPipe,  } from './Pipes/filter.pipe';
 import { SortPipe } from './Pipes/sort.pipe';
 import { HttpErrorInterceptorService } from './services/httperror-interceptor.service';
 import { TokenInterceptorService } from './services/token-interceptor.service';
+import { MyProfileComponent } from './user/my-profile/my-profile.component';
 
 
 const appRoutes: Routes = [
@@ -36,6 +37,7 @@ const appRoutes: Routes = [
   {path: 'property-detail/:id', component: PropertyDetailComponent},
   {path: 'user/login', component: UserLoginComponent},
   {path: 'user/register', component: UserRegisterComponent},
+  {path: 'my-profile', component: MyProfileComponent},
   {path: '**', component: PropertyListComponent}
 ];
 
@@ -50,7 +52,8 @@ const appRoutes: Routes = [
     UserLoginComponent,
     UserRegisterComponent,
     FilterPipe,
-    SortPipe
+    SortPipe,
+    MyProfileComponent
 
   ],
   imports: [

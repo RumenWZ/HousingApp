@@ -30,6 +30,8 @@ namespace WebAPI.Helpers
 
             CreateMap<FurnishingType, KeyValuePairDTO>();
             CreateMap<PropertyType, KeyValuePairDTO>();
+            CreateMap<User, UserDetailsDTO>()
+                .ForMember(d => d.Properties, op => op.Ignore());
         }
     }
 }

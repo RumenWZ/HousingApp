@@ -8,6 +8,7 @@ namespace WebAPI.Interfaces
         void AddProperty(Property property);
         Task<Property> GetPropertyDetailsAsync(int id);
         Task<Property> GetPropertyByIdAsync(int id);
+        Task<IEnumerable<Property>> GetPropertieOfUserAsync(int userId);
 
     }
 }
