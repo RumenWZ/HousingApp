@@ -37,11 +37,6 @@ export class PropertyListComponent implements OnInit{
     }
   }
 
-  test() {
-    console.log(this.city);
-    console.log(this.sortByParam);
-  }
-
   ngOnInit(): void {
     this.searchCityFilter = '';
     if (this.route.snapshot.url.toString()) {
@@ -50,10 +45,6 @@ export class PropertyListComponent implements OnInit{
     this.housingService.getAllProperties(this.SellRent).subscribe(
       (response: any)=>{
         this.properties=response;
-
-        console.log(response);
-      }, error => {
-        console.log(error);
       }
     );
   }

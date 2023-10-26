@@ -11,12 +11,13 @@ export class FilterPipe implements PipeTransform {
       return value;
     }
 
+    filter = filter.toLowerCase();
+
     for (const item of value) {
-      if (item[propertyName] === filter) {
+      if (item[propertyName].toLowerCase().includes(filter)) {
         result.push(item);
       }
     }
-
     return result;
   }
 

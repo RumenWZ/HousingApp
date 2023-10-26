@@ -4,7 +4,7 @@
     <div class="overlapping-label">Filtering</div>
     <label>City: &nbsp;</label>
 
-    <input [(ngModel)]='city'>
+    <input [(ngModel)]='city' (keyup.enter)="onSearchClick()">
     <button (click)="onSearchClick()" type="button" class="white-button">Search</button>
     <button (click)="onClearClick()" type="button" class="white-button">Clear</button> &nbsp;
   </div>
@@ -13,8 +13,8 @@
     <div class="overlapping-label">Sorting</div>
     <label>Sort by &nbsp;</label>
     <select [(ngModel)]="sortByParam">
-      <option value="City">City</option>
-      <option value="Price">Price</option>
+      <option value="city">City</option>
+      <option value="price">Price</option>
     </select>
 
     <button type="button" class="white-button" (click)="toggleSortDirection()">
@@ -24,10 +24,9 @@
   </div>
 
 </div>
-<button (click)="test()">test</button>
 
 <div class="row">
-  <div *ngFor="let property of properties|filter:searchCityFilter:'City'|sort: [sortByParam, sortDirection]" class="col-sm-4 p-3">
+  <div *ngFor="let property of properties|filter:searchCityFilter:'city'|sort: [sortByParam, sortDirection]" class="col-sm-4 p-3">
     <app-property-card [property]="property"></app-property-card>
   </div>
 </div>

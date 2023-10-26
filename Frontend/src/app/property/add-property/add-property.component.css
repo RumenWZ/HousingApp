@@ -23,7 +23,7 @@
 
 .photo-belt {
   position:absolute;
-  bottom: 0;
+  bottom: 0.5rem;
   width: 100%;
   display: grid;
   gap: 0.5rem;
