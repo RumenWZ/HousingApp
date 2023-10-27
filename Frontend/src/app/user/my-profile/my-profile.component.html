@@ -1,10 +1,9 @@
 <div class="profile-wrapper shadow-lg">
-
   <div class="profile">
     <div class="avatar-container">
       <img src="/assets/images/avatar-default.png" class="profile-picture">
     </div>
-    <span class="username">{{user.username}}</span>
+    <span class="username">{{user?.username}}</span>
     <div class="user-details">
       <form [formGroup]="profileForm">
         <div class="user-details-wrapper">
@@ -36,7 +35,7 @@
       <h2>My Property Listings</h2>
     </div>
     <div class="user-properties">
-      <div *ngFor="let prop of user.properties | paginate: { itemsPerPage: pageSize, currentPage: currentPage }" class="property">
+      <div *ngFor="let prop of user?.properties | paginate: { itemsPerPage: pageSize, currentPage: currentPage }" class="property">
         <div class="property-photo-wrapper">
           <img *ngIf="!prop.photo" src="/assets/images/houseClipart.png">
           <img class="property-photo" *ngIf="prop.photo" [src]="prop.photo">
@@ -45,7 +44,7 @@
               <button class="btn btn-primary" routerLink="/property-detail/{{prop.id}}"><i class="fa-regular fa-pen-to-square"></i></button>
             </li>
             <li class="list-inline-item">
-              <button class="btn btn-danger"><i class="fa-solid fa-trash-can"></i></button>
+              <button class="btn btn-danger" (click)="confirmDelete(prop)"><i class="fa-solid fa-trash-can"></i></button>
             </li>
           </ul>
         </div>
@@ -60,10 +59,14 @@
 
       </div>
     </div>
-    <div div *ngIf="user.properties?.length > 0" class="pagination">
+    <div div *ngIf="user?.properties.length > 0" class="pagination">
       <pagination-controls (pageChange)="currentPage = $event"></pagination-controls>
     </div>
   </div>
-
-
 </div>
+
+<div [@notificationState]="processingRequest ? 'visible' : 'hidden'"  class="processing">
+  <div class="spinner"></div>
+  <span>Processing your request...</span>
+</div>
+

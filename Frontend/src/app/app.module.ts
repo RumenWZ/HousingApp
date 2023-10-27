@@ -30,7 +30,7 @@ import { TokenInterceptorService } from './services/token-interceptor.service';
 import { MyProfileComponent } from './user/my-profile/my-profile.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ConfirmActionComponent } from './confirm-action/confirm-action.component';
-
+import { MaterialModule } from './material/material.module';
 
 const appRoutes: Routes = [
   {path: 'add-property', component: AddPropertyComponent},
@@ -72,7 +72,8 @@ const appRoutes: Routes = [
     ButtonsModule.forRoot(),
     BsDatepickerModule.forRoot(),
     NgxGalleryModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    MaterialModule
   ],
   providers: [
     {

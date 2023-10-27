@@ -48,4 +48,8 @@ export class HousingService {
     return this.http.post(`${this.baseUrl}/property/add-property`, property);
   }
 
+  deleteProperty(id: number) {
+    return this.http.delete(`${this.baseUrl}/property/delete/${id}`);
+  }
+
 }
