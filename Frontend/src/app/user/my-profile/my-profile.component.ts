@@ -9,7 +9,7 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./my-profile.component.css']
 })
 export class MyProfileComponent {
-  user: User;
+  user: any;
   canEditEmail: boolean = false;
   canEditMobile: boolean = false;
   mobileControl: FormControl;
@@ -17,6 +17,9 @@ export class MyProfileComponent {
 
   @ViewChild('emailInput') emailInput: ElementRef;
   @ViewChild('mobileInput') mobileInput: ElementRef;
+
+  pageSize: number = 6;
+  currentPage: number = 1;
 
   constructor(
     private userService: UserService,
@@ -75,5 +78,10 @@ export class MyProfileComponent {
   }
   get Mobile() {
     return this.profileForm.controls.mobile as FormControl;
+  }
+
+  get pagedData() {
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    return this.user.properties.slice(startIndex, startIndex + this.pageSize);
   }
 }

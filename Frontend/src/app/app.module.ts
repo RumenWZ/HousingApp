@@ -28,6 +28,8 @@ import { SortPipe } from './Pipes/sort.pipe';
 import { HttpErrorInterceptorService } from './services/httperror-interceptor.service';
 import { TokenInterceptorService } from './services/token-interceptor.service';
 import { MyProfileComponent } from './user/my-profile/my-profile.component';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { ConfirmActionComponent } from './confirm-action/confirm-action.component';
 
 
 const appRoutes: Routes = [
@@ -53,7 +55,8 @@ const appRoutes: Routes = [
     UserRegisterComponent,
     FilterPipe,
     SortPipe,
-    MyProfileComponent
+    MyProfileComponent,
+    ConfirmActionComponent
 
   ],
   imports: [
@@ -68,7 +71,8 @@ const appRoutes: Routes = [
     TabsModule.forRoot(),
     ButtonsModule.forRoot(),
     BsDatepickerModule.forRoot(),
-    NgxGalleryModule
+    NgxGalleryModule,
+    NgxPaginationModule
   ],
   providers: [
     {

@@ -119,5 +119,30 @@ namespace WebAPI.Controllers
             
             return Ok(201);
         }
+
+        [HttpDelete("delete/{id}")]
+        [Authorize]
+        public async Task<IActionResult> DeleteProperty(int id)
+        {
+            var property = await uow.PropertyRepository.GetPropertyDetailsAsync(id);
+            if (property == null)
+            {
+                return NotFound("Invalid property id");
+            }
+            var user = await uow.UserRepository.GetUserByTokenAsync(HttpContext.GetAuthToken());
+            if (property.PostedBy != user.Id)
+            {
+                return BadRequest("This property listing does not belong to you");
+            }
+
+            foreach (var photo in property.Photos)
+            {
+                await photoService.DeletePhotoAsync(photo.PhotoUrl);
+            }
+            await uow.PropertyRepository.Delete(property.Id); 
+            await uow.SaveAsync();
+
+            return Ok(201);
+        }
     }
 }

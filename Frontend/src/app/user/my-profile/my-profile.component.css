@@ -1,8 +1,8 @@
 .profile-wrapper {
   margin: 0 auto;
   display: flex;
-  max-width: 50rem;
-  height: 40rem;
+  max-width: 65.5rem;
+  height: 45rem;
   margin-top: 4rem;
 }
 
@@ -69,4 +69,80 @@
 
 .error-msg {
   font-size: 1rem !important;
+}
+
+.properties {
+  width: 100%;
+  position: relative;
+}
+
+.properties-header {
+  background-color: #007bff;
+  height: 2.7rem;
+}
+
+.properties-header h2 {
+  color: white;
+  padding-left: 0.5rem;
+}
+
+.user-properties {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem;
+  padding: 0.5rem;
+}
+
+.property {
+  border: 1px solid gray;
+  overflow: hidden;
+  border-radius: 6px;
+  box-shadow: 3px 3px 8px #b7b7b7;
+  max-width: 14rem;
+}
+
+.property:hover img {
+  transform: scale(1.2,1.2);
+  transition-duration: 300ms;
+  transition-timing-function: ease-out;
+  opacity: 0.5;
+}
+
+.property img {
+  max-height: 11rem;
+  width: 14rem;
+  object-fit: cover;
+  transition: all 0.3s ease-in-out;
+}
+
+.property-photo-wrapper {
+  overflow: hidden;
+  position: relative;
+}
+
+.member-icons {
+  position: absolute;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  top: 100%;
+  opacity: 0;
+}
+
+.property-body {
+  padding-left: 0.2rem;
+}
+
+.property-photo-wrapper:hover .member-icons {
+  top: 70%;
+  opacity: 1;
+}
+
+.highlight-font {
+  font-family: italic;
+  color: red;
+}
+
+.animate {
+  transition: all 0.3s ease-in-out;
 }

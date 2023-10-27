@@ -21,6 +21,15 @@ namespace WebAPI.Data.Repo
             await dc.Properties.AddAsync(property);
         }
 
+        public async Task Delete(int id)
+        {
+            var property = await dc.Properties.FirstOrDefaultAsync(p => p.Id == id);
+            if (property != null)
+            {
+                dc.Properties.Remove(property);
+            }
+        }
+
         public async Task<IEnumerable<Property>> GetPropertieOfUserAsync(int userId)
         {
             var properties = await dc.Properties
