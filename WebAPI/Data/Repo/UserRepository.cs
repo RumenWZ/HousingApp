@@ -110,6 +110,12 @@ namespace WebAPI.Data.Repo
         {
             return await dc.Users.AnyAsync(x => x.Username == username);
         }
+
+        public async Task<User> GetUserByIdAsync(int id)
+        {
+            var user = await dc.Users.FirstOrDefaultAsync(x => x.Id == id);
+            return user;
+        }
     }
 
     

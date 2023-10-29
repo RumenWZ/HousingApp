@@ -11,5 +11,6 @@ namespace WebAPI.Interfaces
         Task<bool> UserAlreadyExists(string username);
 
         Task<User> GetUserByTokenAsync(string token);
+        Task<User> GetUserByIdAsync(int id);
     }
 }

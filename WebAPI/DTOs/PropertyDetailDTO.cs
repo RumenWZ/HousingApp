@@ -15,5 +15,6 @@
         public string Description { get; set; }
         public ICollection<PhotoDTO> Photos { get; set; }
         public DateTime PostedOn { get; set; }
+        public int PostedBy { get; set; }
     }
 }

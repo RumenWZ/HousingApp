@@ -1,4 +1,4 @@
-* {
+/* * {
   font-family: "poppins", sans-serif;
   color: var(--light-grey-text);
 }
@@ -60,4 +60,81 @@ mat-dialog-content {
 .cancel-button:hover {
   background-color: #bcbcbc;
 }
+ */
 
+mat-dialog-content {
+  padding: 0 !important;
+}
+
+.dialog-header {
+  background-color: #0069d9;
+  color: white;
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+  position: relative;
+}
+
+.dialog-header span {
+  font-size: 1.3rem;
+}
+
+.button-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0.3rem;
+}
+
+.close-btn{
+  font-size: 40px;
+  cursor: pointer;
+  top: 0.3rem;
+  right: 0.3rem;
+  position: absolute;
+  color: white;
+}
+
+.delete-button, .cancel-button {
+  height: 2rem;
+  border: none;
+  border-radius: 5px;
+  outline: none;
+  color: white;
+  transition: 1 ease;
+
+}
+
+.delete-button {
+  background-color: #c90606;
+}
+
+.cancel-button {
+  background-color: #9b9b9b ;
+  margin-right: 0.5rem;
+}
+
+.delete-button:hover {
+  background-color: #ff3333;
+}
+
+.cancel-button:hover {
+  background-color: #bcbcbc;
+}
+
+.dialog-body {
+  padding: 1rem;
+}
+
+.image-preview {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f2f2f2;
+  padding: 0.5rem;
+}
+
+.image-preview img {
+  max-width: 9rem;
+  border-radius: 5px;
+}

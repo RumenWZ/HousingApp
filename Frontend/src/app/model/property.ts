@@ -30,6 +30,7 @@ export class Property implements IPropertyBase{
   postedOn: Date
   photo: string;
   photos: any[];
+  postedBy: number;
 }
 
 export class BasicPropertyOption {

@@ -19,4 +19,15 @@
   margin-bottom: 0.5rem;
 }
 
+.fa-phone {
+  color: green;
+}
 
+.contact-details * {
+  font-size: 2rem;
+}
+
+.contact-details span {
+  font-weight: 600;
+  padding: 1rem;
+}

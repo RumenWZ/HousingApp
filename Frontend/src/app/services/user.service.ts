@@ -21,6 +21,10 @@ export class UserService {
     return this.http.get(`${this.baseUrl}/account/profile-details`);
   }
 
+  getUserContactDetails(id: number) {
+    return this.http.get(`${this.baseUrl}/account/user-contact-details/${id}`);
+  }
+
   logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('userName');

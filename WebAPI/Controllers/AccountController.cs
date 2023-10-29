@@ -88,6 +88,20 @@ namespace WebAPI.Controllers
             return Ok(userDTO);
         }
 
+        [HttpGet("user-contact-details/{id}")]
+        public async Task<IActionResult> GetUserContactDetails(int id)
+        {
+            var user = await uow.UserRepository.GetUserByIdAsync(id);
+            if (user == null) { return BadRequest("Invalid user id"); }
+
+            var contactDetails = new UserContactDetailsDTO
+            {
+                Email = user.Email,
+                Mobile = user.Mobile
+            };
+            return Ok(contactDetails);
+        }
+
         private string CreateJWT(User user)
         {
             var secretKey = Environment.GetEnvironmentVariable("JWT_SECRET_KEY");

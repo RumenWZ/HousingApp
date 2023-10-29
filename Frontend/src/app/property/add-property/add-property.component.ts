@@ -198,6 +198,10 @@ export class AddPropertyComponent {
   }
 
   onSubmit(){
+    if (this.photosSelected.length == 0) {
+      return this.alertify.error('You must upload at least 1 photo for your property listing');
+    }
+
     if (this.TabValidityChecker()) {
       this.mapProperty();
       const formData = new FormData();
@@ -205,7 +209,6 @@ export class AddPropertyComponent {
       for (const file of this.photosSelected) {
         formData.append('photos', file);
       }
-      console.log(this.property);
       this.isUploading = true;
       this.housingService.addProperty(this.property).pipe(switchMap((response: any) => {
         this.newPropertyId = response;

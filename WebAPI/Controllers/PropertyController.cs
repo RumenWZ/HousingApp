@@ -51,6 +51,7 @@ namespace WebAPI.Controllers
             return Ok(propertyDTO);
         }
 
+        
         [HttpPost("add-property")]
         [Authorize]
         public async Task<IActionResult> AddPropertyDetails([FromBody] PropertyAddDTO propertyDTO)

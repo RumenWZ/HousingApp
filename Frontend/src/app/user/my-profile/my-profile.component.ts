@@ -78,7 +78,8 @@ export class MyProfileComponent {
       width: '500px',
       data: {
         displayMessage: `Are you sure you want to remove this property listing?`,
-        confirmButtonName: 'Yes'
+        confirmButtonName: 'Yes',
+        imageUrl: property.photo
       },
 
     })
@@ -99,8 +100,8 @@ export class MyProfileComponent {
       if (response == 201) {
         this.user.properties = this.user.properties.filter((property: Property) => property.id !== id);
         this.alertify.success('Successfully deleted property listing');
-        this.processingRequest = false;
       }
+      this.processingRequest = false;
     })
   }
 
