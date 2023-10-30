@@ -116,6 +116,12 @@ namespace WebAPI.Data.Repo
             var user = await dc.Users.FirstOrDefaultAsync(x => x.Id == id);
             return user;
         }
+
+        public async Task<bool> CheckIfEmailIsTakenAsync(string email)
+        {
+            var user = await dc.Users.FirstOrDefaultAsync(x => x.Email == email); 
+            return user != null;
+        }
     }
 
     

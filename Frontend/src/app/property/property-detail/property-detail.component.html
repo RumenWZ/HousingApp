@@ -109,11 +109,11 @@
       <tab heading="Contact">
         <h1 class="card-title">Contact</h1>
         <div class="contact-details">
-          <div class="contact-row">
+          <div *ngIf="posterMobile" class="contact-row">
             <i class="fa-solid fa-phone"></i>
             <span class="mobile">{{posterMobile}}</span>
           </div>
-          <div class="contact-row">
+          <div *ngIf="posterEmail" class="contact-row">
             <i class="fa-regular fa-envelope"></i>
             <span class="email">{{posterEmail}}</span>
           </div>

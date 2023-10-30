@@ -5,7 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using System.Text.Unicode;
+using System.Text.RegularExpressions;
 using WebAPI.DTOs;
 using WebAPI.Errors;
 using WebAPI.Extensions;
@@ -100,6 +100,40 @@ namespace WebAPI.Controllers
                 Mobile = user.Mobile
             };
             return Ok(contactDetails);
+        }
+
+        [HttpPatch("update-email/{newEmail}")]
+        [Authorize]
+        public async Task<IActionResult> UpdateEmail(string newEmail)
+        {
+            var validEmailPattern = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
+            if (!Regex.IsMatch(newEmail, validEmailPattern))
+            {
+                return BadRequest("Invalid email address");
+            }
+            if (newEmail.Length > 30)
+            {
+                return BadRequest("Email is too long");
+            }
+            if (await uow.UserRepository.CheckIfEmailIsTakenAsync(newEmail))
+            {
+                return BadRequest("This email is already taken");
+            }
+            
+            var user = await uow.UserRepository.GetUserByTokenAsync(HttpContext.GetAuthToken());
+            user.Email = newEmail;
+            await uow.SaveAsync();
+            return Ok(201);
+        }
+
+        [HttpPatch("update-mobile/{newMobile}")]
+        [Authorize]
+        public async Task<IActionResult> UpdateMobile(string newMobile)
+        {
+            var user = await uow.UserRepository.GetUserByTokenAsync(HttpContext.GetAuthToken());
+            user.Mobile = newMobile;
+            await uow.SaveAsync();
+            return Ok();
         }
 
         private string CreateJWT(User user)

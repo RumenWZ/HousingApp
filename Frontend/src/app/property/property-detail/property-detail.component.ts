@@ -51,8 +51,6 @@ export class PropertyDetailComponent {
       this.posterMobile = response.mobile;
     })
 
-
-
     this.galleryOptions = [
       {
         width: '100%',
