@@ -111,7 +111,7 @@ namespace WebAPI.Controllers
             {
                 return BadRequest("Invalid email address");
             }
-            if (newEmail.Length > 30)
+            if (newEmail.Length > 50)
             {
                 return BadRequest("Email is too long");
             }
@@ -130,6 +130,11 @@ namespace WebAPI.Controllers
         [Authorize]
         public async Task<IActionResult> UpdateMobile(string newMobile)
         {
+            var validMobilePattern = @"^\+?\d{9,15}$";
+            if (!Regex.IsMatch(newMobile, validMobilePattern))
+            {
+                return BadRequest("Invalid mobile number");
+            }
             var user = await uow.UserRepository.GetUserByTokenAsync(HttpContext.GetAuthToken());
             user.Mobile = newMobile;
             await uow.SaveAsync();
