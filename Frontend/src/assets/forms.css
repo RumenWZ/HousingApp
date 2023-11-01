@@ -4,6 +4,8 @@
 
 .error-block {
   color: red;
+  display: flex;
+  flex-direction: column;
 }
 
 .btn-group > label[ng-reflect-btn-radio] {

@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { User } from 'src/app/model/user';
 import { UserService } from 'src/app/services/user.service';
 import { AlertifyService } from 'src/app/services/alertify.service';
-import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-user-register',
@@ -18,7 +17,6 @@ export class UserRegisterComponent {
 
 
   constructor(
-    private fb: FormBuilder,
     private userService: UserService,
     private alertify: AlertifyService,
     ) { }
@@ -31,23 +29,26 @@ export class UserRegisterComponent {
       confirmPassword: new FormControl(null, Validators.required),
       mobile: new FormControl(null, [Validators.required, Validators.maxLength(10)])
     }, this.passwordMatchingValidator);
-    this.createRegisterForm();
-  }
-
-  createRegisterForm() {
-    this.registerForm = this.fb.group({
-      userName: [null, Validators.required],
-      email: [null, Validators.email, Validators.required],
-      password: [null, Validators.required, Validators.minLength(8)],
-      confirmPassword: [null, Validators.required],
-      mobile: [null, [Validators.required, Validators.maxLength(10)]]
-    }, {Validators: this.passwordMatchingValidator});
   }
 
   passwordMatchingValidator(fc: AbstractControl): ValidationErrors | null {
-    return fc.get('password')?.value === fc.get('confirmPassword')?.value ? null :
-      { notmatched: true }
-  };
+    const passwordControl = fc.get('password');
+    const confirmPasswordControl = fc.get('confirmPassword');
+
+    if (passwordControl && confirmPasswordControl) {
+      const passwordValue = passwordControl.value;
+      const confirmPasswordValue = confirmPasswordControl.value;
+
+      if (passwordValue !== confirmPasswordValue) {
+        confirmPasswordControl.setErrors({ notmatched: true });
+        return { notmatched: true };
+      } else {
+        confirmPasswordControl.setErrors(null);
+        return null;
+      }
+    }
+    return null;
+  }
 
   onSubmit(){
     this.userSubmitted = true;

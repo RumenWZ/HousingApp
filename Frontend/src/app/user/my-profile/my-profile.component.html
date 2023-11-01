@@ -54,7 +54,9 @@
 
           <hr class="mt-0 mb-2">
 
-          Price: <span class="highlight-font">{{prop.price | number:'':'en'}} EUR.</span>
+          <span *ngIf="prop.sellOrRent==1">Price: </span>
+          <span *ngIf="prop.sellOrRent==2">Rent: </span>
+          <span class="highlight-font">{{prop.price | number:'':'en'}} EUR.</span>
         </div>
 
       </div>
