@@ -25,7 +25,7 @@
 
 </div>
 
-<div class="row">
+<div class="row" [@fadeInOut]>
   <div *ngFor="let property of properties|filter:searchCityFilter:'city'|sort: [sortByParam, sortDirection]" class="col-sm-4 p-3">
     <app-property-card [property]="property"></app-property-card>
   </div>

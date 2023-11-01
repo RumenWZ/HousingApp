@@ -122,6 +122,15 @@ namespace WebAPI.Data.Repo
             var user = await dc.Users.FirstOrDefaultAsync(x => x.Email == email); 
             return user != null;
         }
+
+        public bool IsPasswordValid(string passwordText, byte[] password, byte[] passwordKey)
+        {
+            if (!MatchPasswordHash(passwordText, password, passwordKey))
+            {
+                return false;
+            }
+            return true;
+        }
     }
 
     

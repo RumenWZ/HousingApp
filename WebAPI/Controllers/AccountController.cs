@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using WebAPI.DTOs;
@@ -139,6 +140,34 @@ namespace WebAPI.Controllers
             user.Mobile = newMobile;
             await uow.SaveAsync();
             return Ok(201);
+        }
+
+        [HttpPatch("change-password")]
+        [Authorize]
+        public async Task<IActionResult> ChangePassword(ChangePasswordRequestDTO request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var user = await uow.UserRepository.GetUserByTokenAsync(HttpContext.GetAuthToken());
+            var oldPassword = request.oldPassword;
+            var newPassword = request.newPassword;
+            if (!uow.UserRepository.IsPasswordValid(oldPassword, user.Password, user.PasswordKey))
+            {
+                return BadRequest("Old Password is incorrect");
+            }
+            byte[] passwordHash, passwordKey;
+
+            using (var hmac = new HMACSHA512())
+            {
+                passwordKey = hmac.Key;
+                passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(newPassword));
+            }
+            user.Password = passwordHash;
+            user.PasswordKey = passwordKey;
+            await uow.SaveAsync();
+            return StatusCode(201);
         }
 
         private string CreateJWT(User user)

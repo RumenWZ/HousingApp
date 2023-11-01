@@ -12,7 +12,7 @@
       <div class="card-body">
         <h1 class="card-title">{{property.name}}</h1>
         <div>
-          <strong>{{property.bhk}} BHK {{property.propertyType}} @ €{{property.price}}<strong *ngIf="property.sellOrRent==2"> per month</strong></strong>
+          <strong>{{property.bhk}} BHK {{property.propertyType}} @ €{{property.price | number:'':'en'}}<strong *ngIf="property.sellOrRent==2"> per month</strong></strong>
         </div>
         <div>
           <strong>{{property.city}}</strong>

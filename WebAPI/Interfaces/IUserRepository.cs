@@ -13,5 +13,6 @@ namespace WebAPI.Interfaces
         Task<User> GetUserByTokenAsync(string token);
         Task<User> GetUserByIdAsync(int id);
         Task<bool> CheckIfEmailIsTakenAsync(string email);
+        bool IsPasswordValid(string passwordText, byte[] password, byte[] passwordKey);
     }
 }
