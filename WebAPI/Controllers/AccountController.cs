@@ -151,8 +151,8 @@ namespace WebAPI.Controllers
                 return BadRequest(ModelState);
             }
             var user = await uow.UserRepository.GetUserByTokenAsync(HttpContext.GetAuthToken());
-            var oldPassword = request.oldPassword;
-            var newPassword = request.newPassword;
+            var oldPassword = request.OldPassword;
+            var newPassword = request.NewPassword;
             if (!uow.UserRepository.IsPasswordValid(oldPassword, user.Password, user.PasswordKey))
             {
                 return BadRequest("Old Password is incorrect");
@@ -167,7 +167,7 @@ namespace WebAPI.Controllers
             user.Password = passwordHash;
             user.PasswordKey = passwordKey;
             await uow.SaveAsync();
-            return StatusCode(201);
+            return Ok(201);
         }
 
         private string CreateJWT(User user)

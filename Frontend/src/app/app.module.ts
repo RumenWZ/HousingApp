@@ -32,6 +32,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { ConfirmActionComponent } from './confirm-action/confirm-action.component';
 import { MaterialModule } from './material/material.module';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { ChangePasswordComponent } from './user/change-password/change-password.component';
 
 const appRoutes: Routes = [
   {path: 'add-property', component: AddPropertyComponent},
@@ -41,6 +42,7 @@ const appRoutes: Routes = [
   {path: 'user/login', component: UserLoginComponent},
   {path: 'user/register', component: UserRegisterComponent},
   {path: 'my-profile', component: MyProfileComponent},
+  {path: 'user/change-password', component: ChangePasswordComponent},
   {path: '**', component: PropertyListComponent}
 ];
 
@@ -57,7 +59,8 @@ const appRoutes: Routes = [
     FilterPipe,
     SortPipe,
     MyProfileComponent,
-    ConfirmActionComponent
+    ConfirmActionComponent,
+    ChangePasswordComponent
 
   ],
   imports: [

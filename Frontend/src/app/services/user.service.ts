@@ -33,6 +33,10 @@ export class UserService {
     return this.http.patch(`${this.baseUrl}/account/update-mobile/${mobile}`, null);
   }
 
+  changePassword(formData: any) {
+    return this.http.patch(`${this.baseUrl}/account/change-password`, formData);
+  }
+
   logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('userName');

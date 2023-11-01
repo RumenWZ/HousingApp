@@ -5,11 +5,11 @@ namespace WebAPI.DTOs
     public class ChangePasswordRequestDTO
     {
         [Required]
-        public string oldPassword { get; set; }
+        public string OldPassword { get; set; }
         [Required]
         [StringLength(64, ErrorMessage = "Password is too long"), 
             MinLength(8, ErrorMessage = "Password must be at least 8 characters")]
 
-        public string newPassword { get; set; }
+        public string NewPassword { get; set; }
     }
 }
