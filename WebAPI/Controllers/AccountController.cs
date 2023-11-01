@@ -106,7 +106,7 @@ namespace WebAPI.Controllers
         [Authorize]
         public async Task<IActionResult> UpdateEmail(string newEmail)
         {
-            var validEmailPattern = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
+            var validEmailPattern = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+";
             if (!Regex.IsMatch(newEmail, validEmailPattern))
             {
                 return BadRequest("Invalid email address");
@@ -138,7 +138,7 @@ namespace WebAPI.Controllers
             var user = await uow.UserRepository.GetUserByTokenAsync(HttpContext.GetAuthToken());
             user.Mobile = newMobile;
             await uow.SaveAsync();
-            return Ok();
+            return Ok(201);
         }
 
         private string CreateJWT(User user)

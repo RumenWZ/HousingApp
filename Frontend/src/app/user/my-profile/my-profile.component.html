@@ -9,7 +9,7 @@
         <div class="user-details-wrapper">
           <strong>Email</strong>
           <div class="details-wrapper">
-            <input class="input-field" formControlName="email" [readOnly]="!canEditEmail" #emailInput (blur)="onEmailInputBlur()">
+            <input class="input-field" formControlName="email" [readOnly]="!canEditEmail" #emailInput (keyup.Enter)="updateUserEmail()" (blur)="onEmailInputBlur()">
             <i class="fa-regular fa-pen-to-square edit-icon" (click)="toggleEditEmail()"></i>
           </div>
           <span *ngIf="Email.hasError('email')" class="error-block error-msg">
@@ -19,11 +19,11 @@
         <div class="user-details-wrapper">
           <strong>Mobile number</strong>
           <div class="details-wrapper">
-            <input class="input-field" formControlName="mobile" [readOnly]="!canEditMobile" #mobileInput (blur)="onMobileInputBlur()">
+            <input class="input-field" formControlName="mobile" [readOnly]="!canEditMobile" #mobileInput (keyup.Enter)="updateUserMobile()" (blur)="onMobileInputBlur()">
             <i class="fa-regular fa-pen-to-square edit-icon" (click)="toggleEditMobile()"></i>
           </div>
           <span *ngIf="Mobile.hasError('invalidMobile')" class="error-block error-msg">
-            Please enter a valid 10-digit mobile number.
+            Invalid mobile number.
           </span>
         </div>
     </form>
@@ -54,7 +54,7 @@
 
           <hr class="mt-0 mb-2">
 
-          Price: <span class="highlight-font">{{prop.price}} EUR.</span>
+          Price: <span class="highlight-font">{{prop.price | number:'':'en'}} EUR.</span>
         </div>
 
       </div>

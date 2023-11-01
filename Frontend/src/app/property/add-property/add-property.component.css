@@ -10,7 +10,7 @@
 
 .photo-upload-button {
   margin: 2rem auto;
-  border: 2px solid #0079fa;
+  border: 2px solid var(--main-dark-blue);
   border-radius: 5px;
   width: 5rem;
   cursor: pointer;
@@ -31,7 +31,7 @@
 }
 
 .photo-belt-item:first-child img{
-  border: 2px solid #0074e4;
+  border: 2px solid var(--main-dark-blue);
   box-shadow: 0 0 10px rgba(0, 116, 228, 0.5);
   transition: box-shadow 0.3s ease;
 }

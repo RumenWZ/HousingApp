@@ -69,6 +69,30 @@ export class MyProfileComponent {
     this.profileForm.controls.mobile.setValue(this.user.mobile);
   }
 
+  updateUserMobile() {
+    if (this.Mobile.valid) {
+      this.userService.updateMobile(this.Mobile.value).subscribe((response: any) => {
+        if (response == 201) {
+          this.alertify.success('Mobile number updated successfully');
+          this.user.mobile = this.Mobile.value;
+          this.onMobileInputBlur();
+        }
+      })
+    }
+  }
+
+  updateUserEmail() {
+    if (this.Email.valid) {
+      this.userService.updateEmail(this.Email.value).subscribe((response: any) => {
+        if (response == 201) {
+          this.alertify.success('Email updated successfully');
+          this.user.email = this.Email.value;
+          this.onEmailInputBlur();
+        }
+      });
+    }
+  }
+
   confirmDelete(property: any) {
     if (this.processingRequest) {
       return;
@@ -77,7 +101,7 @@ export class MyProfileComponent {
     const dialogRef = this.matDialog.open(ConfirmActionComponent, {
       width: '500px',
       data: {
-        displayMessage: `Are you sure you want to remove this property listing?`,
+        displayMessage: `Are you sure you want to remove your property listing in ${property.name}, ${property.city}?`,
         confirmButtonName: 'Yes',
         imageUrl: property.photo
       },
@@ -108,7 +132,6 @@ export class MyProfileComponent {
   ngOnInit() {
     this.userService.getLoggedInUserDetails().subscribe((response: any) => {
       this.user = response;
-      console.log(this.user);
       this.profileForm.controls.mobile.setValue(this.user.mobile);
       this.profileForm.controls.email.setValue(this.user.email);
     })
@@ -121,7 +144,7 @@ export class MyProfileComponent {
       if (!mobileNumber) {
         return null;
       }
-      const valid = /^\d{10}$/.test(mobileNumber);
+      const valid = /^\+?\d{9,15}$/.test(mobileNumber);
 
       return valid ? null : { invalidMobile: true };
     };

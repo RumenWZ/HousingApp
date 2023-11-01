@@ -25,6 +25,14 @@ export class UserService {
     return this.http.get(`${this.baseUrl}/account/user-contact-details/${id}`);
   }
 
+  updateEmail(email: string) {
+    return this.http.patch(`${this.baseUrl}/account/update-email/${email}`, null);
+  }
+
+  updateMobile(mobile: string) {
+    return this.http.patch(`${this.baseUrl}/account/update-mobile/${mobile}`, null);
+  }
+
   logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('userName');

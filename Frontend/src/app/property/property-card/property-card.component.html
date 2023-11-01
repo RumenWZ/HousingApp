@@ -26,8 +26,8 @@
         <hr class="mt-0 mb-2">
 
         <h6 class="mb-0">
-          Price: <span class="highlight-font">{{property.price}} EUR.</span>
-          Area: <span class="highlight-font">{{property.builtArea}} Sq Ft </span>
+          <span *ngIf="property.sellOrRent==1">Price: </span><span *ngIf="property.sellOrRent==2">Rent: </span><span class="highlight-font">{{property.price | number: '':'en'}} EUR.</span>
+          Area: <span class="highlight-font">{{property.builtArea | number: '':'en'}} Sq Ft </span>
         </h6>
       </div>
     </div>

@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { TabsetComponent } from 'ngx-bootstrap/tabs';
@@ -7,6 +7,7 @@ import { BasicPropertyOption, Property } from 'src/app/model/property';
 import { HousingService } from 'src/app/services/housing.service';
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { switchMap } from 'rxjs';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-add-property',
@@ -15,6 +16,7 @@ import { switchMap } from 'rxjs';
 })
 export class AddPropertyComponent {
   @ViewChild('formTabs') formTabs: TabsetComponent;
+
   addPropertyForm!: FormGroup;
   clickedNext: boolean;
   property = new Property();
@@ -26,7 +28,7 @@ export class AddPropertyComponent {
   photosSelectedPreview: any[] = [];
   photosSelected: File[] = [];
   newPropertyId: number;
-
+  dragStartIndex: number;
   isUploading: boolean = false;
 
   propertyView: IPropertyBase = {
@@ -47,8 +49,11 @@ export class AddPropertyComponent {
     private router: Router,
     private fb: FormBuilder,
     private housingService: HousingService,
-    private alertify: AlertifyService
-    ) {}
+    private alertify: AlertifyService,
+
+    ) {
+
+    }
 
   GetPropertyTypeOptions() {
     this.housingService.getPropertyTypes().subscribe((response: BasicPropertyOption[]) => {
@@ -287,6 +292,7 @@ export class AddPropertyComponent {
       this.clickedNext = false;
     }
   }
+  //#region get form values
   get BasicInfo() {
     return this.addPropertyForm.controls.BasicInfo as FormGroup;
   }
@@ -386,6 +392,35 @@ export class AddPropertyComponent {
   get Description() {
     return this.OtherInfo.controls.Description as FormControl;
   }
+  //#endregion
+
+  dragStarted(index: number){
+    this.dragStartIndex = index;
+  }
+
+  dropPhoto(event: CdkDragDrop<string[]>) {
+    const previewImageEnd = document.elementFromPoint(event.dropPoint.x, event.dropPoint.y);
+    const previewImageEndId = parseInt(previewImageEnd.getAttribute('id'), 10);
+
+    if(isNaN(previewImageEndId)) {
+      return;
+    }
+
+    const photoEnd = this.photosSelected[previewImageEndId];
+    const photoEndPreview = this.photosSelectedPreview[previewImageEndId];
+
+    const photoStart = this.photosSelected[this.dragStartIndex];
+    const photoStartPreview = this.photosSelectedPreview[this.dragStartIndex];
+
+    this.photosSelected[this.dragStartIndex] = photoEnd;
+    this.photosSelectedPreview[this.dragStartIndex] = photoEndPreview;
+
+    this.photosSelected[previewImageEndId] = photoStart;
+    this.photosSelectedPreview[previewImageEndId]= photoStartPreview;
+    this.updatePreviewPhoto()
+  }
+
+
 }
 
 

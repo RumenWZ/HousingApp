@@ -1,66 +1,3 @@
-/* * {
-  font-family: "poppins", sans-serif;
-  color: var(--light-grey-text);
-}
-
-mat-dialog-content {
-  background-color: var(--main-color);
-  padding: 0;
-  position: relative;
-}
-
-.delete-span {
-  color: red;
-  font-weight: 700;
-}
-
-.header {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.button-wrapper {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.close-btn{
-  font-size: 40px;
-  cursor: pointer;
-  top: 0;
-  right: 0;
-  position: absolute;
-  margin-top: 0.7rem;
-  margin-right: 0.7rem;
-}
-
-.delete-button, .cancel-button {
-  height: 2rem;
-  border: none;
-  border-radius: 5px;
-  outline: none;
-  color: white;
-  transition: 1 ease;
-}
-
-.delete-button {
-  background-color: #c90606;
-}
-
-.cancel-button {
-  background-color: #9b9b9b ;
-  margin-right: 0.5rem;
-}
-
-.delete-button:hover {
-  background-color: #ff3333;
-}
-
-.cancel-button:hover {
-  background-color: #bcbcbc;
-}
- */
 
 mat-dialog-content {
   padding: 0 !important;
@@ -83,7 +20,7 @@ mat-dialog-content {
 .button-wrapper {
   display: flex;
   justify-content: flex-end;
-  padding: 0.3rem;
+  padding: 0.6rem;
 }
 
 .close-btn{
@@ -102,6 +39,8 @@ mat-dialog-content {
   outline: none;
   color: white;
   transition: 1 ease;
+  padding: 0.5rem 0.7rem;
+  font-weight: 600;
 
 }
 
@@ -126,15 +65,8 @@ mat-dialog-content {
   padding: 1rem;
 }
 
-.image-preview {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #f2f2f2;
-  padding: 0.5rem;
-}
-
-.image-preview img {
-  max-width: 9rem;
-  border-radius: 5px;
+.dialog-body p {
+  color: black;
+  font-size: 1rem;
+  line-height: 1.3rem;
 }

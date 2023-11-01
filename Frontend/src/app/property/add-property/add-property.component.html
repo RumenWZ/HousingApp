@@ -9,7 +9,7 @@
           <tab heading="Basic information" formGroupName="BasicInfo">
             <div class="form-group col-12">
               <label>I want to*</label><br/>
-              <div class="btn-group" btnRadioGroup formControlName="SellOrRent">
+              <div class="btn-group" btnRadioGroup [(ngModel)]="propertyView.sellOrRent" formControlName="SellOrRent">
                 <label class="btn btn-outline-primary" btnRadio="1" tabindex="0" role="button" name="SellOrRent">Sell</label>
                 <label class="btn btn-outline-primary" btnRadio="2" tabindex="0" role="button" name="SellOrRent">Rent</label>
               </div>
@@ -73,7 +73,7 @@
 
           <tab heading="Pricing and Area" formGroupName="PriceInfo">
             <div class="form-group col-12" >
-              <label><span *ngIf="SellOrRent.value==1">Price</span><span *ngIf="SellOrRent.value==2">Rent</span> (in EUR)*</label>
+              <label><span *ngIf="SellOrRent.value==1">Price</span><span *ngIf="SellOrRent.value==2">Rent per month</span> (in EUR)*</label>
               <input type="text" class="form-control" formControlName="Price" [(ngModel)]="propertyView.price">
               <span class="error-block" *ngIf="Price.invalid && (Price.touched || clickedNext)">
                 Field required
@@ -206,17 +206,18 @@
               <div class="submit-photo-control">
                 <div class="photo-upload-button">
                   <label for="fileUpload" class="upload-button">Upload</label>
-                  <input type="file" id="fileUpload" (change)="onFileSelected($event)" accept="image/*" style="display: none;">
+                  <input type="file" id="fileUpload" #photoBeltList (change)="onFileSelected($event)" accept="image/*" style="display: none;">
                 </div>
 
-                <div class="photo-belt">
+                <div class="photo-belt" cdkDropList cdkDropListSortingDisabled="true" (cdkDropListDropped)="dropPhoto($event)">
                   <div *ngFor="let photo of photosSelectedPreview; let i = index" class="photo-belt-item">
-                    <img (click)="setPrimaryPhoto(i)" [src]="photo.url" alt="Preview image">
+                    <img  [src]="photo.url" alt="Preview image" data-id="{{i}}" cdkDrag cdkDragData="photo" cdkDragBoundary=".photo-belt"
+                    (cdkDragStarted)="dragStarted(i)">
                     <i class='bx bx-x remove-button' (click)="removeSelectedPhoto(i)"></i>
                   </div>
                 </div>
               </div>
-              <span *ngIf="photosSelected.length > 0" style="font-family: italics; ">Note: The blue highlight indicates the primary photo for the property. Click any photo to set it as the primary.</span>
+              <span *ngIf="photosSelected.length > 0" style="font-family: italics; "><strong style="color: var(--main-dark-blue);">IMPORTANT</strong>: The first photo highlighted in blue will be the primary photo for your property. You can drag and drop the photos to sort them to your liking.</span>
             </div>
             <div class="form-group col-12 mt-3">
               <button (click)="selectTab(3)" type="button" class="btn btn-primary mt-1" style="width: 100%;"><- Back</button>
