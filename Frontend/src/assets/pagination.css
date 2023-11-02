@@ -23,3 +23,9 @@
 .pagination .ngx-pagination a:hover {
   background-color: #bababa;
 }
+
+@media (max-width: 768px) {
+  .pagination * {
+    font-size: 0.7rem;
+  }
+}

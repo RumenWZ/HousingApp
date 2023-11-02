@@ -178,3 +178,54 @@
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+@media (max-width: 992px) {
+  .user-properties {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .profile-wrapper {
+    height: 47rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .user-properties {
+    grid-template-columns: 1fr;
+  }
+
+  .property {
+    max-width: 100%;
+  }
+
+  .property img {
+    width: 100%;
+  }
+
+  .avatar-container {
+    padding: 1rem 1rem;
+  }
+}
+
+
+@media (max-width: 576px) {
+  .profile-wrapper {
+    flex-direction: column;
+    height: 100%;
+    padding-bottom: 3rem;
+    position: relative;
+  }
+
+  .profile {
+    max-width: none;
+    border-right: none;
+  }
+
+  .properties {
+    position: static;
+  }
+
+  .avatar-container img {
+    width: 90%;
+  }
+}

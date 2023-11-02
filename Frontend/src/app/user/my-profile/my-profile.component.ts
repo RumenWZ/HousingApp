@@ -1,5 +1,5 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmActionComponent } from 'src/app/confirm-action/confirm-action.component';
@@ -36,6 +36,10 @@ export class MyProfileComponent {
   pageSize: number = 6;
   currentPage: number = 1;
 
+  screenWidthLessThan992px: boolean;
+  screenWidthLessThan768px: boolean;
+  screenWidthLessThan576px: boolean;
+
   constructor(
     private userService: UserService,
     private fb: FormBuilder,
@@ -43,6 +47,10 @@ export class MyProfileComponent {
     private housingService: HousingService,
     private alertify: AlertifyService
   ) {
+    this.screenWidthLessThan992px = window.innerWidth <= 992;
+    this.screenWidthLessThan768px = window.innerWidth <= 768;
+    this.screenWidthLessThan576px = window.innerWidth <= 576;
+    this.applyResponsiveOptions();
     this.profileForm = this.fb.group({
       mobile: ['', [Validators.required, this.mobileValidator()]],
       email: ['', [Validators.required, Validators.email]]
@@ -93,6 +101,16 @@ export class MyProfileComponent {
     }
   }
 
+  applyResponsiveOptions() {
+    if (this.screenWidthLessThan992px) {
+      this.pageSize = 4;
+    }
+
+    if (this.screenWidthLessThan768px) {
+      this.pageSize = 2;
+    }
+  }
+
   confirmDelete(property: any) {
     if (this.processingRequest) {
       return;
@@ -107,6 +125,7 @@ export class MyProfileComponent {
       },
 
     })
+
 
     dialogRef.componentInstance.deleteConfirmed.subscribe(() => {
       this.deleteProperty(property.id);
@@ -128,6 +147,8 @@ export class MyProfileComponent {
       this.processingRequest = false;
     })
   }
+
+
 
   ngOnInit() {
     this.userService.getLoggedInUserDetails().subscribe((response: any) => {
@@ -160,5 +181,20 @@ export class MyProfileComponent {
   get pagedData() {
     const startIndex = (this.currentPage - 1) * this.pageSize;
     return this.user.properties.slice(startIndex, startIndex + this.pageSize);
+  }
+
+  test() {
+    console.log(this.screenWidthLessThan992px);
+    console.log(this.screenWidthLessThan768px);
+    console.log(this.screenWidthLessThan576px);
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onWindowResize(event: any) {
+    this.screenWidthLessThan992px = window.innerWidth <= 992;
+    this.screenWidthLessThan768px = window.innerWidth <= 768;
+    this.screenWidthLessThan576px = window.innerWidth <= 576;
+
+    this.applyResponsiveOptions();
   }
 }
