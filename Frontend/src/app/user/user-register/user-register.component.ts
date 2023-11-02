@@ -92,7 +92,4 @@ export class UserRegisterComponent {
   get mobile() {
     return this.registerForm.get('mobile') as FormControl;
   }
-
-
-
 }

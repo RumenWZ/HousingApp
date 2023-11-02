@@ -169,12 +169,6 @@ namespace WebAPI.Controllers
             await uow.SaveAsync();
             return Ok(201);
         }
-        [Authorize]
-        [HttpGet("validate-token")]
-        public async Task<IActionResult> ValidateToken()
-        {
-            return Ok("valid");
-        }
 
         private string CreateJWT(User user)
         {
