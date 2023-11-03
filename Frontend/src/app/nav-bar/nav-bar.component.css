@@ -5,3 +5,12 @@
 .pointer {
   cursor: pointer;
 }
+
+.dropdown-toggle {
+  text-decoration: none;
+  transition: 0.3s ease;
+}
+
+.dropdown-toggle:hover {
+  color: #eaeaea !important;
+}

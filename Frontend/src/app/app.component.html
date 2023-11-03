@@ -1,5 +1,14 @@
-<app-nav-bar></app-nav-bar>
-<div class="container" style="margin-top: 70px;">
-  <!-- <app-property-list></app-property-list> -->
-  <router-outlet></router-outlet>
-</div>
+<mat-sidenav-container (backdropClick)="toggleSidenav()">
+  <mat-sidenav *ngIf="token" position="end" [opened]="sidenavOpen">
+    <app-sidenav></app-sidenav>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <app-nav-bar></app-nav-bar>
+      <div class="container" style="margin-top: 70px;">
+        <router-outlet></router-outlet>
+      </div>
+  </mat-sidenav-content>
+
+</mat-sidenav-container>
+

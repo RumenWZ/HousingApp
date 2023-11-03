@@ -4,7 +4,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 
 const material = [
   MatDialogModule,
-  MatSidenavModule
+  MatSidenavModule,
 ];
 
 @NgModule({

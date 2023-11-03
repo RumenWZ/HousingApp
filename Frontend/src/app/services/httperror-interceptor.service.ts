@@ -26,7 +26,8 @@ export class HttpErrorInterceptorService implements HttpInterceptor {
         if (error.status === ErrorCode.unauthorized) {
           this.userService.logout();
           this.router.navigate(['/user/login']);
-          this.alertify.error('Login session expired');
+          this.alertify.error('Unauthorized');
+          return throwError('Unauthorized');
         }
         this.alertify.error(errorMessage);
         return throwError(errorMessage);

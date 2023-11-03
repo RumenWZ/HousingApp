@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using WebAPI.DTOs;
+using WebAPI.DTOs.PropertyDTOs;
+using WebAPI.DTOs.UserDTOs;
 using WebAPI.Models;
 
 namespace WebAPI.Helpers
@@ -14,6 +16,7 @@ namespace WebAPI.Helpers
             CreateMap<PropertyAddDTO, Property>().ReverseMap();
             CreateMap<Property, PropertyDTO>().ReverseMap();
             CreateMap<Photo, PhotoDTO>();
+            CreateMap<User, UserDTO>();
 
             CreateMap<Property, PropertyListDTO>()
                 .ForMember(d => d.FurnishingType, op => op.MapFrom(src => src.FurnishingType.Name))

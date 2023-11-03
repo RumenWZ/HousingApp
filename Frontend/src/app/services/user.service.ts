@@ -17,6 +17,10 @@ export class UserService {
     return this.http.post(this.baseUrl + '/account/register', user);
   }
 
+  getLoggedInUser() {
+    return this.http.get(`${this.baseUrl}/account/user`);
+  }
+
   getLoggedInUserDetails() {
     return this.http.get(`${this.baseUrl}/account/profile-details`);
   }

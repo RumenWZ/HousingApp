@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { SidenavService } from './services/sidenav.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,23 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'Frontend';
+  sidenavOpen: boolean;
+  title = 'Housing App';
+  token: string;
+
+  constructor(
+    private sidenav: SidenavService
+  ) {
+    this.token = localStorage.getItem('token');
+  }
+
+  toggleSidenav() {
+    this.sidenav.toggleSidenav();
+  }
+
+  ngOnInit() {
+    this.sidenav.isSidenavOpen.subscribe((isOpen: boolean) => {
+      this.sidenavOpen = isOpen;
+    })
+  }
 }

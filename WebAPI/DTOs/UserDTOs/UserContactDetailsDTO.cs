@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace WebAPI.DTOs
+namespace WebAPI.DTOs.UserDTOs
 {
     public class UserContactDetailsDTO
     {

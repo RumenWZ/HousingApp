@@ -1,0 +1,16 @@
+.mat-sidenav-container {
+  height: 100vh;
+  background-color: transparent !important;;
+  position: relative;
+}
+
+mat-sidenav-content {
+  height: 100vh;
+}
+
+mat-sidenav {
+  font-family: "poppins", sans-serif;
+  color: white;
+  min-width: 22rem;
+  
+}

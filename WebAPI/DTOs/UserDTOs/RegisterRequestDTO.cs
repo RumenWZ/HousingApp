@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace WebAPI.DTOs
+namespace WebAPI.DTOs.UserDTOs
 {
     public class RegisterRequestDTO
     {
@@ -9,6 +9,6 @@ namespace WebAPI.DTOs
         public string Email { get; set; }
         public string Mobile { get; set; }
         public string Password { get; set; }
-        
+
     }
 }

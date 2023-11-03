@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using WebAPI.Models;
 
-namespace WebAPI.DTOs
+namespace WebAPI.DTOs.PropertyDTOs
 {
     public class PropertyDTO
     {
@@ -30,7 +30,7 @@ namespace WebAPI.DTOs
         public string Description { get; set; }
         public DateTime PostedOn { get; set; } = DateTime.Now;
         public int PostedBy { get; set; }
-        public DateTime LastUpdatedOn { get; set; } 
+        public DateTime LastUpdatedOn { get; set; }
         public int LastUpdatedBy { get; set; }
 
     }

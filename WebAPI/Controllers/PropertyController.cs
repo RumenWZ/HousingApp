@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Reflection.Metadata.Ecma335;
-using WebAPI.DTOs;
+using WebAPI.DTOs.PropertyDTOs;
 using WebAPI.Extensions;
 using WebAPI.Interfaces;
 using WebAPI.Models;

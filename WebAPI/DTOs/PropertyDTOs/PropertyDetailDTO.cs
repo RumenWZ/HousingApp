@@ -1,4 +1,4 @@
-﻿namespace WebAPI.DTOs
+﻿namespace WebAPI.DTOs.PropertyDTOs
 {
     public class PropertyDetailDTO : PropertyListDTO
     {

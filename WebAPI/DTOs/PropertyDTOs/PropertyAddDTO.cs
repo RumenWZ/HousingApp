@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using WebAPI.Models;
 
-namespace WebAPI.DTOs
+namespace WebAPI.DTOs.PropertyDTOs
 {
     public class PropertyAddDTO
     {

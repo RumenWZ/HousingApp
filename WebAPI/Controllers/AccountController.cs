@@ -7,7 +7,8 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
-using WebAPI.DTOs;
+using WebAPI.DTOs.PropertyDTOs;
+using WebAPI.DTOs.UserDTOs;
 using WebAPI.Errors;
 using WebAPI.Extensions;
 using WebAPI.Interfaces;
@@ -101,6 +102,15 @@ namespace WebAPI.Controllers
                 Mobile = user.Mobile
             };
             return Ok(contactDetails);
+        }
+
+        [HttpGet("user")]
+        [Authorize]
+        public async Task<IActionResult> GetUser()
+        {
+            var user = await uow.UserRepository.GetUserByTokenAsync(HttpContext.GetAuthToken());
+            var userDTO = mapper.Map<UserDTO>(user);
+            return Ok(userDTO);
         }
 
         [HttpPatch("update-email/{newEmail}")]

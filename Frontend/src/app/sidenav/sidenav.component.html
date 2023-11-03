@@ -1,0 +1,40 @@
+<div class="avatar">
+  <div class="avatar-container">
+    <img src="assets/images/avatar-default.png">
+  </div>
+  <span class="username">{{user?.username}}</span>
+</div>
+
+<i class='bx bx-x close-sidenav' (click)="toggleSidenav()"></i>
+
+<div class="menu-context">
+  <hr>
+  <div class="general-wrapper">
+    <span class="context">GENERAL</span>
+  </div>
+</div>
+
+<div class="sidebar-menu">
+  <div class="main-menu option" (click)="toggleGeneralDrawer()">
+    <span>Properties</span>
+    <i class='bx bx-chevron-left' [ngClass]="{ 'rotate-90-deg-back' : generalDrawerState == 'open' }"></i>
+  </div>
+  <ul class="option-menu" [@drawerState]="generalDrawerState">
+    <li *ngFor="let item of sidenavGeneralEntries" class="option" (click)="navigateUrl(item.url)">
+      <i class="{{item.icon}} option-icon"></i>
+      <span>{{item.label}}</span>
+    </li>
+  </ul>
+
+  <div class="main-menu option" (click)="toggleUserDrawer()">
+    <span>User</span>
+    <i class='bx bx-chevron-left' [ngClass]="{ 'rotate-90-deg-back' : userDrawerState == 'open' }"></i>
+  </div>
+  <ul class="option-menu" [@drawerState]="userDrawerState">
+    <li *ngFor="let item of sidenavUserEntries" class="option" (click)="navigateUrl(item.url)">
+      <i class="{{item.icon}} option-icon"></i>
+      <span>{{item.label}}</span>
+    </li>
+  </ul>
+</div>
+
