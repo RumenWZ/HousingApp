@@ -1,8 +1,8 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
   <div class="container-fluid">
     <a class="navbar-brand" href="/">Housing App</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span (click)="toggleSidenav()" class="navbar-toggler-icon"></span>
+    <button *ngIf="loggedIn() && isSmallScreen" class="sidenav-toggler" (click)="toggleSidenav()">
+      <i class="fa-solid fa-bars"></i>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -15,17 +15,9 @@
         <li class="nav-item">
           <a class="nav-link" routerLinkActive="active" routerLink="/add-property">List Property</a>
         </li>
-
-
       </ul>
       <div>
         <ul class="nav navbar-nav">
-          <li *ngIf="!loggedIn()" class="nav-item" >
-            <a routerLink="/user/register" routerLinkActive="active" class="nav-link">Register</a>
-          </li>
-          <li *ngIf="!loggedIn()" class="nav-item">
-            <a routerLink="/user/login" routerLinkActive="active" class="nav-link">Login</a>
-          </li>
           <div *ngIf="loggedIn()" class="dropdown" style="margin-right: 50px;" dropdown>
             <a href="#" class="dropdown-toggle text-light" dropdownToggle (click)="false">
                 Welcome {{loggedinUser}}
@@ -43,6 +35,15 @@
           </div>
         </ul>
       </div>
+
     </div>
-  </div>
+      <ul *ngIf="!loggedIn() " class="account-nav">
+        <li *ngIf="!loggedIn()" class="nav-item">
+          <a routerLink="/user/login" routerLinkActive="active" class="nav-link">Login</a>
+        </li>
+        <li *ngIf="!loggedIn()" class="nav-item" >
+          <a routerLink="/user/register" routerLinkActive="active" class="nav-link">Register</a>
+        </li>
+      </ul>
+    </div>
 </nav>

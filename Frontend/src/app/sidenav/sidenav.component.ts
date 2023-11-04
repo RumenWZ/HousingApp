@@ -45,7 +45,9 @@ export class SidenavComponent {
   }
 
   onLogout() {
-
+    this.userService.logout();
+    this.router.navigate(['/']);
+    this.toggleSidenav();
   }
 
   toggleGeneralDrawer() {

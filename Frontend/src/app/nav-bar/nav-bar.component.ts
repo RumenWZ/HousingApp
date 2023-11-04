@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { AlertifyService } from '../services/alertify.service';
 import { Router } from '@angular/router';
 import { UserService } from '../services/user.service';
@@ -11,11 +11,15 @@ import { SidenavService } from '../services/sidenav.service';
 })
 export class NavBarComponent {
   loggedinUser: string;
+  isSmallScreen: boolean;
 
   constructor(
     private alertify: AlertifyService,
     private userService: UserService,
-    private sidenav: SidenavService) {}
+    private sidenav: SidenavService)
+    {
+      this.isSmallScreen = window.innerWidth < 992;
+    }
 
   ngOnInit() {
 
@@ -33,5 +37,10 @@ export class NavBarComponent {
   onLogout() {
     this.alertify.success("You have logged out.");
     this.userService.logout();
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onWindowResize(event: any) {
+    this.isSmallScreen = window.innerWidth < 992;
   }
 }

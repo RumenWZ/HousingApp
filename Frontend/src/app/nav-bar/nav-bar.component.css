@@ -14,3 +14,22 @@
 .dropdown-toggle:hover {
   color: #eaeaea !important;
 }
+
+.sidenav-toggler {
+  color: white;
+  background-color: #212529;
+  font-size: 1.5rem;
+  border: none;
+}
+
+.account-nav {
+  list-style: none;
+  color: white;
+  display: flex;
+  align-items: center;
+  margin: 0;
+}
+
+.account-nav li {
+  padding: 0 0.2rem;
+}

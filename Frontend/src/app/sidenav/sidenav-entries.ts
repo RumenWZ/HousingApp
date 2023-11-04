@@ -30,6 +30,6 @@ export const sidenavUserEntries = [
   {
     'label': 'Logout',
     'icon': 'bx bx-exit',
-    'url': 'onLogout',
+    'url': 'logout',
   }
 ]
