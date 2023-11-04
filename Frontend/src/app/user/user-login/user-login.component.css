@@ -1,5 +1,4 @@
-@media (max-width: 768px) {
-  .card {
-    width: 20rem !important;
-  }
+.card-container {
+  max-width: 35rem;
+  margin: 0 auto;
 }

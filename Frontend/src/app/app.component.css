@@ -12,5 +12,16 @@ mat-sidenav {
   font-family: "poppins", sans-serif;
   color: white;
   min-width: 22rem;
-  
+}
+
+
+@media (max-width: 350px) {
+  mat-sidenav {
+    min-width: 0;
+    width: 100vw;
+  }
+
+  mat-sidenav * {
+    font-size: 0.8rem;
+  }
 }

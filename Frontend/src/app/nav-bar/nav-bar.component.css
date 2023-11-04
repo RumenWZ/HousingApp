@@ -28,8 +28,25 @@
   display: flex;
   align-items: center;
   margin: 0;
+  padding: 0;
 }
 
 .account-nav li {
-  padding: 0 0.2rem;
+  padding: 0 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .account-nav li {
+    padding: 0 0.2rem;
+  }
+}
+
+@media (max-width: 330px) {
+  .navbar-brand {
+    font-size: 0.8rem;
+  }
+
+  .account-nav li {
+    font-size: 0.7rem;
+  }
 }
