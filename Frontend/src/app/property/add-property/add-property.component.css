@@ -1,3 +1,27 @@
+.main-container {
+  display: flex;
+}
+
+.preview-container {
+  width: 50%;
+  max-width: 25rem;
+}
+
+.form-container {
+  width: 50%;
+}
+
+.headerx {
+  background-color: var(--main-dark-blue);
+  padding: 0.3rem 0;
+  align-items: center;
+  display: flex;
+  color: white;
+  text-indent: 0.5rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
 .submit-photo-control {
   min-height: 300px;
   text-align: center;
@@ -76,3 +100,67 @@
 .photo-belt-item img:hover{
   opacity: 0.8;
 }
+
+.possession {
+  width: 50%;
+}
+
+@media (max-width: 768px) {
+  .main-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .form-container, .possession {
+    width: 100%;
+  }
+
+  .preview-container {
+    width: 100%;
+    margin: 0 auto;
+    max-width: 100%;
+  }
+
+  .preview {
+    max-width: 2rem !important;
+  }
+}
+
+@media (max-width: 400px) {
+  .photo-belt {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .form-container *, .preview-container * {
+    font-size: 0.7rem;
+  }
+
+  .photo-upload-button {
+    margin: 0.5rem auto;
+  }
+
+  .submit-photo-control {
+    height: 25rem;
+  }
+
+  .btn-group {
+    width: 100% !important;
+  }
+}
+
+@media (max-width: 290px) {
+  .photo-belt {
+    grid-template-columns: 1fr;
+  }
+
+  .submit-photo-control {
+    height: 41.5rem;
+  }
+
+  .btn {
+    padding: 0 !important;
+  }
+
+}
+
+
