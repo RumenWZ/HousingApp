@@ -140,7 +140,7 @@ namespace WebAPI.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("EstPosessionOn")
+                    b.Property<DateTime>("EstPossessionOn")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("FloorNo")

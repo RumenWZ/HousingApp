@@ -18,13 +18,13 @@ export class Property implements IPropertyBase{
   cityId: number;
   floorNo?: string;
   totalFloors?: string;
-  rtm: boolean;
-  aop?: string;
+  readyToMove: boolean;
+  age?: string;
   mainEntrance?: string;
   security?: number;
   gated?: boolean;
   maintenance?: number;
-  possessionOn?: string;
+  estPossessionOn?: string;
   image?: string;
   description?: string;
   postedOn: Date
@@ -32,6 +32,7 @@ export class Property implements IPropertyBase{
   photos: any[];
   postedBy: number;
 }
+
 
 export class BasicPropertyOption {
   id: number;

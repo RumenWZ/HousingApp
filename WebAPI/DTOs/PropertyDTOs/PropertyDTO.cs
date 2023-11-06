@@ -25,7 +25,7 @@ namespace WebAPI.DTOs.PropertyDTOs
         public int Security { get; set; }
         public bool Gated { get; set; }
         public int Maintenance { get; set; }
-        public DateTime EstPosessionOn { get; set; }
+        public DateTime EstPossessionOn { get; set; }
         public int Age { get; set; }
         public string Description { get; set; }
         public DateTime PostedOn { get; set; } = DateTime.Now;

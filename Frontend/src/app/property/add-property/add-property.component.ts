@@ -42,7 +42,7 @@ export class AddPropertyComponent {
     sellOrRent: null,
     propertyType: null,
     furnishingType: null,
-    rtm: null,
+    readyToMove: null,
     bhk: null,
     builtArea: null,
     city: '',
@@ -193,7 +193,7 @@ export class AddPropertyComponent {
       OtherInfo: this.fb.group({
         RTM: [null,Validators.required],
         PossessionOn: [null, [this.isValidDateFormat]],
-        AOP: [null, [Validators.pattern(this.regexWholeNumberPattern), Validators.maxLength(4)]],
+        Age: [null, [Validators.pattern(this.regexWholeNumberPattern), Validators.maxLength(4)]],
         Gated: [null],
         MainEntrance: [null, [Validators.maxLength(100)]],
         Description: [null, [Validators.maxLength(900)]]
@@ -276,13 +276,13 @@ export class AddPropertyComponent {
     this.property.cityId = this.City.value;
     this.property.floorNo = this.FloorNo.value;
     this.property.totalFloors = this.TotalFloors.value;
-    this.property.rtm = this.RTM.value;
-    this.property.aop = this.AOP.value;
+    this.property.readyToMove = this.RTM.value;
+    this.property.age = this.Age.value;
     this.property.mainEntrance = this.MainEntrance.value;
     this.property.security = this.Security.value;
     this.property.gated = this.Gated.value;
     this.property.maintenance = this.Maintenance.value;
-    this.property.possessionOn = this.PossessionOn.value;
+    this.property.estPossessionOn = this.PossessionOn.value;
     this.property.description = this.Description.value;
   }
 
@@ -381,8 +381,8 @@ export class AddPropertyComponent {
     return this.AddressInfo.controls.LandMark as FormControl;
   }
 
-  get AOP() {
-    return this.OtherInfo.controls.AOP as FormControl;
+  get Age() {
+    return this.OtherInfo.controls.Age as FormControl;
   }
 
   get FloorNo() {

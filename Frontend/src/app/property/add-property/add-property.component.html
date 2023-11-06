@@ -175,13 +175,13 @@
                   formControlName="RTM">
                     <label class="btn btn-outline-primary mr-2 mt-1"
                       btnRadio=true tabindex="0" role="button"
-                      (click)="propertyView.rtm=true"
+                      (click)="propertyView.readyToMove=true"
                       name="RTM">Yes
                     </label>
 
                     <label class="btn btn-outline-primary mt-1"
                       btnRadio=false  tabindex="0" role="button"
-                      (click)="propertyView.rtm=false"
+                      (click)="propertyView.readyToMove=false"
                       name="RTM">No
                     </label>
                   </div>
@@ -203,10 +203,10 @@
 
             <div class="form-group col-12">
               <label>Age of Property (in years)</label>
-              <input type="text" class="form-control" formControlName="AOP">
-              <div *ngIf="!AOP.valid && AOP.touched" class="error-block">
-                <span *ngIf="AOP.errors.pattern">Only numbers are allowed</span>
-                <span *ngIf="AOP.errors.maxlength && !AOP.errors.pattern">The property is too old</span>
+              <input type="text" class="form-control" formControlName="Age">
+              <div *ngIf="!Age.valid && Age.touched" class="error-block">
+                <span *ngIf="Age.errors.pattern">Only numbers are allowed</span>
+                <span *ngIf="Age.errors.maxlength && !Age.errors.pattern">The property is too old</span>
               </div>
             </div>
 

@@ -29,6 +29,10 @@
           <strong>Furnished: </strong>
           {{property.furnishingType}}
         </div>
+        <div>
+          <strong>Ready To Move: </strong>
+          <span *ngIf="!property.readyToMove">No</span><span *ngIf="property.readyToMove">Yes</span>
+        </div>
       </div>
       <div class="card-footer">
         <div class="btn-group d-flex">
@@ -56,12 +60,12 @@
 
                   <div class="heading">
                       <strong>Age of Property</strong>
-                      <p>{{property.aop}}</p>
+                      <p>{{property.age}}</p>
                   </div>
 
                   <div class="heading">
                       <strong>Posession</strong>
-                      <p>{{property.possessionOn}}</p>
+                      <p>{{property?.estPossessionOn | date: 'longDate'}}</p>
                   </div>
               </div>
 

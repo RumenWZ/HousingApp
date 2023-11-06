@@ -25,7 +25,7 @@ namespace WebAPI.Models
         public int? Security { get; set; }
         public bool? Gated { get; set; }
         public int? Maintenance { get; set; }
-        public  DateTime EstPosessionOn { get; set; }
+        public  DateTime EstPossessionOn { get; set; }
         public int? Age { get; set; }
         public string? Description { get; set; }
         public ICollection<Photo> Photos { get; set; }
