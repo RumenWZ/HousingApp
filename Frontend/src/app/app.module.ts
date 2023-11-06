@@ -34,6 +34,7 @@ import { MaterialModule } from './material/material.module';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ChangePasswordComponent } from './user/change-password/change-password.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
+import { DocumentationComponent } from './documentation/documentation.component';
 
 const appRoutes: Routes = [
   {path: 'add-property', component: AddPropertyComponent},
@@ -44,6 +45,7 @@ const appRoutes: Routes = [
   {path: 'user/register', component: UserRegisterComponent},
   {path: 'user/my-profile', component: MyProfileComponent},
   {path: 'user/change-password', component: ChangePasswordComponent},
+  {path: 'documentation', component: DocumentationComponent},
   {path: '**', component: PropertyListComponent}
 ];
 
@@ -62,7 +64,8 @@ const appRoutes: Routes = [
     MyProfileComponent,
     ConfirmActionComponent,
     ChangePasswordComponent,
-    SidenavComponent
+    SidenavComponent,
+    DocumentationComponent
 
   ],
   imports: [

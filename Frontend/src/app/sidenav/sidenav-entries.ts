@@ -33,3 +33,11 @@ export const sidenavUserEntries = [
     'url': 'logout',
   }
 ]
+
+export const sidenavOtherEntries = [
+  {
+    'label': 'Documentation',
+    'icon': 'bx bxs-file',
+    'url': '/documentation'
+  }
+]

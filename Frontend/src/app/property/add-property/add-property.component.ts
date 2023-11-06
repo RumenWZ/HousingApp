@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, NgForm, ValidatorFn, Validators } from '@angular/forms';
 import { TabsetComponent } from 'ngx-bootstrap/tabs';
 import { IPropertyBase } from 'src/app/model/ipropertybase';
 import { BasicPropertyOption, Property } from 'src/app/model/property';
@@ -30,6 +30,10 @@ export class AddPropertyComponent {
   newPropertyId: number;
   dragStartIndex: number;
   isUploading: boolean = false;
+  posessionOnValue: string;
+
+  regexOnlyLettersPattern = /^[a-zA-Z\s]*$/;
+  regexWholeNumberPattern = /^[0-9]+$/;
 
   propertyView: IPropertyBase = {
     id: null,
@@ -167,35 +171,55 @@ export class AddPropertyComponent {
       BHK: [null, Validators.required],
       FType: [null, Validators.required],
       PType: [null, Validators.required],
-      Name: [null, Validators.required],
+      Name: [null, [Validators.required, Validators.pattern(this.regexOnlyLettersPattern), Validators.minLength(5), Validators.maxLength(30)]],
       City: ['', Validators.required],
       }),
 
       PriceInfo: this.fb.group({
-        Price: [null, Validators.required],
-        BuiltArea: [null, Validators.required],
-        CarpetArea: [null],
-        Maintenance: [null],
-        Security: [null],
+        Price: [null, [Validators.required, Validators.pattern(this.regexWholeNumberPattern), Validators.maxLength(10)]],
+        BuiltArea: [null, [Validators.required, Validators.pattern(this.regexWholeNumberPattern), Validators.maxLength(7)]],
+        CarpetArea: [null, [Validators.pattern(this.regexWholeNumberPattern), Validators.maxLength(20)]],
+        Maintenance: [null, [Validators.pattern(this.regexWholeNumberPattern), Validators.maxLength(20)]],
+        Security: [null, [Validators.pattern(this.regexWholeNumberPattern), Validators.maxLength(20)]],
       }),
 
       AddressInfo: this.fb.group({
-        FloorNo: [null],
-        TotalFloors: [null],
-        Address: [null, Validators.required],
-        LandMark: [null]
+        FloorNo: [null, [Validators.pattern(this.regexWholeNumberPattern), Validators.maxLength(10)]],
+        TotalFloors: [null, [Validators.pattern(this.regexWholeNumberPattern), Validators.maxLength(10)]],
+        Address: [null, [Validators.required, Validators.maxLength(100)]],
+        LandMark: [null, [Validators.maxLength(100)]]
       }),
 
       OtherInfo: this.fb.group({
         RTM: [null,Validators.required],
-        PossessionOn: [null],
-        AOP: [null],
+        PossessionOn: [null, [this.isValidDateFormat]],
+        AOP: [null, [Validators.pattern(this.regexWholeNumberPattern), Validators.maxLength(4)]],
         Gated: [null],
-        MainEntrance: [null],
-        Description: [null]
+        MainEntrance: [null, [Validators.maxLength(100)]],
+        Description: [null, [Validators.maxLength(900)]]
       })
 
     });
+  }
+
+  isValidDateFormat(control: AbstractControl) {
+    const inputDate = new Date(control.value);
+
+    if (isNaN(inputDate.getTime())) {
+      return { invalidDate: true };
+    }
+
+    const day = inputDate.getUTCDate();
+    const month = inputDate.getUTCMonth() + 1;
+    const year = inputDate.getUTCFullYear();
+
+    const formattedDate = `${day.toString().padStart(2, '0')}-${month.toString().padStart(2, '0')}-${year}`;
+    const dateRegex = /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/;
+
+    if (!dateRegex.test(formattedDate)) {
+      return { invalidDate: true };
+    }
+    return null;
   }
 
   onBack() {
@@ -419,8 +443,6 @@ export class AddPropertyComponent {
     this.photosSelectedPreview[previewImageEndId]= photoStartPreview;
     this.updatePreviewPhoto()
   }
-
-
 }
 
 

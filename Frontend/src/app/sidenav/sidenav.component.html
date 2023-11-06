@@ -36,5 +36,16 @@
       <span>{{item.label}}</span>
     </li>
   </ul>
+
+  <div class="main-menu option" (click)="toggleOtherDrawer()">
+    <span>Other</span>
+    <i class='bx bx-chevron-left' [ngClass]="{ 'rotate-90-deg-back' : otherDrawerState == 'open' }"></i>
+  </div>
+  <ul class="option-menu" [@drawerState]="otherDrawerState">
+    <li *ngFor="let item of sidenavOtherEntries" class="option" (click)="navigateUrl(item.url)">
+      <i class="{{item.icon}} option-icon"></i>
+      <span>{{item.label}}</span>
+    </li>
+  </ul>
 </div>
 

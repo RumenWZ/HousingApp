@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { sidenavGeneralEntries, sidenavUserEntries } from './sidenav-entries';
+import { sidenavGeneralEntries, sidenavOtherEntries, sidenavUserEntries } from './sidenav-entries';
 import { SidenavService } from '../services/sidenav.service';
 import { Router } from '@angular/router';
 import { UserService } from '../services/user.service';
@@ -21,9 +21,11 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 export class SidenavComponent {
   sidenavGeneralEntries = sidenavGeneralEntries;
   sidenavUserEntries = sidenavUserEntries;
+  sidenavOtherEntries = sidenavOtherEntries;
   user: any;
   generalDrawerState = 'closed';
   userDrawerState = 'closed';
+  otherDrawerState = 'closed';
 
   constructor(
     private sidenav: SidenavService,
@@ -42,6 +44,9 @@ export class SidenavComponent {
 
   toggleSidenav() {
     this.sidenav.toggleSidenav();
+    this.generalDrawerState = 'closed';
+    this.userDrawerState = 'closed';
+    this.otherDrawerState = 'closed';
   }
 
   onLogout() {
@@ -56,6 +61,10 @@ export class SidenavComponent {
 
   toggleUserDrawer() {
     this.userDrawerState = (this.userDrawerState === 'closed') ? 'open' : 'closed';
+  }
+
+  toggleOtherDrawer() {
+    this.otherDrawerState = (this.otherDrawerState === 'closed') ? 'open' : 'closed';
   }
 
   ngOnInit() {

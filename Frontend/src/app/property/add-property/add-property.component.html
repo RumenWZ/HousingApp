@@ -52,6 +52,8 @@
               <span *ngIf="!Name.valid && (Name.touched || clickedNext)" class="error-block">
                 <span *ngIf="Name.errors.required">Field required</span>
                 <span *ngIf="Name.errors.minlength">The name must be at least 5 characters long</span>
+                <span *ngIf="Name.errors.maxlength">The name must be less than 30 characters long</span>
+                <span *ngIf="Name.errors.pattern">The name can contain only letters</span>
               </span>
             </div>
 
@@ -76,31 +78,48 @@
               <label><span *ngIf="SellOrRent.value==1">Price</span><span *ngIf="SellOrRent.value==2">Rent per month</span> (in EUR)*</label>
               <input type="text" class="form-control" formControlName="Price" [(ngModel)]="propertyView.price">
               <span class="error-block" *ngIf="Price.invalid && (Price.touched || clickedNext)">
-                Field required
+                <span *ngIf="Price.hasError('required')">Field required</span>
+                <span *ngIf="Price.hasError('pattern')">Only whole numbers allowed</span>
+                <span *ngIf="!Price.hasError('pattern') && Price.hasError('maxlength')">Too expensive!</span>
               </span>
+
             </div>
 
             <div class="form-group col-12">
               <label>Security (in EUR)</label>
               <input type="text" class="form-control" formControlName="Security">
+              <span class="error-block" *ngIf="Security.invalid && Security.touched">
+                <span *ngIf="Security.errors.pattern">Only numbers are allowed</span>
+                <span *ngIf="Security.errors.maxlength && !Security.errors.pattern">The number is too large</span>
+              </span>
             </div>
 
             <div class="form-group col-12">
               <label>Maintenance (in EUR)</label>
               <input type="text" class="form-control" formControlName="Maintenance">
+              <span class="error-block" *ngIf="Maintenance.invalid && Maintenance.touched">
+                <span *ngIf="Maintenance.errors.pattern">Only numbers are allowed</span>
+                <span *ngIf="Maintenance.errors.maxlength && !Maintenance.errors.pattern">The number is too large</span>
+              </span>
             </div>
 
             <div class="form-group col-12">
               <label>Built Area (in Sqr Feet)*</label>
               <input type="text" class="form-control" [(ngModel)]="propertyView.builtArea" formControlName="BuiltArea">
               <span class="error-block" *ngIf="BuiltArea.invalid && (BuiltArea.touched || clickedNext)">
-                Field required
+                <span *ngIf="BuiltArea.errors.required">This field is required</span>
+                <span *ngIf="BuiltArea.errors.pattern">Only numbers are allowed</span>
+                <span *ngIf="BuiltArea.errors.maxlength">The number is too large</span>
               </span>
             </div>
 
             <div class="form-group col-12">
               <label>Carpet Area(in Sqr Feet)</label>
               <input type="text" class="form-control" formControlName="CarpetArea">
+              <span class="error-block" *ngIf="CarpetArea.invalid && CarpetArea.touched">
+                <span *ngIf="CarpetArea.errors.pattern">Only numbers are allowed</span>
+                <span *ngIf="CarpetArea.errors.maxlength && !CarpetArea.errors.pattern">The number is too large</span>
+              </span>
             </div>
             <div class="form-group col-12 mt-3">
               <button (click)="selectTab(2, PriceInfo.valid)" type="button" class="btn btn-primary" style="width: 100%;">Next -></button>
@@ -112,24 +131,36 @@
             <div class="form-group col-12">
               <label>Floor</label>
               <input type="text" class="form-control" formControlName="FloorNo">
+              <span class="error-block" *ngIf="FloorNo.invalid && FloorNo.touched">
+                <span *ngIf="FloorNo.errors.pattern">Only numbers are allowed</span>
+                <span *ngIf="FloorNo.errors.maxlength && !FloorNo.errors.pattern">The number is too large</span>
+              </span>
             </div>
 
             <div class="form-group col-12">
-              <label>Total Floor</label>
+              <label>Total Floors</label>
               <input type="text" class="form-control" formControlName="TotalFloors">
+              <span class="error-block" *ngIf="TotalFloors.invalid && TotalFloors.touched">
+                <span *ngIf="TotalFloors.errors.pattern">Only numbers are allowed</span>
+                <span *ngIf="TotalFloors.errors.maxlength && !TotalFloors.errors.pattern">The number is too large</span>
+              </span>
             </div>
 
             <div class="form-group col-12">
               <label>Address*</label>
               <input type="text" class="form-control" formControlName="Address">
               <div class="error-block" *ngIf="Address.invalid && (Address.touched || clickedNext)">
-                Address field required
+                <span *ngIf="Address.errors.required">This field is required</span>
+                <span *ngIf="Address.errors.maxlength">Address is too long</span>
               </div>
             </div>
 
             <div class="form-group col-12">
               <label>Landmark</label>
               <input type="text" class="form-control" formControlName="LandMark">
+            </div>
+            <div class="error-block" *ngIf="LandMark.invalid && LandMark.touched">
+              <span *ngIf="LandMark.errors.maxlength">Address is too long</span>
             </div>
             <div class="form-group col-12 mt-3">
               <button (click)="selectTab(3, AddressInfo.valid)" type="button" class="btn btn-primary" style="width: 100%;">Next -></button>
@@ -161,15 +192,22 @@
 
             <div class="form-group">
               <label>Possession/Avaialble From</label>
-              <input type="text" formControlName="PossessionOn" placeholder="Select date" class="form-control possession" bsDatepicker [bsConfig]="{
+              <input type="text" formControlName="PossessionOn" [(ngModel)]="posessionOnValue" placeholder="Select date" class="form-control possession" bsDatepicker [bsConfig]="{
                 containerClass : 'theme-dark-blue',
                 dateInputFormat: 'DD-MM-YYYY'
               }">
+              <div class="error-block" *ngIf="!PossessionOn.valid && PossessionOn.touched">
+                <span *ngIf="PossessionOn.errors.invalidDate">Invalid date. Please follow a DD-MM-YYYY date format</span>
+              </div>
             </div>
 
             <div class="form-group col-12">
-              <label>Age of Property</label>
+              <label>Age of Property (in years)</label>
               <input type="text" class="form-control" formControlName="AOP">
+              <div *ngIf="!AOP.valid && AOP.touched" class="error-block">
+                <span *ngIf="AOP.errors.pattern">Only numbers are allowed</span>
+                <span *ngIf="AOP.errors.maxlength && !AOP.errors.pattern">The property is too old</span>
+              </div>
             </div>
 
             <div class="form-group col-12">
@@ -190,11 +228,17 @@
             <div class="form-group col-12">
               <label>Main Entrance</label>
               <input type="text" class="form-control" formControlName="MainEntrance">
+              <div *ngIf="!MainEntrance.valid && MainEntrance.touched" class="error-block">
+                <span *ngIf="MainEntrance.errors.maxlength">Too many characters!</span>
+              </div>
             </div>
 
             <div class="form-group col-12" >
               <label>Description</label>
               <textarea type="text" class="form-control" formControlName="Description" rows="6"></textarea>
+              <div *ngIf="!Description.valid && Description.touched" class="error-block">
+                <span *ngIf="Description.errors.maxlength">Description is too long!</span>
+              </div>
             </div>
           <div class="form-group col-12 mt-3">
             <button (click)="selectTab(4, OtherInfo.valid)" type="button" class="btn btn-primary" style="width: 100%;">Next -></button>
