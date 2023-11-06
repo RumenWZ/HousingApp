@@ -203,6 +203,9 @@ export class AddPropertyComponent {
   }
 
   isValidDateFormat(control: AbstractControl) {
+    if (!control.value) {
+      return null;
+    }
     const inputDate = new Date(control.value);
 
     if (isNaN(inputDate.getTime())) {

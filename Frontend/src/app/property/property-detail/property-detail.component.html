@@ -60,11 +60,11 @@
 
                   <div class="heading">
                       <strong>Age of Property</strong>
-                      <p>{{property.age}}</p>
+                      <p><span *ngIf="property.age">{{property.age}} years old</span></p>
                   </div>
 
                   <div class="heading">
-                      <strong>Posession</strong>
+                      <strong>Available on</strong>
                       <p>{{property?.estPossessionOn | date: 'longDate'}}</p>
                   </div>
               </div>
@@ -75,18 +75,18 @@
                       <p>{{property.mainEntrance}}</p>
                   </div>
 
-                  <div class="heading">
+                  <div *ngIf="!property.gated === null" class="heading">
                       <strong>Gated Community</strong>
-                      <p>{{property.gated}}</p>
+                      <p><span *ngIf="property.gated === false">No</span><span *ngIf="property.gated">Yes</span></p>
                   </div>
 
                   <div *ngIf="property.security" class="heading">
                       <strong>Security Deposit</strong>
-                      <p>{{property.security}}</p>
+                      <p>{{property.security | number:'':'en'}}€ per month</p>
                   </div>
-                  <div class="heading">
+                  <div *ngIf="property.maintenance" class="heading">
                       <strong>Maintenance</strong>
-                      <p>{{property.maintenance}}</p>
+                      <p>{{property.maintenance | number:'':'en'}}€ per month</p>
                   </div>
               </div>
               <div class="col-sm-12">

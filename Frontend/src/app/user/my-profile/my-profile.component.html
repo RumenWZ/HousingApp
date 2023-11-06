@@ -44,6 +44,9 @@
               <button class="btn btn-primary" routerLink="/property-detail/{{prop.id}}"><i class="fa-regular fa-pen-to-square"></i></button>
             </li>
             <li class="list-inline-item">
+              <button class="btn btn-warning" routerLink="/edit-property/{{prop.id}}"><i class="fa-regular fa-pen-to-square"></i></button>
+            </li>
+            <li class="list-inline-item">
               <button class="btn btn-danger" (click)="confirmDelete(prop)"><i class="fa-solid fa-trash-can"></i></button>
             </li>
           </ul>

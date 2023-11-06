@@ -35,12 +35,15 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ChangePasswordComponent } from './user/change-password/change-password.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { DocumentationComponent } from './documentation/documentation.component';
+import { EditPropertyComponent } from './property/edit-property/edit-property.component';
+import { PropertyOwnerGuard } from './guards/property-owner.guard';
 
 const appRoutes: Routes = [
   {path: 'add-property', component: AddPropertyComponent},
   {path: '', component: PropertyListComponent},
   {path: 'rent-property', component: PropertyListComponent},
   {path: 'property-detail/:id', component: PropertyDetailComponent},
+  {path: 'edit-property/:id', component: EditPropertyComponent, canActivate: [PropertyOwnerGuard]},
   {path: 'user/login', component: UserLoginComponent},
   {path: 'user/register', component: UserRegisterComponent},
   {path: 'user/my-profile', component: MyProfileComponent},
@@ -65,7 +68,8 @@ const appRoutes: Routes = [
     ConfirmActionComponent,
     ChangePasswordComponent,
     SidenavComponent,
-    DocumentationComponent
+    DocumentationComponent,
+    EditPropertyComponent
 
   ],
   imports: [
