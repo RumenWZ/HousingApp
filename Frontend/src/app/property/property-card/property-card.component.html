@@ -5,10 +5,10 @@
         <img *ngIf="!property.image && property.photo" class="card-img-top display-image" [src]="property.photo">
         <ul *ngIf="!hideIcons" class="list-inline text-center member-icons animate">
           <li class="list-inline-item">
-            <button class="btn btn-primary" routerLink="/property-detail/{{property.id}}"><i class="fa-regular fa-pen-to-square"></i></button>
+            <button class="btn btn-primary" routerLink="/property-detail/{{property.id}}" title="Property Details"><i class="fa-solid fa-magnifying-glass"></i></button>
           </li>
           <li class="list-inline-item">
-            <button class="btn btn-success"><i class="fa-solid fa-phone"></i></button>
+            <button class="btn btn-success" title="Cosmetic Only"><i class="fa-solid fa-phone"></i></button>
           </li>
         </ul>
       </div>

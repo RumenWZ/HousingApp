@@ -157,5 +157,30 @@ namespace WebAPI.Controllers
 
             return Ok(201);
         }
+
+        [HttpPatch("update-details/{id}")]
+        [Authorize]
+        public async Task<IActionResult> UpdatePropertyDetails(int id, PropertyAddDTO updatedProperty)
+        {
+            var property = await uow.PropertyRepository.GetPropertyDetailsAsync(id);
+            if (property == null)
+            {
+                return BadRequest("Property not found");
+            }
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var user = await uow.UserRepository.GetUserByTokenAsync(HttpContext.GetAuthToken());
+            if (user.Id != property.PostedBy)
+            {
+                return BadRequest("This property listing does not belong to you");
+            }
+
+            mapper.Map(updatedProperty, property);
+
+            await uow.SaveAsync();
+            return Ok(201);
+        }
     }
 }

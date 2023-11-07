@@ -56,4 +56,7 @@ export class HousingService {
     return this.http.delete(`${this.baseUrl}/property/delete/${id}`);
   }
 
+  updatePropertyDetails(id: number, data: Property) {
+    return this.http.patch(`${this.baseUrl}/property/update-details/${id}`, data);
+  }
 }

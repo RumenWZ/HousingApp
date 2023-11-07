@@ -20,6 +20,7 @@ export class EditPropertyComponent {
   clickedNext: boolean;
   editPropertyForm: FormGroup;
   property: any;
+  updatedProperty = new Property();
   cityList: any[];
 
   propertyTypes: Array<BasicPropertyOption>;
@@ -132,6 +133,15 @@ export class EditPropertyComponent {
   }
 
   onSubmit() {
+    if (this.TabValidityChecker()) {
+      this.mapProperty();
+      console.log(this.updatedProperty);
+      this.housingService.updatePropertyDetails(this.property.id, this.updatedProperty).subscribe((response: any) => {
+        if (response == 201) {
+          this.alertify.success('Successfully updated property');
+        }
+      });
+    }
 
   }
 
@@ -144,11 +154,6 @@ export class EditPropertyComponent {
     if(this.photosSelected.length >= 6) {
       fileInput.value = '';
       return this.alertify.warning('You can upload a maximum of 6 photos per property');
-    }
-
-    if (this.photosSelected.some(selectedFile => selectedFile.name === file.name)) {
-      fileInput.value = '';
-      return this.alertify.warning(`An image with that file name is already selected`);
     }
 
     if (!allowedFormats.includes(file.type)) {
@@ -289,6 +294,11 @@ export class EditPropertyComponent {
       city: this.property.city.name,
       image: null
     };
+
+    const primaryPhoto = this.property.photos.find((photo: any) => photo.isPrimary);
+    if (primaryPhoto) {
+      this.propertyView.image = primaryPhoto.photoUrl;
+    }
   }
 
   ngOnInit() {
@@ -302,35 +312,37 @@ export class EditPropertyComponent {
     this.housingService.getFullPropertyDetails(propertyId).subscribe((response: any) => {
       this.property = response;
       console.log(this.property);
+      for (const photo of this.property.photos) {
+        this.photosSelectedPreview.push({url : photo.photoUrl});
+        this.photosSelected.push(photo);
+      }
       this.assignFormValues();
     });
 
   }
 
-
-
   mapProperty(): void {
-    this.property.sellOrRent = +this.SellOrRent.value;
-    this.property.name = this.Name.value;
-    this.property.propertyTypeId = this.PType.value;
-    this.property.bhk = this.BHK.value;
-    this.property.furnishingTypeId = this.FType.value;
-    this.property.price = this.Price.value;
-    this.property.builtArea = this.BuiltArea.value;
-    this.property.carpetArea = this.CarpetArea.value;
-    this.property.address = this.Address.value;
-    this.property.address2 = this.LandMark.value;
-    this.property.cityId = this.City.value;
-    this.property.floorNo = this.FloorNo.value;
-    this.property.totalFloors = this.TotalFloors.value;
-    this.property.readyToMove = this.RTM.value;
-    this.property.age = this.Age.value;
-    this.property.mainEntrance = this.MainEntrance.value;
-    this.property.security = this.Security.value;
-    this.property.gated = this.Gated.value;
-    this.property.maintenance = this.Maintenance.value;
-    this.property.estPossessionOn = this.PossessionOn.value;
-    this.property.description = this.Description.value;
+    this.updatedProperty.sellOrRent = +this.SellOrRent.value;
+    this.updatedProperty.name = this.Name.value;
+    this.updatedProperty.propertyTypeId = this.PType.value;
+    this.updatedProperty.bhk = this.BHK.value;
+    this.updatedProperty.furnishingTypeId = this.FType.value;
+    this.updatedProperty.price = this.Price.value;
+    this.updatedProperty.builtArea = this.BuiltArea.value;
+    this.updatedProperty.carpetArea = this.CarpetArea.value;
+    this.updatedProperty.address = this.Address.value;
+    this.updatedProperty.address2 = this.LandMark.value;
+    this.updatedProperty.cityId = this.City.value;
+    this.updatedProperty.floorNo = this.FloorNo.value;
+    this.updatedProperty.totalFloors = this.TotalFloors.value;
+    this.updatedProperty.readyToMove = this.RTM.value;
+    this.updatedProperty.age = this.Age.value;
+    this.updatedProperty.mainEntrance = this.MainEntrance.value;
+    this.updatedProperty.security = this.Security.value;
+    this.updatedProperty.gated = this.Gated.value;
+    this.updatedProperty.maintenance = this.Maintenance.value;
+    this.updatedProperty.estPossessionOn = this.PossessionOn.value;
+    this.updatedProperty.description = this.Description.value;
   }
 
   //#region get form values

@@ -13,7 +13,7 @@
         public string City { get; set; }
         public string Country { get; set; }
         public bool ReadyToMove { get; set; }
-        public DateTime EstPossessionOn { get; set; }
+        public DateTime? EstPossessionOn { get; set; }
         public string Photo { get; set; }
     }
 }

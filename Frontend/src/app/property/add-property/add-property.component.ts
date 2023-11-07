@@ -140,20 +140,6 @@ export class AddPropertyComponent {
     this.updatePreviewPhoto();
   }
 
-  getPhotoURL(file: File){
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => {
-        const photoURL = reader.result as string;
-        resolve(photoURL);
-      };
-      reader.onerror = (error) => {
-        reject(error);
-      };
-      reader.readAsDataURL(file);
-    });
-  }
-
   ngOnInit() {
     this.GetPropertyTypeOptions();
     this.CreateAddPropertyForm();
