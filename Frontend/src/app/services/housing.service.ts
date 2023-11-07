@@ -40,6 +40,10 @@ export class HousingService {
     return this.http.get(`${this.baseUrl}/property/details/${id}`);
   }
 
+  getFullPropertyDetails(id: number) {
+    return this.http.get(`${this.baseUrl}/property/full-details/${id}`);
+  }
+
   getAllProperties(sellRent?: number) {
     return this.http.get(`${this.baseUrl}/property/list/${sellRent}`);
   }

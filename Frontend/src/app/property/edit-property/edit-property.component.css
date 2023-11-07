@@ -1,0 +1,9 @@
+@import '../add-property/add-property.component.css';
+
+.headerx, .btn-primary {
+  background-color: #e2a30f !important;
+}
+
+.btn-primary {
+  border-color: #e2a30f;
+}

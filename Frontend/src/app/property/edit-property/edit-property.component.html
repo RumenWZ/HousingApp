@@ -1,1 +1,284 @@
-<p>edit-property works!</p>
+<div class="main-container">
+  <div class="form-container">
+    <div class="card bg-white shadow-lg">
+  <span class="headerx">Edit Your Property</span>
+  <div class="card-body">
+    <form (ngSubmit)="onSubmit()" [formGroup]="editPropertyForm">
+      <div class="tab-panel">
+        <tabset class="member-tabset" #formTabs>
+          <tab heading="Basic information" formGroupName="BasicInfo">
+            <div class="form-group col-12">
+              <label>I want to*</label><br/>
+              <div class="btn-group" btnRadioGroup [(ngModel)]="propertyView.sellOrRent" formControlName="SellOrRent">
+                <label class="btn btn-outline-primary" btnRadio="1" tabindex="0" role="button" name="SellOrRent">Sell</label>
+                <label class="btn btn-outline-primary" btnRadio="2" tabindex="0" role="button" name="SellOrRent">Rent</label>
+              </div>
+            </div>
+
+
+            <div class="form-group col-12">
+              <label>BHK (Bedroom, Hall, Kitchen)*</label><br/>
+              <div class="btn-group" btnRadioGroup [(ngModel)]="propertyView.bhk" formControlName="BHK">
+                <label *ngFor="let x of [1,2,3,4]" class="btn btn-outline-primary" [btnRadio]="x" role="button">{{x}}</label>
+              </div>
+              <div class="error-block" *ngIf="BHK.invalid && (BHK.touched || clickedNext)">
+                Select the number of BHKs
+              </div>
+            </div>
+
+            <div class="form-group col-12">
+              <label>Type of Property*</label><br/>
+              <div class="btn-group" btnRadioGroup formControlName="propType" formControlName="PType">
+                <label *ngFor="let ptype of propertyTypes" (click)="propertyView.propertyType=ptype.name" class="btn btn-outline-primary" [btnRadio]="ptype.id" role="button" name="PropType">{{ptype.name}}</label>
+              </div>
+              <div class="error-block" *ngIf="PType.invalid && (PType.touched || clickedNext)">
+                Select the property type
+              </div>
+            </div>
+
+            <div class="form-group col-12">
+              <label>Furnishing Type*</label><br/>
+              <div class="btn-group" btnRadioGroup formControlName="FType">
+                <label *ngFor="let ftype of furnishingTypes" (click)="propertyView.furnishingType=ftype.name" class="btn btn-outline-primary" [btnRadio]="ftype.id" role="button" name="SellRent">{{ftype.name}}</label>
+              </div>
+              <div class="error-block" *ngIf="FType.invalid && (FType.touched || clickedNext)">
+                Select type of furnishing
+              </div>
+            </div>
+
+            <div class="col-12 form-group">
+              <label>in Building/Project*</label>
+              <input [(ngModel)]="propertyView.name" [value]="property?.name" type="text" class="form-control" ngModel formControlName="Name" required minlength="5">
+              <span *ngIf="!Name.valid && (Name.touched || clickedNext)" class="error-block">
+                <span *ngIf="Name.errors.required">Field required</span>
+                <span *ngIf="Name.errors.minlength">The name must be at least 5 characters long</span>
+                <span *ngIf="Name.errors.maxlength">The name must be less than 30 characters long</span>
+                <span *ngIf="Name.errors.pattern">The name can contain only letters</span>
+              </span>
+            </div>
+
+            <div class="form-group col-12">
+              <label>City*</label>
+              <select class="form-control" formControlName="City" (change)="cityChanged()">
+                <option value="">--Select City--</option>
+                <option *ngFor="let city of cityList" value="{{city.id}}">{{city.name}}</option>
+              </select>
+              <div class="error-block" *ngIf="City.invalid && (City.touched || clickedNext)">
+                Field required
+              </div>
+            </div>
+
+            <div class="form-group col-12 mt-3">
+              <button (click)="selectTab(1, BasicInfo.valid)" type="button" class="btn btn-primary" style="width: 100%;">Next -></button>
+            </div>
+          </tab>
+
+          <tab heading="Pricing and Area" formGroupName="PriceInfo">
+            <div class="form-group col-12" >
+              <label><span *ngIf="SellOrRent.value==1">Price</span><span *ngIf="SellOrRent.value==2">Rent per month</span> (in EUR)*</label>
+              <input type="text" class="form-control" formControlName="Price" [(ngModel)]="propertyView.price">
+              <span class="error-block" *ngIf="Price.invalid && (Price.touched || clickedNext)">
+                <span *ngIf="Price.hasError('required')">Field required</span>
+                <span *ngIf="Price.hasError('pattern')">Only whole numbers allowed</span>
+                <span *ngIf="!Price.hasError('pattern') && Price.hasError('maxlength')">Too expensive!</span>
+              </span>
+
+            </div>
+
+            <div class="form-group col-12">
+              <label>Security (in EUR)</label>
+              <input type="text" class="form-control" formControlName="Security">
+              <span class="error-block" *ngIf="Security.invalid && Security.touched">
+                <span *ngIf="Security.errors.pattern">Only numbers are allowed</span>
+                <span *ngIf="Security.errors.maxlength && !Security.errors.pattern">The number is too large</span>
+              </span>
+            </div>
+
+            <div class="form-group col-12">
+              <label>Maintenance (in EUR)</label>
+              <input type="text" class="form-control" formControlName="Maintenance">
+              <span class="error-block" *ngIf="Maintenance.invalid && Maintenance.touched">
+                <span *ngIf="Maintenance.errors.pattern">Only numbers are allowed</span>
+                <span *ngIf="Maintenance.errors.maxlength && !Maintenance.errors.pattern">The number is too large</span>
+              </span>
+            </div>
+
+            <div class="form-group col-12">
+              <label>Built Area (in Sqr Feet)*</label>
+              <input type="text" class="form-control" [(ngModel)]="propertyView.builtArea" formControlName="BuiltArea">
+              <span class="error-block" *ngIf="BuiltArea.invalid && (BuiltArea.touched || clickedNext)">
+                <span *ngIf="BuiltArea.errors.required">This field is required</span>
+                <span *ngIf="BuiltArea.errors.pattern">Only numbers are allowed</span>
+                <span *ngIf="BuiltArea.errors.maxlength">The number is too large</span>
+              </span>
+            </div>
+
+            <div class="form-group col-12">
+              <label>Carpet Area(in Sqr Feet)</label>
+              <input type="text" class="form-control" formControlName="CarpetArea">
+              <span class="error-block" *ngIf="CarpetArea.invalid && CarpetArea.touched">
+                <span *ngIf="CarpetArea.errors.pattern">Only numbers are allowed</span>
+                <span *ngIf="CarpetArea.errors.maxlength && !CarpetArea.errors.pattern">The number is too large</span>
+              </span>
+            </div>
+            <div class="form-group col-12 mt-3">
+              <button (click)="selectTab(2, PriceInfo.valid)" type="button" class="btn btn-primary" style="width: 100%;">Next -></button>
+              <button (click)="selectTab(0)" type="button" class="btn btn-primary mt-1" style="width: 100%;"><- Back</button>
+            </div>
+          </tab>
+
+          <tab heading="Address" formGroupName="AddressInfo">
+            <div class="form-group col-12">
+              <label>Floor</label>
+              <input type="text" class="form-control" formControlName="FloorNo">
+              <span class="error-block" *ngIf="FloorNo.invalid && FloorNo.touched">
+                <span *ngIf="FloorNo.errors.pattern">Only numbers are allowed</span>
+                <span *ngIf="FloorNo.errors.maxlength && !FloorNo.errors.pattern">The number is too large</span>
+              </span>
+            </div>
+
+            <div class="form-group col-12">
+              <label>Total Floors</label>
+              <input type="text" class="form-control" formControlName="TotalFloors">
+              <span class="error-block" *ngIf="TotalFloors.invalid && TotalFloors.touched">
+                <span *ngIf="TotalFloors.errors.pattern">Only numbers are allowed</span>
+                <span *ngIf="TotalFloors.errors.maxlength && !TotalFloors.errors.pattern">The number is too large</span>
+              </span>
+            </div>
+
+            <div class="form-group col-12">
+              <label>Address*</label>
+              <input type="text" class="form-control" formControlName="Address">
+              <div class="error-block" *ngIf="Address.invalid && (Address.touched || clickedNext)">
+                <span *ngIf="Address.errors.required">This field is required</span>
+                <span *ngIf="Address.errors.maxlength">Address is too long</span>
+              </div>
+            </div>
+
+            <div class="form-group col-12">
+              <label>Landmark</label>
+              <input type="text" class="form-control" formControlName="LandMark">
+            </div>
+            <div class="error-block" *ngIf="LandMark.invalid && LandMark.touched">
+              <span *ngIf="LandMark.errors.maxlength">Address is too long</span>
+            </div>
+            <div class="form-group col-12 mt-3">
+              <button (click)="selectTab(3, AddressInfo.valid)" type="button" class="btn btn-primary" style="width: 100%;">Next -></button>
+              <button (click)="selectTab(1)" type="button" class="btn btn-primary mt-1" style="width: 100%;"><- Back</button>
+            </div>
+          </tab>
+
+          <tab heading="Other" formGroupName="OtherInfo">
+            <div class="form-group col-12">
+              <label>Ready to Move*</label><br/>
+              <div class="btn-group" btnRadioGroup
+                  formControlName="RTM">
+                    <label class="btn btn-outline-primary mr-2 mt-1"
+                      btnRadio=true tabindex="0" role="button"
+                      (click)="propertyView.readyToMove=true"
+                      name="RTM">Yes
+                    </label>
+
+                    <label class="btn btn-outline-primary mt-1"
+                      btnRadio=false  tabindex="0" role="button"
+                      (click)="propertyView.readyToMove=false"
+                      name="RTM">No
+                    </label>
+                  </div>
+                  <div class="error-block" *ngIf="RTM.invalid && clickedNext">
+                    Please select ready to move
+                  </div>
+            </div>
+
+            <div class="form-group">
+              <label>Possession/Avaialble From</label>
+              <input type="text" formControlName="PossessionOn" placeholder="Select date" class="form-control possession" bsDatepicker [bsConfig]="{
+                containerClass : 'theme-dark-blue',
+                dateInputFormat: 'DD-MM-YYYY'
+              }">
+              <div class="error-block" *ngIf="!PossessionOn.valid && PossessionOn.touched">
+                <span *ngIf="PossessionOn.errors.invalidDate">Invalid date. Please follow a DD-MM-YYYY date format</span>
+              </div>
+            </div>
+
+            <div class="form-group col-12">
+              <label>Age of Property (in years)</label>
+              <input type="text" class="form-control" formControlName="Age">
+              <div *ngIf="!Age.valid && Age.touched" class="error-block">
+                <span *ngIf="Age.errors.pattern">Only numbers are allowed</span>
+                <span *ngIf="Age.errors.maxlength && !Age.errors.pattern">The property is too old</span>
+              </div>
+            </div>
+
+            <div class="form-group col-12">
+              <label>Gated</label><br/>
+              <div class="btn-group" btnRadioGroup
+                  formControlName="Gated">
+                    <label class="btn btn-outline-primary mr-2 mt-1"
+                      btnRadio=true tabindex="0" role="button"
+                      name="gated">Yes
+                    </label>
+                    <label class="btn btn-outline-primary mt-1"
+                      btnRadio=false  tabindex="0" role="button"
+                      name="Gated">No
+                    </label>
+                  </div>
+            </div>
+
+            <div class="form-group col-12">
+              <label>Main Entrance</label>
+              <input type="text" class="form-control" formControlName="MainEntrance">
+              <div *ngIf="!MainEntrance.valid && MainEntrance.touched" class="error-block">
+                <span *ngIf="MainEntrance.errors.maxlength">Too many characters!</span>
+              </div>
+            </div>
+
+            <div class="form-group col-12" >
+              <label>Description</label>
+              <textarea type="text" class="form-control" formControlName="Description" rows="6"></textarea>
+              <div *ngIf="!Description.valid && Description.touched" class="error-block">
+                <span *ngIf="Description.errors.maxlength">Description is too long!</span>
+              </div>
+            </div>
+          <div class="form-group col-12 mt-3">
+            <button (click)="selectTab(4, OtherInfo.valid)" type="button" class="btn btn-primary" style="width: 100%;">Next -></button>
+            <button (click)="selectTab(2)" type="button" class="btn btn-primary mt-1" style="width: 100%;"><- Back</button>
+          </div></tab>
+
+          <tab heading="Photos">
+            <div class="form-group col-12">
+              <div class="submit-photo-control">
+                <div class="photo-upload-button">
+                  <label for="fileUpload" class="upload-button">Upload</label>
+                  <input type="file" id="fileUpload" #photoBeltList (change)="onFileSelected($event)" accept="image/*" style="display: none;">
+                </div>
+
+                <div class="photo-belt" cdkDropList cdkDropListSortingDisabled="true" (cdkDropListDropped)="dropPhoto($event)">
+                  <div *ngFor="let photo of photosSelectedPreview; let i = index" class="photo-belt-item">
+                    <img  [src]="photo.url" alt="Preview image" data-id="{{i}}" cdkDrag cdkDragData="photo" cdkDragBoundary=".photo-belt"
+                    (cdkDragStarted)="dragStarted(i)">
+                    <i class='bx bx-x remove-button' (click)="removeSelectedPhoto(i)"></i>
+                  </div>
+                </div>
+              </div>
+              <span *ngIf="photosSelected.length > 0" style="font-family: italics; "><strong style="color: var(--main-dark-blue);">IMPORTANT</strong>: The first photo highlighted in blue will be the primary photo for your property. You can drag and drop the photos to sort them to your liking.</span>
+            </div>
+            <div class="form-group col-12 mt-3">
+              <button (click)="selectTab(3)" type="button" class="btn btn-primary mt-1" style="width: 100%;"><- Back</button>
+              <button type="reset" class="btn btn-primary mt-1" style="width: 100%;">Cancel</button>
+              <button (click)="selectTab(3)" type="submit" class="btn btn-primary mt-1" style="width: 100%;">Save</button>
+            </div>
+          </tab>
+        </tabset>
+      </div>
+    </form>
+  </div>
+</div>
+</div>
+<div class="preview-container">
+  <span class="headerx">Preview</span>
+    <div class="shadow-lg p-3 bg-white">
+      <app-property-card class="preview" [property]="propertyView" [hideIcons]="true"></app-property-card>
+    </div>
+</div>
+</div>

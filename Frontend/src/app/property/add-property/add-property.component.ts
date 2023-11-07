@@ -1,6 +1,6 @@
-import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, NgForm, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { TabsetComponent } from 'ngx-bootstrap/tabs';
 import { IPropertyBase } from 'src/app/model/ipropertybase';
 import { BasicPropertyOption, Property } from 'src/app/model/property';
@@ -30,7 +30,6 @@ export class AddPropertyComponent {
   newPropertyId: number;
   dragStartIndex: number;
   isUploading: boolean = false;
-  posessionOnValue: string;
 
   regexOnlyLettersPattern = /^[a-zA-Z\s]*$/;
   regexWholeNumberPattern = /^[0-9]+$/;
@@ -161,7 +160,7 @@ export class AddPropertyComponent {
     this.GetFurnishingTypeOptions();
     this.housingService.getAllCities().subscribe(data => {
       this.cityList = data;
-    })
+    });
   }
 
   CreateAddPropertyForm() {

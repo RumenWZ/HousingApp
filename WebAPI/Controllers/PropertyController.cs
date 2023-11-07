@@ -51,7 +51,19 @@ namespace WebAPI.Controllers
             return Ok(propertyDTO);
         }
 
-        
+        [HttpGet("full-details/{id}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetFullPropertyDetails(int id)
+        {
+            var property = await uow.PropertyRepository.GetPropertyDetailsAsync(id);
+            if (property == null)
+            {
+                return BadRequest("Property not found");
+            }
+            return Ok(property);
+        }
+
+
         [HttpPost("add-property")]
         [Authorize]
         public async Task<IActionResult> AddPropertyDetails([FromBody] PropertyAddDTO propertyDTO)
