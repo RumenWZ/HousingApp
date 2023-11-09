@@ -96,7 +96,7 @@ namespace WebAPI.Controllers
                 return BadRequest("You can not modify other people's properties");
             }
 
-            bool isFirstPhoto = true;
+            var index = 0;
 
             foreach(var photo in photos)
             {
@@ -120,12 +120,13 @@ namespace WebAPI.Controllers
                 var newPhoto = new Photo
                 {
                     PhotoUrl = photoUrl,
-                    IsPrimary = isFirstPhoto,
+                    IsPrimary = index == 0,
                     PropertyId = property.Id,
                     LastUpdatedBy = user.Id,
-                    PublicId = uploadResult.PublicId
+                    PublicId = uploadResult.PublicId,
+                    PhotoIndex = index,
                 };
-                isFirstPhoto = false;
+                index++;
                 property.Photos.Add(newPhoto);
                 await uow.SaveAsync();
             }
@@ -179,6 +180,103 @@ namespace WebAPI.Controllers
 
             mapper.Map(updatedProperty, property);
 
+            await uow.SaveAsync();
+            return Ok(201);
+        }
+
+        [HttpPatch("update-photo-index/{propertyId}/{photoId}/{index}")]
+        [Authorize]
+        public async Task<IActionResult> UpdatePhotoIndex(int propertyId, int photoId, int index)
+        {
+            var property = await uow.PropertyRepository.GetPropertyDetailsAsync(propertyId);
+            if (property == null)
+            {
+                return BadRequest("Property not found");
+            }
+            var user = await uow.UserRepository.GetUserByTokenAsync(HttpContext.GetAuthToken());
+            if (user.Id != property.PostedBy) 
+            {
+                return BadRequest("This property does not belong to you");
+            }
+            var photo = property.Photos.FirstOrDefault(p => p.Id == photoId);
+            if (photo == null)
+            {
+                return BadRequest("Photo not found");
+            }
+            photo.PhotoIndex = index;
+            photo.IsPrimary = index == 0;
+            await uow.SaveAsync();
+            return Ok(201);
+        }
+
+        [HttpPost("upload-photo/{propertyId}/{photoIndex}")]
+        [Authorize]
+        public async Task<IActionResult> UploadPropertyPhoto(int propertyId, int photoIndex, IFormFile photo)
+        {
+            var property = await uow.PropertyRepository.GetPropertyDetailsAsync(propertyId);
+            if (property == null)
+            {
+                return BadRequest("Property not found");
+            }
+            var user = await uow.UserRepository.GetUserByTokenAsync(HttpContext.GetAuthToken());
+            if (user.Id != property.PostedBy)
+            {
+                return BadRequest("This property does not belong to you");
+            }
+
+            if (!photoService.IsImageValidFormat(photo))
+            {
+                return BadRequest($"{photo.FileName} is not a valid format. Supported formats: .jpeg, .png, .jpg");
+            }
+
+            if (!photoService.IsImageValidSize(photo, 2 * 1024 * 1024))
+            {
+                return BadRequest($"Image size exceeds the maximum allowed size of 2 MB.");
+            }
+
+            var uploadResult = await photoService.UploadPhotoAsync(photo);
+            var photoUrl = uploadResult.SecureUrl.ToString();
+
+            if (property.Photos == null)
+            {
+                property.Photos = new List<Photo>();
+            }
+
+            var newPhoto = new Photo
+            {
+                PhotoUrl = photoUrl,
+                IsPrimary = photoIndex == 0,
+                PropertyId = property.Id,
+                LastUpdatedBy = user.Id,
+                PublicId = uploadResult.PublicId,
+                PhotoIndex = photoIndex,
+            };
+            property.Photos.Add(newPhoto);
+            await uow.SaveAsync();
+            return Ok(201);
+        }
+
+        [HttpDelete("delete-photo/{propertyId}/{photoId}")]
+        [Authorize]
+        public async Task<IActionResult> DeletePropertyPhoto(int propertyId, int photoId)
+        {
+            var property = await uow.PropertyRepository.GetPropertyDetailsAsync(propertyId);
+            if (property == null)
+            {
+                return BadRequest("Property not found");
+            }
+            var user = await uow.UserRepository.GetUserByTokenAsync(HttpContext.GetAuthToken());
+            if (user.Id != property.PostedBy)
+            {
+                return BadRequest("This property does not belong to you");
+            }
+            var photo = property.Photos.FirstOrDefault(p => p.Id == photoId);
+            if (photo == null)
+            {
+                return BadRequest("Photo not found");
+            }
+            await photoService.DeletePhotoAsync(photo.PhotoUrl);
+            property.Photos.Remove(photo);
             await uow.SaveAsync();
             return Ok(201);
         }

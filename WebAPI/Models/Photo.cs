@@ -13,5 +13,6 @@ namespace WebAPI.Models
         public bool IsPrimary { get; set; } = false;
         [ForeignKey("Property")]
         public int PropertyId { get; set; }
+        public int PhotoIndex { get; set; } = 0;
     }
 }

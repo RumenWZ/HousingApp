@@ -1,7 +1,7 @@
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Component, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TabsetComponent } from 'ngx-bootstrap/tabs';
 import { switchMap } from 'rxjs';
 import { IPropertyBase } from 'src/app/model/ipropertybase';
@@ -32,6 +32,10 @@ export class EditPropertyComponent {
   dragStartIndex: number;
   isUploading: boolean = false;
 
+  pendingApiCallsCount: number = 0;
+
+  initialPhotos: any[] = [];
+
   regexOnlyLettersPattern = /^[a-zA-Z\s]*$/;
   regexWholeNumberPattern = /^[0-9]+$/;
 
@@ -54,7 +58,8 @@ export class EditPropertyComponent {
     private fb: FormBuilder,
     private alertify: AlertifyService,
     private housingService: HousingService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {
 
   }
@@ -135,11 +140,11 @@ export class EditPropertyComponent {
   onSubmit() {
     if (this.TabValidityChecker()) {
       this.mapProperty();
-      console.log(this.updatedProperty);
-      this.housingService.updatePropertyDetails(this.property.id, this.updatedProperty).subscribe((response: any) => {
-        if (response == 201) {
-          this.alertify.success('Successfully updated property');
-        }
+      this.housingService.updatePropertyDetails(this.property.id, this.updatedProperty)
+      .pipe(
+        switchMap(async () => this.processPhotosForSubmit()),
+      )
+      .subscribe(() => {
       });
     }
 
@@ -242,6 +247,9 @@ export class EditPropertyComponent {
   }
 
   selectTab(id: number, currentTabValid?: boolean) {
+    if (this.pendingApiCallsCount > 0) {
+      return;
+    }
     this.clickedNext = true;
     if (currentTabValid) {
       this.formTabs.tabs[id].active = true;
@@ -301,6 +309,58 @@ export class EditPropertyComponent {
     }
   }
 
+  processPhotosForSubmit() {
+    this.photosSelected.forEach((photo: any, i) => {
+      if (photo instanceof File) {
+        var formData = new FormData();
+        formData.append('photo', photo);
+        this.pendingApiCallsCount++;
+        this.housingService.uploadPropertyPhoto(this.property.id, i, formData).subscribe((response: any) => {
+          if (response == 201) {
+            this.pendingApiCallsCount--;
+            this.deleteOldPhotos();
+          }
+        });
+      } else {
+        this.pendingApiCallsCount++;
+        this.initialPhotos = this.initialPhotos.filter(p => p !== photo);
+        this.housingService.updatePhotoIndex(this.property.id, photo.id, i).subscribe((response: any) => {
+          if (response == 201) {
+            this.pendingApiCallsCount--;
+            this.deleteOldPhotos();
+          }
+        });
+      }
+    });
+    this.tryRedirectAfterSuccess();
+  }
+
+  deleteOldPhotos() {
+    if (this.pendingApiCallsCount != 0) {
+      return;
+    }
+    if (this.initialPhotos.length == 0) {
+      this.tryRedirectAfterSuccess();
+    }
+    this.initialPhotos.forEach(photo => {
+      this.pendingApiCallsCount++;
+      this.housingService.deletePropertyPhoto(this.property.id, photo.id).subscribe((response: any) => {
+        if (response == 201) {
+          this.pendingApiCallsCount--;
+          this.tryRedirectAfterSuccess();
+        }
+      });
+    })
+  }
+
+  tryRedirectAfterSuccess() {
+    if (this.pendingApiCallsCount != 0) {
+      return;
+    }
+    this.router.navigate(['/user/my-profile']);
+    this.alertify.success('Property updated successfully');
+  }
+
   ngOnInit() {
     this.GetFurnishingTypeOptions();
     this.GetPropertyTypeOptions();
@@ -310,8 +370,10 @@ export class EditPropertyComponent {
     });
     var propertyId = Number(this.route.snapshot.params['id']);
     this.housingService.getFullPropertyDetails(propertyId).subscribe((response: any) => {
+      response.photos.sort((a: any, b: any) => a.photoIndex - b.photoIndex);
       this.property = response;
       console.log(this.property);
+      this.initialPhotos = this.property.photos;
       for (const photo of this.property.photos) {
         this.photosSelectedPreview.push({url : photo.photoUrl});
         this.photosSelected.push(photo);

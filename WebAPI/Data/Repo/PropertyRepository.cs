@@ -74,5 +74,6 @@ namespace WebAPI.Data.Repo
 
             return property;
         }
+
     }
 }

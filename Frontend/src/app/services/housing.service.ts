@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { BasicPropertyOption, Property } from '../model/property';
+import { BasicPropertyOption,  Property } from '../model/property';
 
 @Injectable({
   providedIn: 'root'
@@ -58,5 +57,17 @@ export class HousingService {
 
   updatePropertyDetails(id: number, data: Property) {
     return this.http.patch(`${this.baseUrl}/property/update-details/${id}`, data);
+  }
+
+  updatePhotoIndex(propId: number, photoId: number, index: number) {
+    return this.http.patch(`${this.baseUrl}/property/update-photo-index/${propId}/${photoId}/${index}`, null);
+  }
+
+  uploadPropertyPhoto(propId: number, index: number, photo: any) {
+    return this.http.post(`${this.baseUrl}/property/upload-photo/${propId}/${index}`, photo);
+  }
+
+  deletePropertyPhoto(propId: number, photoId: number) {
+    return this.http.delete(`${this.baseUrl}/property/delete-photo/${propId}/${photoId}`);
   }
 }

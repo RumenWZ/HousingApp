@@ -33,8 +33,9 @@ export class Property implements IPropertyBase{
   postedBy: number;
 }
 
-
 export class BasicPropertyOption {
   id: number;
   name: string;
 }
+
+
