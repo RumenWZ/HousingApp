@@ -139,6 +139,9 @@ export class EditPropertyComponent {
 
   onSubmit() {
     if (this.TabValidityChecker()) {
+      if (this.photosSelected.length == 0) {
+        return this.alertify.error('You must have least 1 photo for your property');
+      }
       this.mapProperty();
       this.housingService.updatePropertyDetails(this.property.id, this.updatedProperty)
       .pipe(

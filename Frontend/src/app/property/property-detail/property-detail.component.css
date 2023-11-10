@@ -31,3 +31,10 @@
   font-weight: 600;
   padding: 1rem;
 }
+
+.address-details div {
+  display: flex;
+  flex-direction: column;
+  font-size: 1.5rem;
+  margin-bottom: 0.8rem;
+}

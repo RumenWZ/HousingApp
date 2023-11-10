@@ -255,8 +255,8 @@
 
                 <div class="photo-belt" cdkDropList cdkDropListSortingDisabled="true" (cdkDropListDropped)="dropPhoto($event)">
                   <div *ngFor="let photo of photosSelectedPreview; let i = index" class="photo-belt-item">
-                    <img  [src]="photo.url" alt="Preview image" data-id="{{i}}" cdkDrag cdkDragData="photo" cdkDragBoundary=".photo-belt"
-                    (cdkDragStarted)="dragStarted(i)">
+                      <img  [src]="photo.url" alt="Preview image" data-id="{{i}}" cdkDrag cdkDragData="photo" cdkDragBoundary=".photo-belt"
+                      (cdkDragStarted)="dragStarted(i)">
                     <i class='bx bx-x remove-button' (click)="removeSelectedPhoto(i)"></i>
                   </div>
                 </div>

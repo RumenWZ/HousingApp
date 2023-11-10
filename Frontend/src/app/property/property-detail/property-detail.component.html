@@ -59,8 +59,8 @@
                   </div>
 
                   <div class="heading">
-                      <strong>Age of Property</strong>
-                      <p><span *ngIf="property.age">{{property.age}} years old</span></p>
+                    <strong>Total Floors</strong>
+                    <p>{{property.totalFloors}}</p>
                   </div>
 
                   <div class="heading">
@@ -88,6 +88,10 @@
                       <strong>Maintenance</strong>
                       <p>{{property.maintenance | number:'':'en'}}€ per month</p>
                   </div>
+                  <div class="heading">
+                    <strong>Age of Property</strong>
+                    <p><span *ngIf="property.age">{{property.age}} years old</span></p>
+                </div>
               </div>
               <div class="col-sm-12">
                   <div class="heading">
@@ -100,15 +104,24 @@
       <tab heading="Address">
         <div class="col-sm-12">
           <h1 class="card-title">Address</h1>
-          <div class="heading">
-              <strong>{{property.address}}</strong><br/>
-              <strong>{{property.address2}}</strong><br/>
-              <strong>{{property.city}}</strong>
+          <div class="address-details">
+            <div>
+              <strong>Address</strong>
+              <span>{{property.address}}</span>
+            </div>
+            <div *ngIf="property.address2">
+              <strong>Landmark</strong>
+              <span>{{property.address2}}</span>
+            </div>
+            <div>
+              <strong>City</strong>
+              <span>{{property.city}}</span>
+            </div>
           </div>
       </div>
       </tab>
       <tab heading="Photos">
-        <ngx-gallery [options]="galleryOptions" [images]="galleryImages" class="ngx-gallery"></ngx-gallery>
+        <ngx-gallery *ngIf="refreshGalleryFlag" #myGallery [options]="galleryOptions" [images]="galleryImages" class="ngx-gallery"></ngx-gallery>
       </tab>
       <tab heading="Contact">
         <h1 class="card-title">Contact</h1>
