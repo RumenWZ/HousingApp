@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebAPI.Data;
 using WebAPI.DTOs;
+using WebAPI.Extensions;
 using WebAPI.Interfaces;
 using WebAPI.Models;
 
@@ -35,8 +36,18 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("post")]
+        [Authorize]
         public async Task<IActionResult> AddCity(CityDTO cityDTO)
         {
+            var user = await uow.UserRepository.GetUserByTokenAsync(HttpContext.GetAuthToken());
+            if (!user.IsAdmin)
+            {
+                return BadRequest("You do not have permission to add cities");
+            }
+            if (await uow.CityRepository.CityAlreadyExists(cityDTO.Name, cityDTO.Country))
+            {
+                return BadRequest("This city is already in the database");
+            }
             var city = mapper.Map<City>(cityDTO);
             city.LastUpdatedBy = 1;
             city.LastUpdatedOn = DateTime.Now;
@@ -44,31 +55,6 @@ namespace WebAPI.Controllers
             uow.CityRepository.AddCity(city);
             await uow.SaveAsync();
             return StatusCode(201);
-        }
-
-        [HttpPut("update/{id}")]
-        public async Task<IActionResult> UpdateCity(int id, CityDTO cityDTO)
-        {
-            if (id != cityDTO.Id)
-            {
-                return BadRequest("Update not allowed");
-            }
-
-            var city = await uow.CityRepository.FindCity(id);
-
-            if (city == null)
-            {
-                return BadRequest("Update not allowed");
-
-            }
-
-            city.LastUpdatedBy = 1;
-            city.LastUpdatedOn = DateTime.Now;
-            mapper.Map(cityDTO, city);
-            await uow.SaveAsync();
-
-            
-            return StatusCode(200);
         }
 
         [HttpPut("updateCityName/{id}")]

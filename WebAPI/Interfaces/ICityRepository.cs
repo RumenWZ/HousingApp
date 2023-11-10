@@ -10,5 +10,6 @@ namespace WebAPI.Interfaces
 
         void DeleteCity(int CityId);
         Task<City> FindCity(int id);
+        Task<bool> CityAlreadyExists(string cityName, string country);
     }
 }

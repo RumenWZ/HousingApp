@@ -370,6 +370,7 @@ export class EditPropertyComponent {
     this.CreateEditPropertyForm();
     this.housingService.getAllCities().subscribe(data => {
       this.cityList = data;
+      this.cityList.sort((a:any, b:any) => a.name.localeCompare(b.name));
     });
     var propertyId = Number(this.route.snapshot.params['id']);
     this.housingService.getFullPropertyDetails(propertyId).subscribe((response: any) => {
@@ -515,7 +516,7 @@ export class EditPropertyComponent {
   cityChanged(){
     var cityId = this.City.value;
     var city = this.cityList.find(c => c.id == cityId);
-    this.propertyView.city = city.name;
+    this.propertyView.city = city?.name;
   }
 
   dragStarted(index: number){

@@ -16,6 +16,12 @@ namespace WebAPI.Data.Repo
             dc.Cities.AddAsync(city);
         }
 
+        public async Task<bool> CityAlreadyExists(string cityName, string country)
+        {
+            var city = await dc.Cities.FirstOrDefaultAsync(c => c.Name == cityName && c.Country == country);
+            return city != null;
+        }
+
         public void DeleteCity(int CityId)
         {
             var city = dc.Cities.Find(CityId);

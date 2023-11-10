@@ -73,7 +73,7 @@ export class AddPropertyComponent {
   cityChanged(){
     var cityId = this.City.value;
     var city = this.cityList.find(c => c.id == cityId);
-    this.propertyView.city = city.name;
+    this.propertyView.city = city?.name;
   }
 
   onFileSelected(event: any) {
@@ -146,6 +146,8 @@ export class AddPropertyComponent {
     this.GetFurnishingTypeOptions();
     this.housingService.getAllCities().subscribe(data => {
       this.cityList = data;
+      console.log(this.cityList);
+      this.cityList.sort((a:any,b:any) => a.name.localeCompare(b.name));
     });
   }
 
