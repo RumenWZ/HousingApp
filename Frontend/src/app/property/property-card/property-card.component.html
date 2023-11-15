@@ -1,8 +1,8 @@
 <div class="card shadow-lg ">
       <div class="card-img-wrapper">
-        <img *ngIf="property.image" class="card-img-top display-image" [src]="property.image">
+        <img *ngIf="property.image" class="card-img-top display-image" [src]="property.image" loading="lazy"  >
         <img *ngIf="!property.image && !property.photo" class="card-img-top display-image" src="/assets/images/houseClipart.png">
-        <img *ngIf="!property.image && property.photo" class="card-img-top display-image" [src]="property.photo">
+        <img *ngIf="!property.image && property.photo" class="card-img-top display-image" [src]="property.photo" loading="lazy">
         <ul *ngIf="!hideIcons" class="list-inline text-center member-icons animate">
           <li class="list-inline-item">
             <button class="btn btn-primary" routerLink="/property-detail/{{property.id}}" title="Property Details"><i class="fa-solid fa-magnifying-glass"></i></button>

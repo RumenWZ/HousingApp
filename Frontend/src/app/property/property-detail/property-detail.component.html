@@ -33,6 +33,11 @@
           <strong>Ready To Move: </strong>
           <span *ngIf="!property.readyToMove">No</span><span *ngIf="property.readyToMove">Yes</span>
         </div>
+        <div *ngIf="property.gated">
+          <strong>Gated Community: </strong>
+          <span *ngIf="!property.gated">No</span><span *ngIf="property.gated">Yes</span>
+        </div>
+
       </div>
       <div class="card-footer">
         <div class="btn-group d-flex">
@@ -53,33 +58,27 @@
                       <p>{{property.name}}</p>
                   </div>
 
-                  <div class="heading">
+                  <div *ngIf="property.floorNo" class="heading">
                       <strong>Floor Number</strong>
                       <p>{{property.floorNo}}</p>
                   </div>
 
-                  <div class="heading">
+                  <div *ngIf="property.totalFloors" class="heading">
                     <strong>Total Floors</strong>
                     <p>{{property.totalFloors}}</p>
                   </div>
 
-                  <div class="heading">
+                  <div *ngIf="property.estPossessionOn" class="heading">
                       <strong>Available on</strong>
                       <p>{{property?.estPossessionOn | date: 'longDate'}}</p>
                   </div>
               </div>
 
               <div class="col-sm-6">
-                  <div class="heading">
+                  <div *ngIf="property.mainEntrance" class="heading">
                       <strong>Main Entrance</strong>
                       <p>{{property.mainEntrance}}</p>
                   </div>
-
-                  <div *ngIf="!property.gated === null" class="heading">
-                      <strong>Gated Community</strong>
-                      <p><span *ngIf="property.gated === false">No</span><span *ngIf="property.gated">Yes</span></p>
-                  </div>
-
                   <div *ngIf="property.security" class="heading">
                       <strong>Security Deposit</strong>
                       <p>{{property.security | number:'':'en'}}€ per month</p>
@@ -88,12 +87,12 @@
                       <strong>Maintenance</strong>
                       <p>{{property.maintenance | number:'':'en'}}€ per month</p>
                   </div>
-                  <div class="heading">
+                  <div *ngIf="property.age" class="heading">
                     <strong>Age of Property</strong>
                     <p><span *ngIf="property.age">{{property.age}} years old</span></p>
                 </div>
               </div>
-              <div class="col-sm-12">
+              <div *ngIf="property.description" class="col-sm-12">
                   <div class="heading">
                       <strong>About Property</strong>
                       <p>{{property.description}}</p>

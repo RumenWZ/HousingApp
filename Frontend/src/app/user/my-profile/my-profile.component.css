@@ -126,7 +126,7 @@
   margin: 0 auto;
   left: 0;
   right: 0;
-  bottom: 0;
+  bottom: -40px;
   opacity: 0;
 }
 
@@ -135,7 +135,7 @@
 }
 
 .property-photo-wrapper:hover .member-icons {
-  bottom: 10%;
+  bottom: 10%;;
   opacity: 1;
 }
 

@@ -51,9 +51,23 @@
   transition: all 0.3s ease-in-out;
 }
 
+
+
 @media (max-width: 400px) {
   .display-image {
     height: auto !important;
   }
+  .card  {
+    min-height: 0;
+    height: 100% !important;
+  }
 }
 
+@media (max-width: 300px) {
+  .card-body h6 span {
+    font-size: 0.8rem;
+  }
+  .card-body {
+    font-size: 0.8rem;
+  }
+}

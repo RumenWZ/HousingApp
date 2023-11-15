@@ -123,7 +123,7 @@
             </div>
             <div class="form-group col-12 mt-3">
               <button (click)="selectTab(2, PriceInfo.valid)" type="button" class="btn btn-primary" style="width: 100%;">Next -></button>
-              <button (click)="selectTab(0)" type="button" class="btn btn-primary mt-1" style="width: 100%;"><- Back</button>
+              <button (click)="selectTab(0, PriceInfo.valid)" type="button" class="btn btn-primary mt-1" style="width: 100%;"><- Back</button>
             </div>
           </tab>
 
@@ -164,7 +164,7 @@
             </div>
             <div class="form-group col-12 mt-3">
               <button (click)="selectTab(3, AddressInfo.valid)" type="button" class="btn btn-primary" style="width: 100%;">Next -></button>
-              <button (click)="selectTab(1)" type="button" class="btn btn-primary mt-1" style="width: 100%;"><- Back</button>
+              <button (click)="selectTab(1, AddressInfo.valid)" type="button" class="btn btn-primary mt-1" style="width: 100%;"><- Back</button>
             </div>
           </tab>
 
@@ -242,7 +242,7 @@
             </div>
           <div class="form-group col-12 mt-3">
             <button (click)="selectTab(4, OtherInfo.valid)" type="button" class="btn btn-primary" style="width: 100%;">Next -></button>
-            <button (click)="selectTab(2)" type="button" class="btn btn-primary mt-1" style="width: 100%;"><- Back</button>
+            <button (click)="selectTab(2, OtherInfo.valid)" type="button" class="btn btn-primary mt-1" style="width: 100%;"><- Back</button>
           </div></tab>
 
           <tab heading="Photos">
@@ -264,9 +264,9 @@
               <span *ngIf="photosSelected.length > 0" style="font-family: italics; "><strong style="color: var(--main-dark-blue);">IMPORTANT</strong>: The first photo highlighted in blue will be the primary photo for your property. You can drag and drop the photos to sort them to your liking.</span>
             </div>
             <div class="form-group col-12 mt-3">
-              <button (click)="selectTab(3)" type="button" class="btn btn-primary mt-1" style="width: 100%;"><- Back</button>
-              <button type="reset" class="btn btn-primary mt-1" style="width: 100%;">Cancel</button>
-              <button (click)="selectTab(3)" type="submit" class="btn btn-primary mt-1" style="width: 100%;">Save</button>
+              <button (click)="selectTab(3, true)" type="button" class="btn btn-primary mt-1" style="width: 100%;"><- Back</button>
+              <button (click)="selectTab(0, true)" type="reset" class="btn btn-primary mt-1" style="width: 100%;">Cancel</button>
+              <button type="submit" class="btn btn-primary mt-1" style="width: 100%;">Save</button>
             </div>
           </tab>
         </tabset>

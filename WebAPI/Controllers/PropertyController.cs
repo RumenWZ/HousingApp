@@ -179,7 +179,7 @@ namespace WebAPI.Controllers
             }
 
             mapper.Map(updatedProperty, property);
-
+            property.LastUpdatedOn = DateTime.Now;
             await uow.SaveAsync();
             return Ok(201);
         }
@@ -205,6 +205,7 @@ namespace WebAPI.Controllers
             }
             photo.PhotoIndex = index;
             photo.IsPrimary = index == 0;
+            property.LastUpdatedOn = DateTime.Now;
             await uow.SaveAsync();
             return Ok(201);
         }
