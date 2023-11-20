@@ -59,7 +59,7 @@
 
             <div class="form-group col-12">
               <label>City*</label>
-              <select class="form-control city-select" formControlName="City" (change)="cityChanged()">
+              <select class="form-select" formControlName="City" (change)="cityChanged()">
                 <option value="">--Select City--</option>
                 <option *ngFor="let city of cityList" value="{{city.id}}">{{city.name}}</option>
               </select>
@@ -268,6 +268,10 @@
               <button (click)="selectTab(0, true)" type="reset" class="btn btn-primary mt-1" style="width: 100%;">Cancel</button>
               <button type="submit" class="btn btn-primary mt-1" style="width: 100%;">Save</button>
             </div>
+          </tab>
+
+          <tab heading="Maps">
+            
           </tab>
         </tabset>
       </div>

@@ -1,2 +1,6 @@
-/WebAPI/.env
+# Frontend
+/Frontend\src\environments
 
+
+# API
+/WebAPI/.env

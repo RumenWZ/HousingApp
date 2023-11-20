@@ -37,6 +37,7 @@ import { SidenavComponent } from './sidenav/sidenav.component';
 import { DocumentationComponent } from './documentation/documentation.component';
 import { EditPropertyComponent } from './property/edit-property/edit-property.component';
 import { PropertyOwnerGuard } from './guards/property-owner.guard';
+import { AgmCoreModule } from '@agm/core';
 
 const appRoutes: Routes = [
   {path: 'add-property', component: AddPropertyComponent},
@@ -87,7 +88,10 @@ const appRoutes: Routes = [
     NgxGalleryModule,
     NgxPaginationModule,
     MaterialModule,
-    DragDropModule
+    DragDropModule,
+    AgmCoreModule.forRoot({
+      apiKey: ''
+    })
   ],
   providers: [
     {
