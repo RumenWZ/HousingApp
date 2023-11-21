@@ -8,7 +8,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-
+import { environment } from 'src/app/environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
@@ -37,7 +37,7 @@ import { SidenavComponent } from './sidenav/sidenav.component';
 import { DocumentationComponent } from './documentation/documentation.component';
 import { EditPropertyComponent } from './property/edit-property/edit-property.component';
 import { PropertyOwnerGuard } from './guards/property-owner.guard';
-import { AgmCoreModule } from '@agm/core';
+import { MapComponent } from './map/map.component';
 
 const appRoutes: Routes = [
   {path: 'add-property', component: AddPropertyComponent},
@@ -70,8 +70,8 @@ const appRoutes: Routes = [
     ChangePasswordComponent,
     SidenavComponent,
     DocumentationComponent,
-    EditPropertyComponent
-
+    EditPropertyComponent,
+    MapComponent
   ],
   imports: [
     BrowserModule,
@@ -88,10 +88,7 @@ const appRoutes: Routes = [
     NgxGalleryModule,
     NgxPaginationModule,
     MaterialModule,
-    DragDropModule,
-    AgmCoreModule.forRoot({
-      apiKey: ''
-    })
+    DragDropModule
   ],
   providers: [
     {
