@@ -132,6 +132,11 @@
 
 .property-body {
   padding-left: 0.2rem;
+  height: 100%;
+}
+
+.body-content {
+  height: 100%;
 }
 
 .property-photo-wrapper:hover .member-icons {

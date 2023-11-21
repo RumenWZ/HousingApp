@@ -37,7 +37,6 @@ import { SidenavComponent } from './sidenav/sidenav.component';
 import { DocumentationComponent } from './documentation/documentation.component';
 import { EditPropertyComponent } from './property/edit-property/edit-property.component';
 import { PropertyOwnerGuard } from './guards/property-owner.guard';
-import { MapComponent } from './map/map.component';
 
 const appRoutes: Routes = [
   {path: 'add-property', component: AddPropertyComponent},
@@ -70,8 +69,7 @@ const appRoutes: Routes = [
     ChangePasswordComponent,
     SidenavComponent,
     DocumentationComponent,
-    EditPropertyComponent,
-    MapComponent
+    EditPropertyComponent
   ],
   imports: [
     BrowserModule,

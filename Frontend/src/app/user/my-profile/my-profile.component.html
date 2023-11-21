@@ -53,13 +53,19 @@
         </div>
         <div class="property-body">
           <h4 style="color: #0069d9; font-weight: 700;"> {{prop.bhk}} BHK {{prop.propertyType}}</h4>
-          <span>in {{prop.name}} , {{prop.city}}</span>
+          <div class="location-wrapper">
+            <span>in {{prop.name}} , {{prop.city}}</span>
+          </div>
 
-          <hr class="mt-0 mb-2">
 
-          <span *ngIf="prop.sellOrRent==1">Price: </span>
-          <span *ngIf="prop.sellOrRent==2">Rent: </span>
-          <span class="highlight-font">{{prop.price | number:'':'en'}} EUR.</span>
+          <div class="price-section">
+            <hr class="mt-0 mb-2">
+
+            <span *ngIf="prop.sellOrRent==1">Price: </span>
+            <span *ngIf="prop.sellOrRent==2">Rent: </span>
+            <span class="highlight-font">{{prop.price | number:'':'en'}} EUR.</span>
+          </div>
+
         </div>
 
       </div>
