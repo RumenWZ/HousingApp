@@ -1,5 +1,10 @@
+
 .active {
   color: #747ff7 !important;
+}
+
+.white {
+  color: white;
 }
 
 .pointer {
@@ -16,7 +21,6 @@
 }
 
 .sidenav-toggler {
-  color: white;
   background-color: #212529;
   font-size: 1.5rem;
   border: none;

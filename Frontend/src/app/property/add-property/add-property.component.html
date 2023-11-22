@@ -107,7 +107,7 @@
               <label>Built Area (in Sqr Feet)*</label>
               <input type="text" class="form-control" [(ngModel)]="propertyView.builtArea" formControlName="BuiltArea">
               <span class="error-block" *ngIf="BuiltArea.invalid && (BuiltArea.touched || clickedNext)">
-                <span *ngIf="BuiltArea.errors.required">This field is required</span>
+                <span *ngIf="BuiltArea.errors.required">Field required</span>
                 <span *ngIf="BuiltArea.errors.pattern">Only numbers are allowed</span>
                 <span *ngIf="BuiltArea.errors.maxlength">The number is too large</span>
               </span>
@@ -150,7 +150,7 @@
               <label>Address*</label>
               <input type="text" class="form-control" formControlName="Address">
               <div class="error-block" *ngIf="Address.invalid && (Address.touched || clickedNext)">
-                <span *ngIf="Address.errors.required">This field is required</span>
+                <span *ngIf="Address.errors.required">Field required</span>
                 <span *ngIf="Address.errors.maxlength">Address is too long</span>
               </div>
             </div>
@@ -270,9 +270,6 @@
             </div>
           </tab>
 
-          <tab heading="Maps">
-            
-          </tab>
         </tabset>
       </div>
     </form>

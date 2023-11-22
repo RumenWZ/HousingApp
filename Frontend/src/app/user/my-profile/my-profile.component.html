@@ -41,13 +41,13 @@
           <img class="property-photo" *ngIf="prop.photo" [src]="prop.photo">
           <ul class="list-inline text-center member-icons animate">
             <li class="list-inline-item">
-              <button class="btn btn-primary" routerLink="/property-detail/{{prop.id}}" title="Property Details"><i class="fa-solid fa-magnifying-glass"></i></button>
+              <button class="btn btn-primary" routerLink="/property-detail/{{prop.id}}" title="Property Details"><i class="white fa-solid fa-magnifying-glass"></i></button>
             </li>
             <li class="list-inline-item">
               <button class="btn btn-warning" routerLink="/edit-property/{{prop.id}}" title="Edit Property"><i class="fa-regular fa-pen-to-square"></i></button>
             </li>
             <li class="list-inline-item">
-              <button class="btn btn-danger" (click)="confirmDelete(prop)" title="Delete Property"><i class="fa-solid fa-trash-can"></i></button>
+              <button class="btn btn-danger" (click)="confirmDelete(prop)" title="Delete Property"><i class="white fa-solid fa-trash-can"></i></button>
             </li>
           </ul>
         </div>
