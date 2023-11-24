@@ -1,6 +1,0 @@
-# Frontend
-/Frontend\src\environments
-
-
-# API
-/WebAPI/.env

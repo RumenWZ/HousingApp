@@ -83,3 +83,4 @@ D:\CSharp\repos\HSPA\WebAPI\obj\Debug\net7.0\WebAPI.genruntimeconfig.cache
 D:\CSharp\repos\HSPA\WebAPI\obj\Debug\net7.0\ref\WebAPI.dll
 D:\CSharp\repos\HSPA\WebAPI\bin\Debug\net7.0\dotenv.net.dll
 D:\CSharp\repos\HSPA\WebAPI\bin\Debug\net7.0\CloudinaryDotNet.dll
+D:\CSharp\repos\HSPA\WebAPI\obj\Debug\net7.0\WebAPI.sourcelink.json

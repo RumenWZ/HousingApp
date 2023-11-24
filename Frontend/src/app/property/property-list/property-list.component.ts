@@ -25,6 +25,9 @@ export class PropertyListComponent implements OnInit{
   sortByParam = 'City';
   sortDirection = 'asc';
 
+  pageSize: number = 3;
+  currentPage: number = 1;
+
   constructor(private housingService: HousingService, private route: ActivatedRoute) { }
 
 

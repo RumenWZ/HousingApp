@@ -4,12 +4,13 @@
   justify-content: center;
   position: absolute;
   bottom: 0;
+  right: 0;
   z-index: 10;
   width: 100%;
 }
 
 .pagination .ngx-pagination .current {
-  background: #0069d9;
+  background: #99d3fc;
 }
 
 .pagination .ngx-pagination .disabled {

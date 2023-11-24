@@ -2,9 +2,9 @@ i {
   color: white;
 }
 
-.card {
+/* .card {
   min-height: 433px;
-}
+} */
 
 .card-body h1 {
   font-family: fantasy;
@@ -53,6 +53,15 @@ i {
 
 .animate {
   transition: all 0.3s ease-in-out;
+}
+
+@media (max-width: 992px){
+  .display-image {
+    height: 13rem !important;
+  }
+  /* .card {
+    height: 200px !important;
+  } */
 }
 
 @media (max-width: 400px) {

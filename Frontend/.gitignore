@@ -38,6 +38,8 @@ testem.log
 /typings
 /src/app/environments
 ../WebAPI/.env
+../WebAPI/.vs/WebAPI/FileContentIndex/b52989ea-0469-4dff-b758-5e2e8a21444e.vsidx
+
 
 # System files
 .DS_Store

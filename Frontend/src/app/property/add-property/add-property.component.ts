@@ -146,7 +146,6 @@ export class AddPropertyComponent {
     this.GetFurnishingTypeOptions();
     this.housingService.getAllCities().subscribe(data => {
       this.cityList = data;
-      console.log(this.cityList);
       this.cityList.sort((a:any,b:any) => a.name.localeCompare(b.name));
     });
   }
