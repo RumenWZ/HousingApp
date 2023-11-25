@@ -78,19 +78,19 @@ export class MyProfileComponent {
   }
 
   updateUserMobile() {
-    if (this.Mobile.valid) {
+    if (this.Mobile.valid && this.canEditMobile) {
       this.userService.updateMobile(this.Mobile.value).subscribe((response: any) => {
         if (response == 201) {
           this.alertify.success('Mobile number updated successfully');
           this.user.mobile = this.Mobile.value;
           this.onMobileInputBlur();
         }
-      })
+      });
     }
   }
 
   updateUserEmail() {
-    if (this.Email.valid) {
+    if (this.Email.valid && this.canEditEmail) {
       this.userService.updateEmail(this.Email.value).subscribe((response: any) => {
         if (response == 201) {
           this.alertify.success('Email updated successfully');

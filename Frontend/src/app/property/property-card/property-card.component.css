@@ -55,6 +55,10 @@ i {
   transition: all 0.3s ease-in-out;
 }
 
+.card-body {
+  padding: 0.6rem !important;
+}
+
 @media (max-width: 992px){
   .display-image {
     height: 13rem !important;
@@ -79,6 +83,10 @@ i {
     font-size: 0.8rem;
   }
   .card-body {
+    font-size: 0.8rem;
+  }
+
+  .f-type {
     font-size: 0.8rem;
   }
 }

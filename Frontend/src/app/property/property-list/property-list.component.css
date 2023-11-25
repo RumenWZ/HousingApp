@@ -46,6 +46,13 @@
 }
 
 
+.pagination-wrapper {
+  width: 100%;
+  height: 3rem;
+  position: relative;
+  margin-top: 1rem;
+}
+
 @media (max-width: 578px) {
 
   .property-container {
