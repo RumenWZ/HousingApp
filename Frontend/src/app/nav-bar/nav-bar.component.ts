@@ -11,14 +11,16 @@ import { SidenavService } from '../services/sidenav.service';
 })
 export class NavBarComponent {
   loggedinUser: string;
-  isSmallScreen: boolean;
+  screenWidthLessThan992px: boolean;
+  screenWidthLessThan200px: boolean;
 
   constructor(
     private alertify: AlertifyService,
     private userService: UserService,
     private sidenav: SidenavService)
     {
-      this.isSmallScreen = window.innerWidth < 992;
+      this.screenWidthLessThan992px = window.innerWidth < 992;
+      this.screenWidthLessThan200px = window.innerWidth < 200;
     }
 
   ngOnInit() {
@@ -41,6 +43,7 @@ export class NavBarComponent {
 
   @HostListener('window:resize', ['$event'])
   onWindowResize(event: any) {
-    this.isSmallScreen = window.innerWidth < 992;
+    this.screenWidthLessThan992px = window.innerWidth < 992;
+    this.screenWidthLessThan200px = window.innerWidth < 200;
   }
 }

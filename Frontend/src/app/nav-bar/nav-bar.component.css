@@ -39,6 +39,10 @@
   padding: 0 0.5rem;
 }
 
+.nav-item a {
+  color: #f2f2f2;
+}
+
 @media (max-width: 768px) {
   .account-nav li {
     padding: 0 0.2rem;

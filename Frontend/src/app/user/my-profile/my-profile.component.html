@@ -31,8 +31,8 @@
   </div>
 
   <div class="properties">
-    <div class="properties-header">
-      <h2 class="mb-0">My Property Listings</h2>
+    <div class="card-header">
+      <span class="header">My Properties</span>
     </div>
     <div class="user-properties">
       <div *ngFor="let prop of user?.properties | paginate: { itemsPerPage: pageSize, currentPage: currentPage }" class="property">
