@@ -1,7 +1,7 @@
 <div class="main-container">
   <div class="form-container">
     <div class="card bg-white shadow-lg">
-  <span class="headerx">Edit Your Property</span>
+  <span class="header">Edit Your Property</span>
   <div class="card-body">
     <form (ngSubmit)="onSubmit()" [formGroup]="editPropertyForm">
       <div class="tab-panel">
@@ -276,7 +276,7 @@
 </div>
 </div>
 <div class="preview-container">
-  <span class="headerx">Preview</span>
+  <span class="header">Preview</span>
     <div class="shadow-lg p-3 bg-white">
       <app-property-card class="preview" [property]="propertyView" [hideIcons]="true"></app-property-card>
     </div>

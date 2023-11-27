@@ -122,24 +122,24 @@ export class AddPropertyComponent {
 
   private async isValidResolution(file: File): Promise<boolean> {
     const targetAspectRatio16_9 = 16 / 9;
-  const targetAspectRatio4_3 = 4 / 3;
-  const maxDifferencePercentage = 0.15;
+    const targetAspectRatio4_3 = 4 / 3;
+    const maxDifferencePercentage = 0.15;
 
-  return new Promise<boolean>((resolve) => {
-    const image = new Image();
-    image.src = URL.createObjectURL(file);
+    return new Promise<boolean>((resolve) => {
+      const image = new Image();
+      image.src = URL.createObjectURL(file);
 
-    image.onload = () => {
-      const aspectRatio = image.width / image.height;
+      image.onload = () => {
+        const aspectRatio = image.width / image.height;
 
-      const differencePercentage16_9 = Math.abs((aspectRatio - targetAspectRatio16_9) / targetAspectRatio16_9);
-      const differencePercentage4_3 = Math.abs((aspectRatio - targetAspectRatio4_3) / targetAspectRatio4_3);
+        const differencePercentage16_9 = Math.abs((aspectRatio - targetAspectRatio16_9) / targetAspectRatio16_9);
+        const differencePercentage4_3 = Math.abs((aspectRatio - targetAspectRatio4_3) / targetAspectRatio4_3);
 
-      const isValid16_9 = differencePercentage16_9 <= maxDifferencePercentage;
-      const isValid4_3 = differencePercentage4_3 <= maxDifferencePercentage;
+        const isValid16_9 = differencePercentage16_9 <= maxDifferencePercentage;
+        const isValid4_3 = differencePercentage4_3 <= maxDifferencePercentage;
 
-      resolve(isValid16_9 || isValid4_3);
-    };
+        resolve(isValid16_9 || isValid4_3);
+      };
     });
   }
 

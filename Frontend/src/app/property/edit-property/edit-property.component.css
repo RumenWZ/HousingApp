@@ -1,6 +1,6 @@
 @import '../add-property/add-property.component.css';
 
-.headerx, .btn-primary {
+.header, .btn-primary {
   background-color: #003675 !important;
 }
 

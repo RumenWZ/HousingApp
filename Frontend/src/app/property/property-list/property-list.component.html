@@ -32,7 +32,7 @@
     </div>
   </div>
 
-  <div *ngIf="properties.length > pageSize" class="pagination-wrapper">
+  <div *ngIf="properties?.length > pageSize" class="pagination-wrapper">
     <div class="pagination">
       <pagination-controls (pageChange)="currentPage = $event"></pagination-controls>
     </div>

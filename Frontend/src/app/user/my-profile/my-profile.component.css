@@ -121,6 +121,10 @@
   position: relative;
 }
 
+.property-photo {
+  height: 150px;
+}
+
 .member-icons {
   position: absolute;
   margin: 0 auto;
@@ -142,7 +146,7 @@
 
 .property-body {
   padding-left: 0.2rem;
-  height: 100%;
+
 }
 
 .body-content {
@@ -202,6 +206,9 @@
   .profile-wrapper {
     height: 47rem;
   }
+  .property-photo {
+    height: 110px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -240,6 +247,10 @@
     position: static;
   }
 
+  .property-photo {
+    height: auto;
+    max-height: none !important;
+  }
 }
 
 @media (max-width: 330px) {
