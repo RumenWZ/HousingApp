@@ -86,8 +86,7 @@ const appRoutes: Routes = [
     NgxGalleryModule,
     NgxPaginationModule,
     MaterialModule,
-    DragDropModule,
-
+    DragDropModule
   ],
   providers: [
     {

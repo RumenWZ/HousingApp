@@ -153,7 +153,7 @@ export class EditPropertyComponent {
 
   }
 
-  onFileSelected(event: any) {
+  async onFileSelected(event: any) {
     const fileInput = event.target;
     const file = event.target.files[0];
     const allowedFormats = ['image/jpeg', 'image/png'];
@@ -174,6 +174,13 @@ export class EditPropertyComponent {
       return this.alertify.error('File size exceeds the limit of 2 MB');
     }
 
+    const isValidResolution = await this.isValidResolution(file);
+
+    if (!isValidResolution) {
+      fileInput.value = '';
+      return this.alertify.error('Invalid image resolution, the image aspect ratio should be close to 4:3 or 16:9');
+    }
+
     this.photosSelected.push(file);
     const reader = new FileReader();
     reader.onload = (e) => {
@@ -183,7 +190,6 @@ export class EditPropertyComponent {
     };
     reader.readAsDataURL(file);
     fileInput.value = '';
-
   }
 
   setPrimaryPhoto(index: number) {
@@ -543,5 +549,28 @@ export class EditPropertyComponent {
     this.photosSelected[previewImageEndId] = photoStart;
     this.photosSelectedPreview[previewImageEndId]= photoStartPreview;
     this.updatePreviewPhoto()
+  }
+
+  private async isValidResolution(file: File): Promise<boolean> {
+    const targetAspectRatio16_9 = 16 / 9;
+  const targetAspectRatio4_3 = 4 / 3;
+  const maxDifferencePercentage = 0.15;
+
+  return new Promise<boolean>((resolve) => {
+    const image = new Image();
+    image.src = URL.createObjectURL(file);
+
+    image.onload = () => {
+      const aspectRatio = image.width / image.height;
+
+      const differencePercentage16_9 = Math.abs((aspectRatio - targetAspectRatio16_9) / targetAspectRatio16_9);
+      const differencePercentage4_3 = Math.abs((aspectRatio - targetAspectRatio4_3) / targetAspectRatio4_3);
+
+      const isValid16_9 = differencePercentage16_9 <= maxDifferencePercentage;
+      const isValid4_3 = differencePercentage4_3 <= maxDifferencePercentage;
+
+      resolve(isValid16_9 || isValid4_3);
+    };
+    });
   }
 }
