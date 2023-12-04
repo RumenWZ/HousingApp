@@ -108,6 +108,8 @@ export class MyProfileComponent {
 
     if (this.screenWidthLessThan768px) {
       this.pageSize = 2;
+    } else {
+      this.pageSize = 6;
     }
   }
 

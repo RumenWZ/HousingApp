@@ -71,5 +71,6 @@ namespace WebAPI.Services
         {
             return image.Length <= maxSizeInBytes;
         }
+
     }
 }

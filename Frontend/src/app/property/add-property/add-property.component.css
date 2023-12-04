@@ -149,11 +149,15 @@
   }
 
   .submit-photo-control {
-    height: 25rem;
+    height: 20rem;
   }
 
   .btn-group {
     width: 100% !important;
+  }
+
+  .preview {
+    height: auto;
   }
 }
 
@@ -169,6 +173,7 @@
   .photo-belt-item img {
     max-height: 6rem;
     height: 100%;
+    width: 100% !important;
   }
 
   .submit-photo-control {
