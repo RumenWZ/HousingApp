@@ -41,6 +41,10 @@ export class UserService {
     return this.http.patch(`${this.baseUrl}/account/change-password`, formData);
   }
 
+  getUserPropertiesCount() {
+    return this.http.get<number>(`${this.baseUrl}/account/user-properties-count`);
+  }
+
   logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('userName');

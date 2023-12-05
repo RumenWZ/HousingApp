@@ -37,9 +37,10 @@ import { SidenavComponent } from './sidenav/sidenav.component';
 import { DocumentationComponent } from './documentation/documentation.component';
 import { EditPropertyComponent } from './property/edit-property/edit-property.component';
 import { PropertyOwnerGuard } from './guards/property-owner.guard';
+import { UserPropertiesCountGuard } from './guards/user-properties-count.guard';
 
 const appRoutes: Routes = [
-  {path: 'add-property', component: AddPropertyComponent},
+  {path: 'add-property', component: AddPropertyComponent, canActivate: [UserPropertiesCountGuard]},
   {path: '', component: PropertyListComponent},
   {path: 'rent-property', component: PropertyListComponent},
   {path: 'property-detail/:id', component: PropertyDetailComponent},

@@ -180,6 +180,16 @@ namespace WebAPI.Controllers
             return Ok(201);
         }
 
+
+        [HttpGet("user-properties-count")]
+        [Authorize]
+        public async Task<IActionResult> GetUserPropertiesCount()
+        {
+            var user = await uow.UserRepository.GetUserByTokenAsync(HttpContext.GetAuthToken());
+            var userProperties = await uow.PropertyRepository.GetPropertieOfUserAsync(user.Id);
+
+            return Ok(userProperties.Count());
+        }
         private string CreateJWT(User user)
         {
             var secretKey = Environment.GetEnvironmentVariable("JWT_SECRET_KEY");
