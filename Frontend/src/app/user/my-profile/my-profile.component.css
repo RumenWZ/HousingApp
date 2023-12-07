@@ -253,18 +253,26 @@
   }
 }
 
+@media (max-width: 382px) {
+  .properties {
+    padding-bottom: 1.1rem;
+  }
+}
+
+
 @media (max-width: 330px) {
   .avatar-container img {
     width: 90%;
   }
 
   .user-details-wrapper * {
-    font-size: 0.8rem;
+    font-size: 4vw;
   }
 
   .header {
-    font-size: 1rem;
+    font-size: 7vw;
   }
+
 }
 
 

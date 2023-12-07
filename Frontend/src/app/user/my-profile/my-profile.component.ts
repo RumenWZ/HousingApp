@@ -108,9 +108,12 @@ export class MyProfileComponent {
 
     if (this.screenWidthLessThan768px) {
       this.pageSize = 2;
-    } else {
+    }
+
+    if (!this.screenWidthLessThan576px && !this.screenWidthLessThan768px && !this.screenWidthLessThan992px) {
       this.pageSize = 6;
     }
+    this.currentPage = 1;
   }
 
   confirmDelete(property: any) {
@@ -189,6 +192,7 @@ export class MyProfileComponent {
     console.log(this.screenWidthLessThan992px);
     console.log(this.screenWidthLessThan768px);
     console.log(this.screenWidthLessThan576px);
+    console.log(this.pageSize);
   }
 
   @HostListener('window:resize', ['$event'])

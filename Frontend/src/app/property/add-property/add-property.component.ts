@@ -34,6 +34,8 @@ export class AddPropertyComponent {
   regexOnlyLettersPattern = /^[a-zA-Z\s]*$/;
   regexWholeNumberPattern = /^[0-9]+$/;
 
+  isProcessingRequest: boolean;
+
   propertyView: IPropertyBase = {
     id: null,
     name: null,
@@ -245,8 +247,12 @@ export class AddPropertyComponent {
   }
 
   onSubmit(){
+    this.isProcessingRequest = true;
+
     if (this.photosSelected.length == 0) {
       return this.alertify.error('You must upload at least 1 photo for your property listing');
+    } else {
+      this.isProcessingRequest = false;
     }
 
     if (this.TabValidityChecker()) {
@@ -276,6 +282,7 @@ export class AddPropertyComponent {
       });
 
     } else {
+      this.isProcessingRequest = false;
       this.alertify.error('Form is invalid, please review your entries');
     }
   }

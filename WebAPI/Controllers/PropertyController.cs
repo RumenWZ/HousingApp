@@ -70,6 +70,11 @@ namespace WebAPI.Controllers
         {
             string token = HttpContext.GetAuthToken();
             var user = await uow.UserRepository.GetUserByTokenAsync(token);
+            // var userProperties = await uow.PropertyRepository.GetPropertieOfUserAsync(user.Id);
+            // if (userProperties.Count() >= 10)
+            // {
+            //     return BadRequest("You can not have more than 10 properties listed.");
+            // }
 
             var newProperty = mapper.Map<Property>(propertyDTO);
             newProperty.PostedBy = user.Id;

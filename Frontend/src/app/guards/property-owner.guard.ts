@@ -14,6 +14,8 @@ export class PropertyOwnerGuard implements CanActivate {
     private router: Router
   ) {}
 
+  // Prevent the user from modifying other users properties
+
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree

@@ -14,8 +14,6 @@ export class UserPropertiesCountGuard implements CanActivate {
     private alertify: AlertifyService
   ) {}
 
-  // Limit the user to have a maximum of 10 properties.
-
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree

@@ -25,8 +25,8 @@
   background-color: #bababa;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 382px) {
   .pagination * {
-    font-size: 0.7rem;
+    font-size: 4vw;
   }
 }
