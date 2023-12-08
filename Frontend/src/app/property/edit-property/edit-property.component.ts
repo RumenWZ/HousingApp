@@ -3,7 +3,7 @@ import { Component, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TabsetComponent } from 'ngx-bootstrap/tabs';
-import { switchMap } from 'rxjs';
+import { catchError, of, switchMap } from 'rxjs';
 import { IPropertyBase } from 'src/app/model/ipropertybase';
 import { BasicPropertyOption, Property } from 'src/app/model/property';
 import { AlertifyService } from 'src/app/services/alertify.service';
@@ -30,9 +30,9 @@ export class EditPropertyComponent {
   photosSelected: File[] = [];
   newPropertyId: number;
   dragStartIndex: number;
-  isUploading: boolean = false;
 
   pendingApiCallsCount: number = 0;
+  isProcessingRequest: boolean = false;
 
   initialPhotos: any[] = [];
 
@@ -138,19 +138,27 @@ export class EditPropertyComponent {
   }
 
   onSubmit() {
+    this.isProcessingRequest = true;
     if (this.TabValidityChecker()) {
       if (this.photosSelected.length == 0) {
+        this.isProcessingRequest = false;
         return this.alertify.error('You must have least 1 photo for your property');
       }
       this.mapProperty();
       this.housingService.updatePropertyDetails(this.property.id, this.updatedProperty)
       .pipe(
         switchMap(async () => this.processPhotosForSubmit()),
+        catchError((error: any) => {
+          this.isProcessingRequest = false;
+          return of();
+        })
       )
       .subscribe(() => {
       });
+    } else {
+      this.isProcessingRequest = false;
+      this.alertify.error('Form is invalid, please review your entries');
     }
-
   }
 
   async onFileSelected(event: any) {

@@ -266,7 +266,7 @@
             <div class="form-group col-12 mt-3">
               <button (click)="selectTab(3, true)" type="button" class="btn btn-primary mt-1" style="width: 100%;"><- Back</button>
               <button (click)="selectTab(0, true)"type="reset" class="btn btn-primary mt-1" style="width: 100%;">Reset</button>
-              <button [disabled]="pendingApiCallsCount > 0" type="submit" class="btn btn-primary mt-1" style="width: 100%;">Save</button>
+              <button [disabled]="(pendingApiCallsCount > 0) || (isProcessingRequest)" type="submit" class="btn btn-primary mt-1" style="width: 100%;">Save</button>
             </div>
           </tab>
         </tabset>

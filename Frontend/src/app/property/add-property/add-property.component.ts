@@ -6,7 +6,7 @@ import { IPropertyBase } from 'src/app/model/ipropertybase';
 import { BasicPropertyOption, Property } from 'src/app/model/property';
 import { HousingService } from 'src/app/services/housing.service';
 import { AlertifyService } from 'src/app/services/alertify.service';
-import { switchMap } from 'rxjs';
+import { catchError, of, switchMap } from 'rxjs';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 
 @Component({
@@ -29,12 +29,11 @@ export class AddPropertyComponent {
   photosSelected: File[] = [];
   newPropertyId: number;
   dragStartIndex: number;
-  isUploading: boolean = false;
 
   regexOnlyLettersPattern = /^[a-zA-Z\s]*$/;
   regexWholeNumberPattern = /^[0-9]+$/;
 
-  isProcessingRequest: boolean;
+  isProcessingRequest: boolean = false;
 
   propertyView: IPropertyBase = {
     id: null,
@@ -247,12 +246,12 @@ export class AddPropertyComponent {
   }
 
   onSubmit(){
+    console.log('submit');
     this.isProcessingRequest = true;
 
     if (this.photosSelected.length == 0) {
-      return this.alertify.error('You must upload at least 1 photo for your property listing');
-    } else {
       this.isProcessingRequest = false;
+      return this.alertify.error('You must upload at least 1 photo for your property listing');
     }
 
     if (this.TabValidityChecker()) {
@@ -262,20 +261,22 @@ export class AddPropertyComponent {
       for (const file of this.photosSelected) {
         formData.append('photos', file);
       }
-      this.isUploading = true;
-      this.housingService.addProperty(this.property).pipe(switchMap((response: any) => {
-        this.newPropertyId = response;
-
-        return this.housingService.uploadPropertyPhotos(this.newPropertyId, formData);
-      })
+      this.housingService.addProperty(this.property).pipe(
+        switchMap((response: any) => {
+          this.newPropertyId = response;
+          return this.housingService.uploadPropertyPhotos(this.newPropertyId, formData);
+        }),
+        catchError((error: any) => {
+          this.isProcessingRequest = false;
+          return of();
+        })
       ).subscribe((response: any) => {
         if (response == 201) {
-          this.isUploading = false;
           this.alertify.success('Property uploaded successfully');
 
           if (this.SellOrRent.value === '2') {
             this.router.navigate(['/rent-property']);
-          }else {
+          } else {
             this.router.navigate(['/']);
           }
         }
