@@ -38,17 +38,22 @@ import { DocumentationComponent } from './documentation/documentation.component'
 import { EditPropertyComponent } from './property/edit-property/edit-property.component';
 import { PropertyOwnerGuard } from './guards/property-owner.guard';
 import { UserPropertiesCountGuard } from './guards/user-properties-count.guard';
+import { ScrollToMenuComponent } from './scroll-to-menu/scroll-to-menu.component';
+import { NotLoggedInGuard } from './guards/not-logged-in.guard';
+import { LoggedInGuard } from './guards/logged-in.guard';
+import { PropertyCardPreviewComponent } from './property/property-card-preview/property-card-preview.component';
+import { PropertyCardSmallComponent } from './property/property-card-small/property-card-small.component';
 
 const appRoutes: Routes = [
-  {path: 'add-property', component: AddPropertyComponent, canActivate: [UserPropertiesCountGuard]},
+  {path: 'add-property', component: AddPropertyComponent, canActivate: [LoggedInGuard, UserPropertiesCountGuard]},
   {path: '', component: PropertyListComponent},
   {path: 'rent-property', component: PropertyListComponent},
   {path: 'property-detail/:id', component: PropertyDetailComponent},
-  {path: 'edit-property/:id', component: EditPropertyComponent, canActivate: [PropertyOwnerGuard]},
-  {path: 'user/login', component: UserLoginComponent},
-  {path: 'user/register', component: UserRegisterComponent},
-  {path: 'user/my-profile', component: MyProfileComponent},
-  {path: 'user/change-password', component: ChangePasswordComponent},
+  {path: 'edit-property/:id', component: EditPropertyComponent, canActivate: [LoggedInGuard, PropertyOwnerGuard]},
+  {path: 'user/login', component: UserLoginComponent, canActivate: [NotLoggedInGuard]},
+  {path: 'user/register', component: UserRegisterComponent, canActivate: [NotLoggedInGuard]},
+  {path: 'user/my-profile', component: MyProfileComponent, canActivate: [LoggedInGuard]},
+  {path: 'user/change-password', component: ChangePasswordComponent, canActivate: [LoggedInGuard]},
   {path: 'documentation', component: DocumentationComponent},
   {path: '**', component: PropertyListComponent}
 ];
@@ -70,7 +75,10 @@ const appRoutes: Routes = [
     ChangePasswordComponent,
     SidenavComponent,
     DocumentationComponent,
-    EditPropertyComponent
+    EditPropertyComponent,
+    ScrollToMenuComponent,
+    PropertyCardPreviewComponent,
+    PropertyCardSmallComponent
   ],
   imports: [
     BrowserModule,

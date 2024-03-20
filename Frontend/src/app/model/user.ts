@@ -10,3 +10,8 @@ export interface UserForLogin {
   password: string;
   token: string;
 }
+
+export interface LoginForm {
+  username: string;
+  password: string;
+}

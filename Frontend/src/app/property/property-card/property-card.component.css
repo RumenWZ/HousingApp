@@ -2,10 +2,6 @@ i {
   color: white;
 }
 
-/* .card {
-  min-height: 433px;
-} */
-
 .card-body h1 {
   font-family: fantasy;
   color: #0069d9;
@@ -59,13 +55,35 @@ i {
   padding: 0.6rem !important;
 }
 
+.hide {
+  opacity: 0;
+}
+
+.blur-load {
+  position: relative;
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.blur-load::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: inherit;
+  filter: blur(5px);
+}
+
 @media (max-width: 992px){
   .display-image {
     height: 13rem !important;
   }
-  /* .card {
-    height: 200px !important;
-  } */
 }
 
 @media (max-width: 578px) {
@@ -73,7 +91,6 @@ i {
     height: auto !important;
   }
 }
-
 
 @media (max-width: 400px) {
 

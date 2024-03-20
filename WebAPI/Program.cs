@@ -10,19 +10,18 @@ using WebAPI.Interfaces;
 using WebAPI.Middlewares;
 using WebAPI.Services;
 
-DotEnv.Load();
+DotEnv.Load(options: new DotEnvOptions(envFilePaths: new[] { "D:\\CSharp\\repos\\env\\HousingApp\\.env" }));
 
 var builder = WebApplication.CreateBuilder(args);
 
 var env = builder.Environment;
 
 var connectionString = env.IsDevelopment() ? Environment.GetEnvironmentVariable("LOCAL_CONNECTION_STRING")
-    : Environment.GetEnvironmentVariable("PRODUCTION_CONNECTION_STRING");
+    : Environment.GetEnvironmentVariable("PRODUCTION_CONNECTION_STRING_HOUSINGAPP");
 
 builder.Services.AddControllers().AddNewtonsoftJson();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddCors();
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddSwaggerGen(c =>
@@ -50,6 +49,32 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
+if (env.IsDevelopment())
+{
+    builder.Services.AddCors(options =>
+    {
+        options.AddDefaultPolicy(builder =>
+        {
+            builder.AllowAnyOrigin()
+                   .AllowAnyHeader()
+                   .AllowAnyMethod();
+        });
+    });
+}
+else if (env.IsProduction())
+{
+    builder.Services.AddCors(options =>
+    {
+        options.AddPolicy("ProductionPolicy", builder =>
+        {
+            builder.WithOrigins(Environment.GetEnvironmentVariable("PRODUCTION_FRONTEND_URL_HOUSINGAPP"))
+                   .AllowAnyHeader()
+                   .AllowAnyMethod();
+        });
+    });
+}
+
+builder.Services.AddCors();
 builder.Services.AddDbContext<DataContext>(options =>
 {
     options.UseSqlServer(connectionString);
@@ -83,11 +108,13 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-} 
+    app.UseCors();
+} else
+{
+    app.UseCors("ProductionPolicy");
+}
 
 app.UseMiddleware<ExceptionMiddleware>();
-
-app.UseCors(m => m.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 
 app.UseAuthentication();
 

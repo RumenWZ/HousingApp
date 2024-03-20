@@ -28,6 +28,9 @@ export class PropertyListComponent implements OnInit{
   pageSize: number = 6;
   currentPage: number = 1;
 
+  skeletonLoadCount: number = 6;
+  propertiesLoaded: boolean;
+
   constructor(private housingService: HousingService, private route: ActivatedRoute) { }
 
 
@@ -50,12 +53,21 @@ export class PropertyListComponent implements OnInit{
 
   ngOnInit(): void {
     this.searchCityFilter = '';
+
     if (this.route.snapshot.url.toString()) {
       this.SellRent = 2;
     }
+
+    setTimeout(() => {
+      if (!this.propertiesLoaded) {
+        this.propertiesLoaded = false;
+      }
+    }, 1000);
+
     this.housingService.getAllProperties(this.SellRent).subscribe(
       (response: any)=>{
         this.properties=response;
+        this.propertiesLoaded = true;
       }
     );
   }

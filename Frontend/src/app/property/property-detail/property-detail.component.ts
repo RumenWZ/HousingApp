@@ -75,7 +75,6 @@ export class PropertyDetailComponent {
     this.propertyId = Number(this.route.snapshot.params['id']);
     this.housingService.getPropertyDetails(this.propertyId).pipe(switchMap((response: any) => {
       this.property = response;
-      console.log(this.property);
       this.property.photos.sort((a: any, b: any) => a.photoIndex - b.photoIndex);
       var postedDate = new Date(this.property.postedOn);
       this.postedSince = this.dateService.formatDateDifference(postedDate);

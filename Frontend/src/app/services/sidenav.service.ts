@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, timer } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, timer } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -7,8 +7,9 @@ import { BehaviorSubject, timer } from 'rxjs';
 export class SidenavService {
   private _isSidenavOpen: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private isTransitioning: boolean = false;
+  private _updateSidenav: Subject<void> = new Subject<void>();
 
-  constructor() { }
+  constructor() {}
 
   toggleSidenav(): void {
     if (!this.isTransitioning) {
@@ -23,5 +24,13 @@ export class SidenavService {
 
   get isSidenavOpen(): BehaviorSubject<boolean> {
     return this._isSidenavOpen;
+  }
+
+  get sidenavUpdated$(): Observable<void> {
+    return this._updateSidenav.asObservable();
+  }
+
+  updateSidenav(): void {
+    this._updateSidenav.next();
   }
 }

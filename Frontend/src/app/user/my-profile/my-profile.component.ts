@@ -1,8 +1,6 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
-import { ConfirmActionComponent } from 'src/app/confirm-action/confirm-action.component';
 import { Property } from 'src/app/model/property';
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { HousingService } from 'src/app/services/housing.service';
@@ -27,6 +25,7 @@ export class MyProfileComponent {
   canEditMobile: boolean = false;
   mobileControl: FormControl;
   profileForm: FormGroup;
+  canClickIcons: boolean = false;
 
   @ViewChild('emailInput') emailInput: ElementRef;
   @ViewChild('mobileInput') mobileInput: ElementRef;
@@ -43,7 +42,6 @@ export class MyProfileComponent {
   constructor(
     private userService: UserService,
     private fb: FormBuilder,
-    private matDialog: MatDialog,
     private housingService: HousingService,
     private alertify: AlertifyService
   ) {
@@ -116,32 +114,6 @@ export class MyProfileComponent {
     this.currentPage = 1;
   }
 
-  confirmDelete(property: any) {
-    if (this.processingRequest) {
-      return;
-    }
-
-    const dialogRef = this.matDialog.open(ConfirmActionComponent, {
-      width: '500px',
-      data: {
-        displayMessage: `Are you sure you want to remove your property listing in ${property.name}, ${property.city}?`,
-        confirmButtonName: 'Yes',
-        imageUrl: property.photo
-      },
-
-    })
-
-
-    dialogRef.componentInstance.deleteConfirmed.subscribe(() => {
-      this.deleteProperty(property.id);
-      dialogRef.close();
-    });
-
-    dialogRef.componentInstance.deleteCancelled.subscribe(() => {
-      dialogRef.close();
-    })
-  }
-
   deleteProperty(id: number) {
     this.processingRequest = true;
     this.housingService.deleteProperty(id).subscribe((response: any) => {
@@ -153,9 +125,11 @@ export class MyProfileComponent {
     })
   }
 
-
-
   ngOnInit() {
+    this.housingService.deletePropertyEmitter.subscribe((propId: any) => {
+      this.deleteProperty(propId);
+    });
+
     this.userService.getLoggedInUserDetails().subscribe((response: any) => {
       this.user = response;
       this.profileForm.controls.mobile.setValue(this.user.mobile);
@@ -188,12 +162,6 @@ export class MyProfileComponent {
     return this.user.properties.slice(startIndex, startIndex + this.pageSize);
   }
 
-  test() {
-    console.log(this.screenWidthLessThan992px);
-    console.log(this.screenWidthLessThan768px);
-    console.log(this.screenWidthLessThan576px);
-    console.log(this.pageSize);
-  }
 
   @HostListener('window:resize', ['$event'])
   onWindowResize(event: any) {

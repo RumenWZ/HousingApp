@@ -10,5 +10,6 @@ export interface IPropertyBase {
   city: string;
   readyToMove: boolean;
   image?: string;
-  photo? :string;
+  photo?:string;
+  miniPhotoUrl?: string;
 }

@@ -1,0 +1,100 @@
+* {
+  color: black;
+}
+
+.doc-background {
+  max-width: 60rem;
+  margin: 0 auto;
+  padding: 0 3rem 4rem 3rem;
+  margin-bottom: 1rem;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.doc-content {
+  height: 100%;
+}
+
+.doc-top-header {
+  font-size: 2.6rem;
+  padding: 4rem 0;
+}
+
+.doc-description {
+  margin-bottom: 1rem;
+  color: #565656;
+}
+
+.doc-image-wrapper{
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.doc-image {
+  max-width: 100%;
+  border: 1px solid gray;
+}
+
+.doc-bulletpoints li {
+  color: #565656;
+}
+
+.doc-section {
+  margin-top: 1rem;
+}
+
+.doc-link {
+  color: #5d81ea;
+  text-decoration: none;
+}
+
+.doc-link:hover {
+  text-decoration: underline;
+}
+
+.scroll-to-top {
+  background-color: var(--main-dark-blue);
+  border-radius: 20px;
+  padding: 0.7rem 1.1rem 0.7rem 1.5rem;
+  position: fixed;
+  bottom: 3rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+}
+
+.scroll-to-top span, i {
+  color: white;
+}
+
+.scroll-to-top i {
+  font-size: 1.5rem;
+}
+
+.doc-note {
+  color: #49b0f4;
+  font-style: italic;
+}
+
+@media (max-width: 768px) {
+  .doc-top-header {
+    font-size: 2rem;
+    line-height: 2.5rem;
+    padding: 2rem 0;
+  }
+}
+
+@media (max-width: 400px) {
+  .doc-background {
+    height: 100%;
+    padding: 0 1.5rem 1rem 1.5rem;
+  }
+
+  .doc-top-header {
+    font-size: 9vw;
+  }
+}
+

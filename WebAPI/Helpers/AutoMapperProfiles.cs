@@ -23,7 +23,9 @@ namespace WebAPI.Helpers
                 .ForMember(d => d.PropertyType, op => op.MapFrom(src => src.PropertyType.Name))
                 .ForMember(d => d.City, op => op.MapFrom(src => src.City.Name))
                 .ForMember(d => d.Country, op => op.MapFrom(src => src.City.Country))
-                .ForMember(d => d.Photo, op => op.MapFrom(src => src.Photos.FirstOrDefault(p => p.IsPrimary).PhotoUrl));
+                .ForMember(d => d.Photo, op => op.MapFrom(src => src.Photos.FirstOrDefault(p => p.IsPrimary).PhotoUrl))
+                .ForMember(d => d.MiniPhotoUrl, op => op.MapFrom(src => src.Photos.FirstOrDefault(p => p.IsPrimary).MiniPhotoUrl));
+             
 
             CreateMap<Property, PropertyDetailDTO>()
                 .ForMember(d => d.City, op => op.MapFrom(src => src.City.Name))

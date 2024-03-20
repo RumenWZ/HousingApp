@@ -24,17 +24,27 @@
   </div>
 </div>
 
-<div class="property-wrapper">
+<div *ngIf="propertiesLoaded" class="property-wrapper">
   <div class="property-container" [@fadeInOut]>
     <div *ngFor="let property of properties|filter:searchCityFilter:'city'|sort: [sortByParam, sortDirection] |
-    paginate: { itemsPerPage: pageSize, currentPage: currentPage }" class="property">
-      <app-property-card [property]="property"></app-property-card>
+      paginate: { itemsPerPage: pageSize, currentPage: currentPage }" class="property">
+        <app-property-card [property]="property"></app-property-card>
     </div>
   </div>
 
-  <div *ngIf="properties?.length > pageSize" class="pagination-wrapper">
+  <div *ngIf="properties?.length > pageSize && properties.length > 0" class="pagination-wrapper">
     <div class="pagination">
       <pagination-controls (pageChange)="currentPage = $event"></pagination-controls>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="propertiesLoaded === false" class="property-wrapper">
+  <div class="property-container">
+    <div *ngFor="let item of [].constructor(skeletonLoadCount);" class="skeleton-card shadow-lg">
+      <div class="skeleton-image shimmer">
+
+      </div>
     </div>
   </div>
 </div>

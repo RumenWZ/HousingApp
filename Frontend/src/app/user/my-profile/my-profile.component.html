@@ -34,40 +34,10 @@
     <div class="card-header">
       <span class="header">My Properties</span>
     </div>
+    <p style="padding: 5px;" *ngIf="user?.properties.length == 0">You have not listed any properties yet.</p>
     <div class="user-properties">
       <div *ngFor="let prop of user?.properties | paginate: { itemsPerPage: pageSize, currentPage: currentPage }" class="property">
-        <div class="property-photo-wrapper">
-          <img *ngIf="!prop.photo" src="/assets/images/houseClipart.png">
-          <img class="property-photo" *ngIf="prop.photo" [src]="prop.photo">
-          <ul class="list-inline text-center member-icons animate">
-            <li class="list-inline-item">
-              <button class="btn btn-primary" routerLink="/property-detail/{{prop.id}}" title="Property Details"><i class="white fa-solid fa-magnifying-glass"></i></button>
-            </li>
-            <li class="list-inline-item">
-              <button class="btn btn-warning" routerLink="/edit-property/{{prop.id}}" title="Edit Property"><i class="fa-regular fa-pen-to-square"></i></button>
-            </li>
-            <li class="list-inline-item">
-              <button class="btn btn-danger" (click)="confirmDelete(prop)" title="Delete Property"><i class="white fa-solid fa-trash-can"></i></button>
-            </li>
-          </ul>
-        </div>
-        <div class="property-body">
-          <h4 style="color: #0069d9; font-weight: 700;"> {{prop.bhk}} BHK {{prop.propertyType}}</h4>
-          <div class="location-wrapper">
-            <span>in {{prop.name}} , {{prop.city}}</span>
-          </div>
-
-
-          <div class="price-section">
-            <hr class="mt-0 mb-2">
-
-            <span *ngIf="prop.sellOrRent==1">Price: </span>
-            <span *ngIf="prop.sellOrRent==2">Rent: </span>
-            <span class="highlight-font">{{prop.price | number:'':'en'}} EUR.</span>
-          </div>
-
-        </div>
-
+        <app-property-card-small [property]="prop"></app-property-card-small>
       </div>
     </div>
     <div div *ngIf="user?.properties.length > 0" class="pagination">
@@ -81,4 +51,3 @@
   <span>Processing your request...</span>
 </div>
 
-<button (click)="test()">test</button>

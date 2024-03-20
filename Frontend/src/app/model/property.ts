@@ -31,6 +31,7 @@ export class Property implements IPropertyBase{
   photo: string;
   photos: any[];
   postedBy: number;
+  miniPhotoUrl: string;
 }
 
 export class BasicPropertyOption {

@@ -1,13 +1,16 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { BasicPropertyOption,  Property } from '../model/property';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HousingService {
-  baseUrl = 'http://localhost:5131/api';
+  baseUrl = environment.apiUrl;
+
+  deletePropertyEmitter: EventEmitter<number> = new EventEmitter<number>();
 
   constructor(private http:HttpClient) { }
 
@@ -22,14 +25,6 @@ export class HousingService {
   getFurnishingTypes() {
     return this.http.get<BasicPropertyOption[]>(`${this.baseUrl}/FurnishingType`);
   }
-
-  // getProperty(id: number) {
-  //   return this.getAllProperties().pipe(
-  //     map(data => {
-  //       return data.find(p => p.id === id);
-  //     })
-  //   )
-  // }
 
   uploadPropertyPhotos(propertyId: number, photos: FormData) {
     return this.http.post(`${this.baseUrl}/property/add-photos/${propertyId}`, photos);

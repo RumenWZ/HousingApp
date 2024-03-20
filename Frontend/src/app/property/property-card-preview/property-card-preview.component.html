@@ -1,0 +1,24 @@
+<div class="card shadow-lg">
+  <div class="card-img-wrapper">
+    <img *ngIf="property.image" class="card-img-top display-image" [src]="property.image">
+    <img *ngIf="!property.image && !property.photo" class="card-img-top display-image" src="/assets/images/houseClipart.png">
+  </div>
+  
+  <div class="card-body p-1">
+    <h1 class="mb-0"> {{property.bhk}} BHK {{property.propertyType}}</h1>
+
+    in {{property.name}}
+    <span *ngIf="property.name">,</span>
+    {{property.city}}
+
+    <h6 class="mt-2 f-type">{{property.furnishingType}}
+    <span *ngIf="property.furnishingType !== 'Unfurnished' && property.furnishingType">Furnished</span><span *ngIf="property.readyToMove"> | Ready to Move</span></h6>
+
+    <hr class="mt-0 mb-2">
+
+    <h6 class="mb-0">
+      <span *ngIf="property.sellOrRent==1">Price: </span><span *ngIf="property.sellOrRent==2">Rent: </span><span class="highlight-font">{{property.price | number: '':'en'}} EUR.</span>
+      Area: <span class="highlight-font">{{property.builtArea | number: '':'en'}} Sq Ft </span>
+    </h6>
+  </div>
+</div>

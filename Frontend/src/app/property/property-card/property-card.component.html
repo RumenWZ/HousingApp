@@ -1,9 +1,10 @@
-<div class="card shadow-lg ">
+<div class="card shadow-lg">
       <div class="card-img-wrapper">
-        <img *ngIf="property.image" class="card-img-top display-image" [src]="property.image" loading="lazy"  >
-        <img *ngIf="!property.image && !property.photo" class="card-img-top display-image" src="/assets/images/houseClipart.png">
-        <img *ngIf="!property.image && property.photo" class="card-img-top display-image" [src]="property.photo" loading="lazy">
-        <ul *ngIf="!hideIcons" class="list-inline text-center member-icons animate">
+
+        <div class="blur-load" [style.background-image]="'url(' + backgroundImageUrl + ')'">
+          <img class="card-img-top display-image" [src]="property.photo" (load)="onImageLoad()" [ngClass]="{ 'hide': !imageLoaded }" loading="lazy">
+        </div>
+        <ul class="list-inline text-center member-icons animate">
           <li class="list-inline-item">
             <button class="btn btn-primary" routerLink="/property-detail/{{property.id}}" title="Property Details"><i class="fa-solid fa-magnifying-glass"></i></button>
           </li>
@@ -12,7 +13,6 @@
           </li>
         </ul>
       </div>
-
       <div class="card-body p-1">
         <h1 class="mb-0"> {{property.bhk}} BHK {{property.propertyType}}</h1>
 

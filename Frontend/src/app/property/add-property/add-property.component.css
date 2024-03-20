@@ -104,6 +104,28 @@
   width: 50%;
 }
 
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  border-top: 4px solid #fff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 0.5rem;
+}
+
+.loading-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 @media (max-width: 1400px) {
   .remove-button {
     right: 3px;

@@ -1,0 +1,106 @@
+i {
+  color: white;
+}
+
+/* .card {
+  min-height: 433px;
+} */
+
+.card-body h1 {
+  font-family: fantasy;
+  color: #0069d9;
+}
+
+.card-img-wrapper {
+  overflow: hidden;
+  position: relative;
+}
+
+.card:hover img {
+  transform: scale(1.2,1.2);
+  transition-duration: 300ms;
+  transition-timing-function: ease-out;
+  height: 270px;
+  opacity: 0.5;
+}
+
+.card img {
+  transform: scale(1,1);
+  transition-duration: 300ms;
+  transition-timing-function: ease-out;
+  height: 270px;
+}
+
+.highlight-font {
+  font-family: italic;
+  color: red;
+}
+
+.member-icons {
+  position:absolute;
+  bottom: -30%;
+  left: 0;
+  right: 0;
+  margin-right :auto;
+  margin-left: auto;
+  opacity: 0;
+}
+
+.card-img-wrapper:hover .member-icons {
+  bottom: 0;
+  opacity: 1;
+}
+
+.animate {
+  transition: all 0.3s ease-in-out;
+}
+
+.card-body {
+  padding: 0.6rem !important;
+}
+
+.blur {
+  filter: blur(5px);
+}
+
+.hide {
+  display: none;
+}
+
+.show {
+  display: block;
+}
+
+
+@media (max-width: 992px){
+  .display-image {
+    height: 13rem !important;
+  }
+}
+
+@media (max-width: 578px) {
+  .display-image {
+    height: auto !important;
+  }
+}
+
+@media (max-width: 400px) {
+
+  .card  {
+    min-height: 0;
+    height: 100% !important;
+  }
+}
+
+@media (max-width: 300px) {
+  .card-body h6 span {
+    font-size: 0.8rem;
+  }
+  .card-body {
+    font-size: 0.8rem;
+  }
+
+  .f-type {
+    font-size: 0.8rem;
+  }
+}

@@ -1,1 +1,165 @@
-<p>documentation works!</p>
+<div class="doc-background">
+  <div class="doc-content">
+    <div class="doc-top-header">Housing App Documentation</div>
+    <h1>Welcome</h1>
+    <hr>
+    <div class="doc-description">Thank you for visiting my project. This page is a comprehensive documentation for my this web project, with a table of contents below to help with navigating the sections. </div>
+
+    <app-scroll-to-menu></app-scroll-to-menu>
+
+    <div class="doc-section" id="about">
+      <h1>1. About Project</h1>
+      <hr>
+      <div class="doc-description">This web app is a platform for users to list their real-estate properties for sale or for renting. This web app is made using Angular and ASP.NET, with Entity Framework as my object-relational mapper.</div>
+    </div>
+
+    <div class="doc-section" id="getting-started">
+      <h1>2. Getting Started</h1>
+      <hr>
+      <div class="doc-description">
+        This section will guide you how to explore the web app's features.
+      </div>
+
+      <h4>Browse Properties</h4>
+      <div  class="doc-description">
+        You can browse the list of uploaded properties without the need to create an account. You can choose if you would like to browse properties that are listed for sale or for renting by selecting the appropriate option on the navbar.
+      </div>
+
+      <h4>View Property Details</h4>
+      <div class="doc-description">To view a property's details, hover over the property and a magnifying glass icon will appear. Click on that icon to be redirected to the details page for that property. The phone icon that is next to the magnifying glass icon is for cosmetic purposes only.</div>
+
+      <h4>Create an Account</h4>
+      <div class="doc-description">To list your own properties, you will need to create an account. Click on the <a class="doc-link" routerLink="/user/register" target="_blank">Register</a> button on the navbar to create an account.</div>
+
+      <h4>Create a Property Listing</h4>
+      <div class="doc-description">After creating an account, you can create a property listing by pressing on "List Property" on the navbar. If you are on a mobile device, open the sidenav from the burger menu located on the navbar and press Properties -> List Property.</div>
+
+      <h4>Fill Out The Form</h4>
+      <div class="doc-description">Fill out the List Property form fields describing your property.</div>
+      <div class="doc-description">Some of the form fields are mandatory, which have a '*' next to the form label.</div>
+
+      <h4>Add Photos</h4>
+      <div class="doc-description">You can add photos for your property in the "Photos" tab in the List Property page.</div>
+      <div class="doc-description">After selecting your photos from the file browser, you can drag and drop the photos around to manually sort the order that they will be displayed in.</div>
+      <div class="doc-description">It mandatory to upload at least 1 photo for your property. A maximum of 6 photos is allowed per property.</div>
+
+      <h4>Your Profile</h4>
+      <div class="doc-description">You can manage your properties and edit your profile details by clicking on <a class="doc-link" routerLink="/user/my-profile" target="_blank">My Profile</a>, which is found by clicking on the arrow pointing down on the right side of the navbar. Or in the sidenav if you are on a mobile device.</div>
+      <div class="doc-description">In this page, you can view, update and delete your properties that you have listed. To update your property click on the orange button with a note icon under the property. To delete a property, click the red button under the property.</div>
+      <div class="doc-description">Here you can also edit your Email and Mobile Number, which are displayed in your property listings for users to contact you. To edit them, simply click on the note icon next to them.</div>
+
+      <div class="doc-section" id="features">
+      <h1>3. Features</h1>
+      <hr>
+      <div class="doc-description">
+        This section will be a look at the notable features of the app.
+      </div>
+      <h2 id="add-property">3.1. Add Property</h2>
+      <div class="doc-description">The Add Property page has many different types of form inputs, such as a basic input form, a dropdown menu, radio buttons, a pop-up calendar to select dates easily, and also photo selection via the file browser.</div>
+      <div class="doc-description">A preview of the property is displayed next to the add property form, showcasing how the property will look when being displayed in the property list.</div>
+      <div class="doc-description">Every form field is validated, with stricter validation for the mandatory fields marked with '*'. </div>
+      <h2 id="update-property">3.2. Update Property</h2>
+      <div class="doc-description">You can update any information of a property that you have uploaded, along with updating the property's photos. The update interface is idential to the 'Add Property' page, with minor color differences.</div>
+      <div class="doc-description">All of the validation in the 'Add Property' page applies to the Update page as well.</div>
+      <h2 id="blur-loading">3.3. Blurry Image Loading</h2>
+      <div class="doc-description">The properties displayed on the main page contain a blurried placeholder image of the original primary photo, while that primary photo is still being loaded. After the primary photo is fully loaded, that photo smoothly fades in to replace the blurry placeholder.</div>
+      <div class="doc-description">To achieve this effect, I made sure that a much smaller resized version of a photo is also uploaded along with the original photo. The smaller version is created in the backend via the "SixLabors.ImageSharp" image processing library, the image has a resolution of 40x30 px.</div>
+      <div class="doc-description">Since the smaller image is around 3KB, it is loaded nearly instantly. This mini version of the image is then blurred and used as a placeholder while the original image loads.</div>
+      <div class="doc-note">Note: If you would like to repeatedly observe this effect, you will have to disable your browser caching. Navigate to the Developer tools of your browser, go to the 'Network' tab, enable the 'Disable Cache' option and refresh the page while the Developer tools are still open.</div>
+      <h2 id="drag-and-drop">3.4 Drag and Drop Image Sorting</h2>
+      <div class="doc-description">After the user selects the photos for their property in the Add Property page, a small preview of the photos will appear in a grid formation. The user can then drag and drop the photos around to manage the order of how the photos will be displayed when the property listing is created.</div>
+      <h2 id="other-features">3.5. Other Minor Features</h2>
+      <div class="doc-description">The app includes other minor features such as:</div>
+      <ul class="doc-bulletpoints">
+        <li>Notification messages</li>
+        <li>Ability to change Password</li>
+        <li>Filter and sort fields when browsing properties</li>
+        <li>Pagination</li>
+        <li>Image upload validation for frontend and backend</li>
+        <li>Sidenav navigation for smaller devices</li>
+        <li>The user receives a preview of the image they have selected from the file browser, if it passes the validation checks.</li>
+      </ul>
+    </div>
+
+    <div class="doc-section" id="validation">
+      <h1>4. Validation</h1>
+      <h2 id="user-input-validation">4.1. User Input Validation</h2>
+      <h4>Frontend</h4>
+      <div class="doc-description">For my user input validation in the Frontend I used mainly reactive forms, as my forms were slightly complex. I have ensured that all fields are validated in some way, wether it's setting a maxlength for every field, or ensuring that only the appropriate characters are accepted in certain fields. For example only whole numbers are valid for entering prices for properties.</div>
+      <h4>Backend</h4>
+      <div class="doc-description">As for the Backend, I used Data Transfer Objects(DTOs) with the appropriate Data Annotations as well.</div>
+
+      <h2 id="image-validation">4.2. Image Validation</h2>
+      <div class="doc-description">For the image validation in the frontend I created a function, which performs several validation checks on an image, after the user selects it from the file browser.</div>
+      <div class="doc-description">The function validates the file's format, ensuring only JPG,JPEG and PNG are accepted. The function also validates the image's size (a maximum of 2 MB in my case).</div>
+      <div class="doc-description">The aspect ratio of the image is also validated.The aspect ratio of a property's photo must be close to a 16:9 or 4:3 aspect ratio, ensuring the property photo is in landscape mode for consistency. I have applied an aspect ratio tolerance of 15%, so the height and width of the image so they don't have to be pixel perfect 16:9 / 4:3 aspect ratios.</div>
+      <div class="doc-description">These validation checks are also performed in the backend (excluding the aspect ratio validation). If all of the validation is successful, the image and it's mini resized version are then uploaded to Cloudinary and the url strings for the images are saved to the database. If an object in the database is deleted, and that object contains a Cloudinary image url, the image will be deleted from the Cloudinary storage as well.</div>
+    </div>
+
+    <div class="doc-section" id="auth">
+      <h1>5. Authentication / Authorization</h1>
+      <div class="doc-description">This app uses JSON Web Tokens to authenticate the user's credentials.</div>
+      <h3>Frontend</h3>
+      <div class="doc-description">A token is assigned to a user once they successfully log into their account, afterwards the token is saved to the local storage of the user's browser.</div>
+      <div class="doc-description">I have implemented a token interceptor service for this app. This interceptor retrieves the user's token from the local storage and automatically includes it in the HTTP Headers for every outgoing request to the database. If the token is invalid/expired, the user's request will be ignored and they will be automatically logged out and prompted to log in to receive a new valid token.</div>
+      <h3>Backend</h3>
+      <div class="doc-description">In the Backend I have added a middleware, which retrieves the token from the HTTP Headers on every request. For an endpoint to validate a user's credentials I add the [Authorize] attribute to the endpoint, which automatically validates the token. If the token is invalid, the endpoint will return a 401 Unathorized response and the Frontend will respond accordingly.</div>
+      <h3>Guards</h3>
+      <h6>Logged in Guard</h6>
+      <div class="doc-description">This guard is for pages which require a user to be logged in to view their contents. The guard simply calls a basic endpoint, which checks if the user's token is valid.</div>
+      <h6>Not Logged in Guard</h6>
+      <div class="doc-description">This guard is for the pages which the user shouldn't have access to if they are logged in, namely the Login and Register pages.</div>
+      <h6>Property Owner Guard</h6>
+      <div class="doc-description">This guard is used for the 'Update Property' page, which ensures the user is the original uploader of the property, before allowing them to make changes to the property.</div>
+      <h6>User Property Count Guard</h6>
+      <div class="doc-description">This guard is used for the 'Add Property' page, it checks the amount of properties uploaded by the logged in user, if the number is less than 10, they are granted access to the page.</div>
+    </div>
+
+    <div class="doc-section" id="libs">
+      <h1>6. Libraries / Packages</h1>
+      <h5>Frontend</h5>
+      <div class="doc-description">
+        <ul class="doc-bulletpoints">
+          <li>Alertify</li>
+          <li>Angular Material (Sidenav, Dialog, Drag and Drop)</li>
+          <li>ngx-bootstrap (ngx-gallery, ngx-pagination, ngx-datepicker, ngx-tabs)</li>
+        </ul>
+      </div>
+
+      <h5>Backend</h5>
+      <div class="doc-description">
+        <ul class="doc-bulletpoints">
+          <li>Entity Framework</li>
+          <li>AutoMapper</li>
+          <li>CloudinaryDotNet</li>
+          <li>SixLabors</li>
+          <li>JWT Bearer</li>
+          <li>dotenv.net</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="doc-section" id="coding-practices">
+      <h1>7. Coding Practices</h1>
+      <div class="doc-descriptoin">Some of the code practices I have used are: </div>
+      <div class="doc-description">
+        <ul class="doc-bulletpoints" style="padding-top: 10px;">
+          <li>Repository Pattern</li>
+          <li>Unit of Work Pattern</li>
+          <li>Password Hashing</li>
+          <li>Dependancy Injection</li>
+          <li>Error Handling</li>
+          <li>Responsive Design</li>
+          <li>Consistent Code Formatting</li>
+          <li>Environmental Variables</li>
+        </ul>
+      </div>
+    </div>
+
+</div>
+
+
+<div *ngIf="isScrollToTopVisible" class="scroll-to-top" (click)="onBackToTop()">
+  <span>Back to Top</span>
+  <i class='bx bx-up-arrow-alt'></i>
+</div>

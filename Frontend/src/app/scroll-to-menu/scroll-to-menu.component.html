@@ -1,0 +1,13 @@
+<div class="scroll-menu">
+  <div class="scroll-menu-header">Contents</div>
+  <ul class="scroll-menu-list">
+    <div *ngFor="let item of menuData; let i = index">
+      <li class="scroll-menu-item" (click)="scrollTo(item.menuId)">{{i + 1}}. {{item.menuName}}</li>
+      <div class="submenus" *ngIf="item.submenus">
+        <ul class="scroll-menu-list">
+          <li *ngFor="let submenu of item.submenus; let submenuIndex = index" class="submenu-item" (click)="scrollTo(submenu.submenuId)">{{i+1}}.{{submenuIndex+1}}. {{submenu.submenuName}}</li>
+        </ul>
+      </div>
+    </div>
+  </ul>
+</div>

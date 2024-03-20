@@ -1,0 +1,30 @@
+<div class="property-wrapper">
+  <div class="property-photo-wrapper">
+    <img *ngIf="!property.photo" src="/assets/images/houseClipart.png">
+
+    <div *ngIf="property.photo" class="blur-load" [style.background-image]="'url(' + blurLoadBackgroundImage + ')'">
+      <img class="card-img-top display-image" [src]="property.photo" (load)="onImageLoad()" [ngClass]="{ 'hide': !imageLoaded, 'show': imageLoaded }" loading="lazy">
+    </div>
+  </div>
+  <div class="property-body">
+    <h5 style="color: #0069d9; font-weight: 700;"> {{property.bhk}} BHK {{property.propertyType}}</h5>
+    <div class="location-wrapper">
+      <span style="font-size: 0.8rem;">in {{property.name}} , {{property.city}}</span>
+    </div>
+
+    <div class="price-section">
+      <hr class="mt-0 mb-2">
+
+      <span *ngIf="property.sellOrRent==1">Price: </span>
+      <span *ngIf="property.sellOrRent==2">Rent: </span>
+      <span class="highlight-font">{{property.price | number:'':'en'}} EUR.</span>
+    </div>
+
+  </div>
+  <div class="prop-buttons">
+    <div class="prop-btn btn-details" routerLink="/property-detail/{{property.id}}" title="Property Details"><i class="white fa-solid fa-magnifying-glass"></i></div>
+    <div class="prop-btn btn-update" routerLink="/edit-property/{{property.id}}" title="Edit Property"><i class="fa-regular fa-pen-to-square" style="color: white;"></i></div>
+    <div class="prop-btn btn-delete" (click)="confirmDelete(property)" title="Delete Property"><i class="white fa-solid fa-trash-can"></i></div>
+  </div>
+
+</div>

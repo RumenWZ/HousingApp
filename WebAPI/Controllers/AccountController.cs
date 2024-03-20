@@ -180,6 +180,17 @@ namespace WebAPI.Controllers
             return Ok(201);
         }
 
+        [HttpGet("check-logged-in")]
+        public async Task<IActionResult> CheckIfUserIsLoggedIn()
+        {
+            var user = await uow.UserRepository.GetUserByTokenAsync(HttpContext.GetAuthToken());
+            if (user == null)
+            {
+                return Ok(401);
+            }
+            return Ok(200);
+        }
+
 
         [HttpGet("user-properties-count")]
         [Authorize]

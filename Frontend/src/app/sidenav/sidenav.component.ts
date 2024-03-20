@@ -12,9 +12,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
   animations: [
     trigger('drawerState', [
       state('closed', style({  display: 'none'})),
-      state('open', style({  display: 'block'})),
-      // transition('closed => open', animate('200ms ease')),
-      // transition('open => closed', animate('200ms ease'))
+      state('open', style({  display: 'block'}))
     ])
   ]
 })
@@ -31,7 +29,11 @@ export class SidenavComponent {
     private sidenav: SidenavService,
     private router: Router,
     private userService: UserService
-  ) {}
+  ) {
+    this.sidenav.sidenavUpdated$.subscribe(() => {
+      this.getUserDetails();
+    })
+  }
 
   navigateUrl(url: string) {
     if (url == 'logout') {
@@ -67,9 +69,15 @@ export class SidenavComponent {
     this.otherDrawerState = (this.otherDrawerState === 'closed') ? 'open' : 'closed';
   }
 
+  getUserDetails() {
+    if (localStorage.getItem('token')) {
+      this.userService.getLoggedInUser().subscribe((response: any) => {
+        this.user = response;
+      });
+    }
+  }
+
   ngOnInit() {
-    this.userService.getLoggedInUser().subscribe((response: any) => {
-      this.user = response;
-    });
+    this.getUserDetails();
   }
 }

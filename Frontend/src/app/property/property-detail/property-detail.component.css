@@ -51,3 +51,29 @@
 app-property-detail {
   width: 5rem;
 }
+
+@media (max-width: 992px) {
+  .card-img-top {
+    min-height: 0 !important;
+    height: auto !important;
+  }
+}
+
+
+@media (max-width: 330px) {
+  .property-details {
+    font-size: 5vw !important;
+  }
+
+  .card-body * {
+    font-size: 5vw !important;
+  }
+  .card {
+    min-height: 0 !important;
+    height: auto !important;
+  }
+
+  .card-footer button{
+    font-size: 6vw !important;
+  }
+}

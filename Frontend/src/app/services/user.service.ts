@@ -2,12 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from '../model/user';
 import { Router } from '@angular/router';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  baseUrl = "http://localhost:5131/api";
+  baseUrl = environment.apiUrl;
 
   constructor(
     private http: HttpClient,
@@ -43,6 +44,10 @@ export class UserService {
 
   getUserPropertiesCount() {
     return this.http.get<number>(`${this.baseUrl}/account/user-properties-count`);
+  }
+
+  checkIfLoggedIn() {
+    return this.http.get(`${this.baseUrl}/account/check-logged-in`);
   }
 
   logout() {

@@ -246,7 +246,6 @@ export class AddPropertyComponent {
   }
 
   onSubmit(){
-    console.log('submit');
     this.isProcessingRequest = true;
 
     if (this.photosSelected.length == 0) {

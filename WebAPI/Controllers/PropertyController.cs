@@ -1,12 +1,14 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Reflection.Metadata.Ecma335;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Formats.Png;
+using SixLabors.ImageSharp.Processing;
 using WebAPI.DTOs.PropertyDTOs;
 using WebAPI.Extensions;
 using WebAPI.Interfaces;
 using WebAPI.Models;
+
 
 namespace WebAPI.Controllers
 {
@@ -82,7 +84,7 @@ namespace WebAPI.Controllers
             await uow.SaveAsync();
 
             return Ok(newProperty.Id);
-            
+
         }
 
         [HttpPost("add-photos/{propertyId}")]
@@ -103,9 +105,10 @@ namespace WebAPI.Controllers
 
             var index = 0;
 
-            foreach(var photo in photos)
+            foreach (var photo in photos)
             {
-                if (!photoService.IsImageValidFormat(photo)){
+                if (!photoService.IsImageValidFormat(photo))
+                {
                     return BadRequest($"{photo.FileName} is not a valid format. Supported formats: .jpeg, .png, .jpg");
                 }
 
@@ -114,30 +117,55 @@ namespace WebAPI.Controllers
                     return BadRequest($"Image size exceeds the maximum allowed size of 2 MB.");
                 }
 
-                var uploadResult = await photoService.UploadPhotoAsync(photo);
-                var photoUrl = uploadResult.SecureUrl.ToString();
-
-                if (property.Photos == null)
+                using (var image = Image.Load(photo.OpenReadStream()))
                 {
-                    property.Photos = new List<Photo>();
+                    image.Mutate(x => x.Resize(new ResizeOptions
+                    {
+                        Mode = ResizeMode.Max,
+                        Size = new Size(40, 30)
+                    }));
+
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        image.Save(memoryStream, new PngEncoder());
+                        memoryStream.Position = 0;
+
+                        var shrunkenImageStream = new MemoryStream();
+                        memoryStream.CopyTo(shrunkenImageStream);
+                        shrunkenImageStream.Position = 0;
+                        var shrunkenImageFile = new FormFile(shrunkenImageStream, 0, shrunkenImageStream.Length, "shrunkenImage", "shrunkenImage.png");
+                        var shrunkenUploadResult = await photoService.UploadPhotoAsync(shrunkenImageFile);
+
+                        var shrunkenPhotoUrl = shrunkenUploadResult.SecureUrl.ToString();
+
+                        var uploadResult = await photoService.UploadPhotoAsync(photo);
+                        var originalPhotoUrl = uploadResult.SecureUrl.ToString();
+
+                        if (property.Photos == null)
+                        {
+                            property.Photos = new List<Photo>();
+                        }
+
+                        var newPhoto = new Photo
+                        {
+                            PhotoUrl = originalPhotoUrl,
+                            MiniPhotoUrl = shrunkenPhotoUrl,
+                            IsPrimary = index == 0,
+                            PropertyId = property.Id,
+                            LastUpdatedBy = user.Id,
+                            PublicId = uploadResult.PublicId,
+                            PhotoIndex = index,
+                        };
+                        index++;
+                        property.Photos.Add(newPhoto);
+                        await uow.SaveAsync();
+                    }
+
                 }
 
-                var newPhoto = new Photo
-                {
-                    PhotoUrl = photoUrl,
-                    IsPrimary = index == 0,
-                    PropertyId = property.Id,
-                    LastUpdatedBy = user.Id,
-                    PublicId = uploadResult.PublicId,
-                    PhotoIndex = index,
-                };
-                index++;
-                property.Photos.Add(newPhoto);
-                await uow.SaveAsync();
             }
-            
             return Ok(201);
-        }
+        } 
 
         [HttpDelete("delete/{id}")]
         [Authorize]
@@ -156,7 +184,15 @@ namespace WebAPI.Controllers
 
             foreach (var photo in property.Photos)
             {
-                await photoService.DeletePhotoAsync(photo.PhotoUrl);
+                if (!string.IsNullOrEmpty(photo.PhotoUrl))
+                {
+                    await photoService.DeletePhotoAsync(photo.PhotoUrl);
+                }
+                if (!string.IsNullOrEmpty(photo.MiniPhotoUrl))
+                {
+                    await photoService.DeletePhotoAsync(photo.MiniPhotoUrl);
+                }
+
             }
             await uow.PropertyRepository.Delete(property.Id); 
             await uow.SaveAsync();
@@ -240,25 +276,50 @@ namespace WebAPI.Controllers
                 return BadRequest($"Image size exceeds the maximum allowed size of 2 MB.");
             }
 
-            var uploadResult = await photoService.UploadPhotoAsync(photo);
-            var photoUrl = uploadResult.SecureUrl.ToString();
-
-            if (property.Photos == null)
+            using (var image = Image.Load(photo.OpenReadStream()))
             {
-                property.Photos = new List<Photo>();
+                image.Mutate(x => x.Resize(new ResizeOptions
+                {
+                    Mode = ResizeMode.Max,
+                    Size = new Size(40, 30)
+                }));
+
+                using (var memoryStream = new MemoryStream())
+                {
+                    image.Save(memoryStream, new PngEncoder());
+                    memoryStream.Position = 0;
+
+                    var shrunkenImageStream = new MemoryStream();
+                    memoryStream.CopyTo(shrunkenImageStream);
+                    shrunkenImageStream.Position = 0;
+                    var shrunkenImageFile = new FormFile(shrunkenImageStream, 0, shrunkenImageStream.Length, "shrunkenImage", "shrunkenImage.png");
+                    var shrunkenUploadResult = await photoService.UploadPhotoAsync(shrunkenImageFile);
+
+                    var shrunkenPhotoUrl = shrunkenUploadResult.SecureUrl.ToString();
+
+                    var uploadResult = await photoService.UploadPhotoAsync(photo);
+                    var originalPhotoUrl = uploadResult.SecureUrl.ToString();
+
+                    if (property.Photos == null)
+                    {
+                        property.Photos = new List<Photo>();
+                    }
+
+                    var newPhoto = new Photo
+                    {
+                        PhotoUrl = originalPhotoUrl,
+                        MiniPhotoUrl = shrunkenPhotoUrl,
+                        IsPrimary = photoIndex == 0,
+                        PropertyId = property.Id,
+                        LastUpdatedBy = user.Id,
+                        PublicId = uploadResult.PublicId,
+                        PhotoIndex = photoIndex,
+                    };
+
+                    property.Photos.Add(newPhoto);
+                    await uow.SaveAsync();
+                }
             }
-
-            var newPhoto = new Photo
-            {
-                PhotoUrl = photoUrl,
-                IsPrimary = photoIndex == 0,
-                PropertyId = property.Id,
-                LastUpdatedBy = user.Id,
-                PublicId = uploadResult.PublicId,
-                PhotoIndex = photoIndex,
-            };
-            property.Photos.Add(newPhoto);
-            await uow.SaveAsync();
             return Ok(201);
         }
 

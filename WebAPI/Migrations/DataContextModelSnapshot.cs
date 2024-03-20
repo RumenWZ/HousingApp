@@ -89,6 +89,10 @@ namespace WebAPI.Migrations
                     b.Property<DateTime>("LastUpdatedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("MiniPhotoUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("PhotoIndex")
                         .HasColumnType("int");
 
